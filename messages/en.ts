@@ -1,0 +1,255 @@
+// English copy for the Siegel marketing site.
+// Placeholders like {n} are replaced at render time (see lib/format.ts).
+
+export const en = {
+  meta: {
+    title: 'Siegel — Validated German e-invoices for Stripe',
+    description:
+      'Siegel turns every Stripe invoice into a validated ZUGFeRD or XRechnung file — automatically, before it reaches your customer. Be ready for the German e-invoicing mandate.',
+    ogTitle: 'Stripe sends PDFs. Germany now wants e-invoices.',
+  },
+  nav: {
+    home: 'Siegel home',
+    how: 'How it works',
+    pricing: 'Pricing',
+    faq: 'FAQ',
+    login: 'Log in',
+    soon: 'Coming soon',
+    cta: 'Join early access',
+    language: 'Language',
+    menu: 'Menu',
+    closeMenu: 'Close menu',
+  },
+  hero: {
+    badge: 'E-Rechnung 2027 · Be ready before the deadline',
+    badgeShort: 'E-Rechnung 2027 · Get ready',
+    h1a: 'Stripe sends PDFs.',
+    h1b: 'Germany now wants e-invoices.',
+    sub: 'Siegel turns every Stripe invoice into a validated ZUGFeRD or XRechnung file — automatically, before it reaches your customer.',
+    ctaPrimary: 'Join early access',
+    ctaSecondary: 'See how it works',
+    bannerAlt:
+      'Line engraving in ink blue and cream of historic brick warehouses along a canal, in the style of a banknote.',
+  },
+  card: {
+    region: 'Example e-invoice being validated',
+    validated: 'Validated',
+    number: 'INV-2026-0142',
+    seller: 'Muster GmbH · Berlin',
+    amount: 4760,
+    vatNote: 'incl. 19% USt.',
+    profileLabel: 'E-invoice profile',
+    profile: 'ZUGFeRD · EN 16931',
+    files: 'PDF/A-3 + XML',
+    copy: 'Copy file type',
+    copied: 'Copied',
+    deliveredTo: 'Delivered to',
+    deliveredEmail: 'buchhaltung@muster.de',
+    example: 'Example invoice',
+    rulesChecked: 'rules checked',
+    stats: {
+      schema: 'Schema check',
+      rules: 'Business rules',
+      vat: 'VAT lines',
+      processing: 'Processing',
+      archived: 'Archived',
+    },
+  },
+  deadline: {
+    eyebrow: 'The timeline',
+    h2: 'The PDF era ends for German B2B.',
+    events: [
+      { date: '1 Jan 2025', text: 'Every business must be able to receive e-invoices.' },
+      { date: '1 Jan 2027', text: 'Businesses above €800k turnover must send them.' },
+      { date: '1 Jan 2028', text: 'Every business must send them.' },
+    ],
+    countdownOne: '{n} day until 1 Jan 2027',
+    countdownMany: '{n} days until 1 Jan 2027',
+    countdownToday: '1 Jan 2027 is today',
+    countdownPast: 'In effect since 1 Jan 2027',
+    today: 'Today',
+    footnote:
+      'Simplified overview. Exceptions apply (e.g. small businesses, invoices under €250). Not tax advice.',
+  },
+  how: {
+    eyebrow: 'How it works',
+    h2: 'Three steps. Then you forget about it.',
+    steps: [
+      {
+        n: '01',
+        title: 'Connect Stripe',
+        body: 'Install the app and add your company details once.',
+      },
+      {
+        n: '02',
+        title: 'Convert & validate',
+        body: 'Every finalized invoice and credit note becomes a ZUGFeRD or XRechnung file, checked against official rules.',
+      },
+      {
+        n: '03',
+        title: 'Deliver & archive',
+        body: 'Sent to your customer by email and stored for the legal retention period.',
+      },
+    ],
+    diagram: {
+      caption: 'One file, two layers.',
+      pdfTitle: 'Invoice',
+      pdfLayer: 'PDF — for humans',
+      xmlLayer: 'XML — for machines',
+      fields: ['Seller VAT ID', 'Service period', 'VAT breakdown', 'Buyer reference'],
+    },
+  },
+  features: {
+    eyebrow: 'Features',
+    h2: 'Everything an e-invoice needs. Nothing you have to learn.',
+    items: [
+      {
+        title: 'ZUGFeRD & XRechnung',
+        body: 'ZUGFeRD in the EN 16931 profile by default, XRechnung for customers who ask for pure XML.',
+      },
+      {
+        title: 'Validation against official rules',
+        body: 'Every file is checked against the official schema and business rules before anyone sees it.',
+      },
+      {
+        title: 'VAT, reverse charge & credit notes',
+        body: '19% and 7%, mixed rates, EU reverse charge and credit notes that reference the original invoice.',
+      },
+      {
+        title: 'Email delivery with logs',
+        body: 'Sent from your name to your customer’s billing address, with a log of every delivery.',
+      },
+      {
+        title: 'Tamper-evident EU archive',
+        body: 'Each file stored in the EU with a cryptographic hash, write-protected for the retention period.',
+      },
+      {
+        title: 'Backfill past invoices',
+        body: 'Convert invoices you already finalized in Stripe, for a date range you choose.',
+      },
+    ],
+  },
+  audience: {
+    eyebrow: 'Who it’s for',
+    h2: 'Built for companies that already bill through Stripe.',
+    items: [
+      {
+        title: 'SaaS on Stripe Billing',
+        body: 'Subscriptions, prorations and discounts become e-invoices with the right service periods.',
+      },
+      {
+        title: 'Agencies & freelancers on Stripe Invoicing',
+        body: 'Keep sending invoices from Stripe. Your clients receive a file their accounting software can read.',
+      },
+      {
+        title: 'Finance teams who’d rather not build this',
+        body: 'Skip the format specs, validators and archive. Spend the engineering time on your product.',
+      },
+    ],
+  },
+  pricing: {
+    eyebrow: 'Early access pricing',
+    h2: 'Priced by invoice volume. Cancel anytime.',
+    perMonth: '/mo',
+    plans: [
+      { id: 'starter', name: 'Starter', price: 29, limit: 'Up to 50 invoices/mo', extras: [] as string[] },
+      { id: 'growth', name: 'Growth', price: 79, limit: 'Up to 500 invoices/mo', extras: [] as string[] },
+      {
+        id: 'scale',
+        name: 'Scale',
+        price: 199,
+        limit: 'Up to 5,000 invoices/mo',
+        extras: ['Multiple Stripe accounts', 'Priority support'],
+      },
+    ],
+    includesTitle: 'Included in every plan',
+    includes: ['ZUGFeRD & XRechnung', 'Validation', 'Email delivery', 'EU archive'],
+    founding: 'Founding customers: 50% off for the first 3 months.',
+    cta: 'Join early access',
+    vatNote: 'Prices excl. VAT.',
+  },
+  faq: {
+    eyebrow: 'FAQ',
+    h2: 'Questions, answered plainly.',
+    sub: 'Something missing? Join early access and ask me directly.',
+    items: [
+      {
+        id: 'need',
+        q: 'Do I need this?',
+        a: 'If your business is established in Germany and invoices other businesses, very likely from 2027 or 2028. Confirm your situation with your tax advisor.',
+      },
+      {
+        id: 'stripe',
+        q: 'Doesn’t Stripe do this already?',
+        a: 'Stripe creates PDF invoices. Structured e-invoices for Germany need an additional app. Siegel is that app.',
+      },
+      {
+        id: 'formats',
+        q: 'Which formats do you support?',
+        a: 'ZUGFeRD (EN 16931 profile) and XRechnung.',
+      },
+      {
+        id: 'change',
+        q: 'Do I have to change how I use Stripe?',
+        a: 'No. Keep invoicing exactly as you do today.',
+      },
+      { id: 'data', q: 'Where is my data stored?', a: 'In the EU.' },
+      {
+        id: 'advice',
+        q: 'Is this tax advice?',
+        a: 'No. Siegel is software that validates files against official technical rules. Your tax advisor remains responsible for your tax situation.',
+      },
+    ],
+  },
+  finalCta: {
+    h2: 'Be ready before January.',
+    sub: 'Join early access. I’ll onboard the first customers personally.',
+  },
+  footer: {
+    tagline: 'Software, not tax advice.',
+    disclaimer: 'Siegel is an independent product and is not affiliated with or endorsed by Stripe.',
+    impressum: 'Impressum',
+    datenschutz: 'Datenschutz',
+    terms: 'Terms',
+    contact: 'Contact',
+    navLabel: 'Legal',
+  },
+  form: {
+    title: 'Join early access',
+    sub: 'Tell me a little about your invoicing. I read every entry.',
+    email: 'Work email',
+    emailPlaceholder: 'you@company.de',
+    company: 'Company name',
+    companyPlaceholder: 'Muster GmbH',
+    optional: 'optional',
+    volume: 'Invoices per month',
+    volumeOptions: [
+      { value: '<20', label: '< 20' },
+      { value: '20-100', label: '20–100' },
+      { value: '100-500', label: '100–500' },
+      { value: '500+', label: '500+' },
+    ],
+    turnover: 'Prior-year turnover above €800k?',
+    turnoverOptions: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' },
+      { value: 'unsure', label: 'Not sure' },
+    ],
+    submit: 'Join early access',
+    submitting: 'Joining…',
+    success: 'You’re on the list. I’ll reach out personally.',
+    already: 'You’re already on the list. I’ll be in touch.',
+    error: 'Something went wrong. Please try again in a moment.',
+    rateLimited: 'Too many attempts. Please wait a few minutes and try again.',
+    invalidEmail: 'Please enter a valid email address.',
+    privacy: 'I’ll only use your email to contact you about Siegel. See',
+    privacyLink: 'Datenschutz',
+    close: 'Close',
+    honeypot: 'Leave this field empty',
+  },
+  legal: {
+    back: 'Back to home',
+  },
+}
+
+export type Messages = typeof en

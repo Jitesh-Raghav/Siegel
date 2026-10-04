@@ -17,6 +17,19 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 308)
   }
 
+  // First visit from a German browser: send them to /de. A manual choice (?lang=en, set by the
+  // language switcher) or navigation from our own pages is never redirected. No cookies.
+  if (pathname === '/' && !request.nextUrl.searchParams.has('lang')) {
+    const lang = request.headers.get('accept-language')?.trim().toLowerCase() ?? ''
+    const referer = request.headers.get('referer') ?? ''
+    const fromSelf = referer.startsWith(request.nextUrl.origin)
+    if (lang.startsWith('de') && !fromSelf) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/de'
+      return NextResponse.redirect(url, 307)
+    }
+  }
+
   const url = request.nextUrl.clone()
   url.pathname = `/en${pathname === '/' ? '' : pathname}`
   url.search = search

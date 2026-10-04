@@ -1,39 +1,108 @@
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { reveal } from '@/components/ui/reveal'
 import type { Messages } from '@/messages/en'
-import { LayerDiagram } from './LayerDiagram'
 
 export function HowItWorks({ t }: { t: Messages['how'] }) {
   return (
     <section
       id="how-it-works"
       data-section="how"
-      className="section relative border-t border-hairline bg-paper-2/60 defer-render"
+      className="on-dark section how-band relative isolate overflow-hidden defer-render"
       aria-labelledby="how-title"
     >
-      <div className="container-ledger">
-        <SectionHeader id="how-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} />
+      {/* faint engraved texture and a mint horizon */}
+      <div className="how-texture pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
 
-        <div className="relative mt-16">
-          <ol className="relative grid gap-5 md:grid-cols-3 md:gap-6">
+      <div className="container-ledger">
+        <SectionHeader num={3} id="how-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} />
+
+        <div className="relative mt-16 md:mt-20">
+          {/* the rail that joins the three steps */}
+          <div className="how-rail absolute top-[22px] right-[16.66%] left-[16.66%] hidden md:block" {...reveal(2, 'rule')} />
+
+          <ol className="relative grid gap-12 md:grid-cols-3 md:gap-x-6 md:gap-y-0">
             {t.steps.map((s, i) => (
-              <li key={s.n} className="surface spotlight group relative p-7 sm:p-8" {...reveal(2 + i)}>
-                <div className="flex items-start justify-between">
-                  <div className="grid size-[60px] place-items-center rounded-2xl border border-hairline bg-paper shadow-[0_1px_0_#fff_inset]">
-                    <StepIcon index={i} />
-                  </div>
-                  <span className="accent foil-text text-[56px] leading-none">{s.n}</span>
+              <li key={s.n} className="group relative flex flex-col md:row-span-3 md:grid md:grid-rows-subgrid md:gap-0" {...reveal(2 + i)}>
+                <div className="flex items-center gap-4 md:flex-col md:gap-0">
+                  <span className="how-node tabular grid size-11 shrink-0 place-items-center rounded-full font-mono text-[12px]">
+                    {s.n}
+                  </span>
+                  <h3 className="h3 text-on-dark md:mt-7 md:text-center">{s.title}</h3>
                 </div>
-                <h3 className="h3 mt-8">{s.title}</h3>
-                <p className="lede mt-3 max-w-[36ch] text-[16px]">{s.body}</p>
+                <p className="lede mt-3 text-[16px] md:mx-auto md:max-w-[32ch] md:text-center">{s.body}</p>
+
+                <div className="glass-dark spotlight mt-8 flex flex-col gap-4 rounded-[20px] p-5">
+                  <div className="flex items-center gap-3">
+                    <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-engrave-paper">
+                      <StepIcon index={i} />
+                    </span>
+                    <span className="font-mono text-[11px] tracking-[0.12em] text-on-dark-muted uppercase">
+                      {['stripe → siegel', 'invoice.finalized', 'delivery'][i]}
+                    </span>
+                  </div>
+                  <StepProof index={i} />
+                </div>
               </li>
             ))}
           </ol>
         </div>
-
-        <LayerDiagram t={t.diagram} />
       </div>
     </section>
+  )
+}
+
+/** A small, product-true panel per step: what Siegel actually does at that moment. */
+function StepProof({ index }: { index: number }) {
+  const row = 'flex items-center justify-between gap-3 rounded-lg border border-white/8 bg-white/[0.03] px-3 py-2 font-mono text-[11.5px]'
+  const ok = (
+    <span className="grid size-4 shrink-0 place-items-center rounded-full bg-gold text-midnight" aria-hidden="true">
+      <svg width="8" height="8" viewBox="0 0 10 10">
+        <path d="M1.8 5.2l2 2 4.4-4.6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      </svg>
+    </span>
+  )
+  if (index === 0) {
+    return (
+      <div className="grid gap-2" aria-hidden="true">
+        <div className={row}>
+          <span className="text-on-dark">acct_1Pz…7Qk</span>
+          <span className="flex items-center gap-2 text-gold-soft">
+            connected
+            <span className="how-toggle relative h-4 w-7 rounded-full bg-gold">
+              <span className="absolute top-0.5 right-0.5 size-3 rounded-full bg-white" />
+            </span>
+          </span>
+        </div>
+        <div className={row}>
+          <span className="text-on-dark-muted">USt-IdNr.</span>
+          <span className="text-on-dark">DE123456789</span>
+        </div>
+      </div>
+    )
+  }
+  if (index === 1) {
+    return (
+      <div className="grid gap-2" aria-hidden="true">
+        {['schema.xsd', 'en16931.sch', 'xrechnung-cius'].map((x, k) => (
+          <div key={x} className={`${row} how-check`} style={{ '--k': k } as React.CSSProperties}>
+            <span className="text-on-dark">{x}</span>
+            <span className="flex items-center gap-2 text-gold-soft">0 errors {ok}</span>
+          </div>
+        ))}
+      </div>
+    )
+  }
+  return (
+    <div className="grid gap-2" aria-hidden="true">
+      <div className={row}>
+        <span className="text-on-dark-muted">sent</span>
+        <span className="text-on-dark">buchhaltung@muster.de</span>
+      </div>
+      <div className={row}>
+        <span className="text-on-dark-muted">archive</span>
+        <span className="flex items-center gap-2 text-on-dark">eu-central · 10y {ok}</span>
+      </div>
+    </div>
   )
 }
 

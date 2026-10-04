@@ -17,9 +17,9 @@ export const MARK = {
 
 const TONES = {
   // on light backgrounds: fir sheet, bone lines
-  light: { sheet: '#0F2A22', line: '#F3F0E6', brass: '#C79B57', dot: '#0F2A22' },
+  light: { sheet: '#0F2A22', line: '#FAFBFA', brass: '#3FA77A', dot: '#0F2A22' },
   // on dark backgrounds: bone sheet, fir lines
-  dark: { sheet: '#F1EDE2', line: '#0F2A22', brass: '#C79B57', dot: '#0F2A22' },
+  dark: { sheet: '#F2F6F3', line: '#0F2A22', brass: '#3FA77A', dot: '#0F2A22' },
 } as const
 
 export function LogoMark({

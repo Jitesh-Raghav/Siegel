@@ -1,9 +1,10 @@
 // Renders video/explainer.html to MP4, frame by frame (deterministic: no dropped frames).
-//   node scripts/render-video.mjs                 → public/video/siegel-explainer-{en,de}.mp4 + posters
+//   node scripts/render-audio.mjs && node scripts/render-video.mjs
+//                                                 → public/video/siegel-explainer-{en,de}.mp4 (with soundtrack) + posters
 //   LANGS=en node scripts/render-video.mjs        → one language
 //   PREVIEW=2,9,15,24 node scripts/render-video.mjs → PNG stills at those seconds (into PREVIEW_DIR)
 import { spawn } from 'node:child_process'
-import { mkdirSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 import { chromium } from '@playwright/test'
@@ -49,13 +50,19 @@ if (process.env.PREVIEW) {
     const duration = await page.evaluate(() => window.DURATION)
     const frames = Math.round(duration * FPS)
     const file = join(OUT, `siegel-explainer-${lang}.mp4`)
+    // Soundtrack from scripts/render-audio.mjs (per language when it carries the voiceover), muxed as AAC.
+    const audio = [`video/soundtrack-${lang}.wav`, 'video/soundtrack.wav'].find((f) => existsSync(f)) ?? ''
+    const audioIn = existsSync(audio) ? ['-i', audio] : []
+    const audioOut = existsSync(audio) ? ['-map', '0:v', '-map', '1:a', '-c:a', 'aac', '-b:a', '160k', '-shortest'] : ['-an']
     const enc = spawn(
       ffmpeg,
       [
         '-y', '-loglevel', 'error',
         '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
+        ...audioIn,
         '-c:v', 'libx264', '-preset', 'slow', '-crf', '22', '-pix_fmt', 'yuv420p',
-        '-movflags', '+faststart', '-an', file,
+        ...audioOut,
+        '-movflags', '+faststart', file,
       ],
       { stdio: ['pipe', 'inherit', 'inherit'] },
     )

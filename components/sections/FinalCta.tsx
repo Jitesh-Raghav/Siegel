@@ -1,5 +1,6 @@
 import { Banner } from '@/components/hero/Banner'
 import { AccentTitle } from '@/components/ui/AccentTitle'
+import { DitherField } from '@/components/ui/DitherField'
 import { Guilloche } from '@/components/ui/Guilloche'
 import { reveal } from '@/components/ui/reveal'
 import { WaitlistForm } from '@/components/waitlist/WaitlistForm'
@@ -18,7 +19,7 @@ export function FinalCta({ locale, t }: { locale: Locale; t: Messages }) {
         className="pointer-events-none absolute -top-[30%] -right-[25%] -z-10 size-[min(1100px,140vw)] opacity-[0.06]"
         aria-hidden="true"
       >
-        <Guilloche className="size-full" color="#D8BE8E" rings={11} />
+        <Guilloche className="size-full" color="#9FD9BC" rings={11} />
       </div>
 
       <div className="container-ledger">
@@ -44,8 +45,13 @@ export function FinalCta({ locale, t }: { locale: Locale; t: Messages }) {
               ))}
             </ul>
           </div>
+          <div className="relative">
+            <div className="dither-wrap dither-dark pointer-events-none absolute -inset-[18%] -z-10" aria-hidden="true">
+              <DitherField className="size-full" />
+            </div>
           <div className="glass-dark rounded-[24px] p-6 sm:p-9" {...reveal(3)}>
             <WaitlistForm locale={locale} t={t.form} location="final_cta" tone="dark" />
+          </div>
           </div>
         </div>
       </div>

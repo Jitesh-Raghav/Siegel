@@ -14,10 +14,10 @@ const lines = [...src.matchAll(/'(M10 1[59]H2[02])'/g)].map((m) => m[1])
 const SVG = (bg) =>
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">` +
   (bg ? `<rect width="32" height="32" rx="7" fill="${bg}"/>` : '') +
-  `<path d="${sheet}" fill="#0F2A22"/><path d="${fold}" fill="#C79B57"/>` +
+  `<path d="${sheet}" fill="#0F2A22"/><path d="${fold}" fill="#3FA77A"/>` +
   `<circle cx="20.9" cy="6.3" r="0.7" fill="#0F2A22"/><circle cx="20.9" cy="8.3" r="0.7" fill="#0F2A22"/><circle cx="22.9" cy="8.3" r="0.7" fill="#0F2A22"/>` +
-  `<g stroke="#F3F0E6" stroke-width="1.6" stroke-linecap="round" fill="none">${[...lines, lastLine].map((d) => `<path d="${d}"/>`).join('')}</g>` +
-  `<rect x="17" y="21.6" width="5" height="2.8" rx="0.8" fill="#C79B57"/></svg>`
+  `<g stroke="#FAFBFA" stroke-width="1.6" stroke-linecap="round" fill="none">${[...lines, lastLine].map((d) => `<path d="${d}"/>`).join('')}</g>` +
+  `<rect x="17" y="21.6" width="5" height="2.8" rx="0.8" fill="#3FA77A"/></svg>`
 
 writeFileSync('app/icon.svg', SVG() + '\n')
 
@@ -33,7 +33,7 @@ const render = async (size, bg, pad = 0) => {
 }
 
 // Apple touch icon: bone tile with padding (iOS adds its own rounded mask).
-writeFileSync('app/apple-icon.png', await render(180, '#F3F0E6', 22))
+writeFileSync('app/apple-icon.png', await render(180, '#FAFBFA', 22))
 
 // favicon.ico: ICO container holding PNG images (supported by all modern browsers).
 const sizes = [16, 32, 48]

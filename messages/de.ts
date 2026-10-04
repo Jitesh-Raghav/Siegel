@@ -6,9 +6,9 @@ import type { Messages } from './en'
 
 export const de: Messages = {
   meta: {
-    title: 'Siegel — Validierte E-⁠Rechnungen für Stripe',
+    title: 'Siegel · Validierte E-⁠Rechnungen für Stripe',
     description:
-      'Siegel macht aus jeder Stripe-Rechnung eine validierte ZUGFeRD- oder XRechnung-Datei — automatisch, bevor sie Ihren Kunden erreicht. Bereit für die E-⁠Rechnungspflicht.',
+      'Siegel macht aus jeder Stripe-Rechnung eine validierte ZUGFeRD- oder XRechnung-Datei, automatisch und bevor sie Ihren Kunden erreicht. Bereit für die E-⁠Rechnungspflicht.',
     ogTitle: 'Jede Stripe-Rechnung, als E-⁠Rechnung besiegelt.',
   },
   nav: {
@@ -24,12 +24,12 @@ export const de: Messages = {
     closeMenu: 'Menü schließen',
   },
   hero: {
-    badge: 'E-⁠Rechnung · Vor der Frist bereit sein',
-    badgeShort: 'E-⁠Rechnung · Jetzt vorbereiten',
+    badge: 'E-⁠Rechnung · Bereit sein vor der Frist',
+    badgeShort: 'E-⁠Rechnung · Bereit sein',
     h1a: 'Jede Stripe-Rechnung,',
     h1b: 'als E-⁠Rechnung besiegelt.',
     h1bAccent: 'besiegelt.',
-    sub: 'Die E-⁠Rechnungspflicht in Deutschland startet 2027. Siegel macht aus jeder Stripe-Rechnung eine validierte ZUGFeRD- oder XRechnung-Datei — automatisch, ohne dass Sie Ihre Abrechnung ändern müssen.',
+    sub: 'Ab dem 1. Januar 2027 müssen größere Unternehmen in Deutschland E-⁠Rechnungen an andere Unternehmen senden, alle übrigen ab 2028. Siegel macht aus jeder Stripe-Rechnung automatisch eine validierte ZUGFeRD- oder XRechnung-Datei, ohne dass Sie Ihre Abrechnung ändern müssen.', // NEEDS NATIVE REVIEW
     ctaPrimary: 'Frühzugang sichern',
     ctaSecondary: 'So funktioniert’s',
     trust: ['Geprüft nach offiziellen Regeln', 'Datenhaltung in der EU', 'Weiter in Stripe abrechnen'],
@@ -61,19 +61,12 @@ export const de: Messages = {
       archived: 'Archiviert',
     },
   },
-  xray: {
-    label: 'Eine Rechnung, wie Menschen sie sehen, darunter die maschinenlesbaren EN-16931-Daten, sichtbar durch eine bewegliche Lupe.',
-    hint: 'Fahren Sie mit der Maus über die Rechnung',
+  heroInvoice: {
+    label: 'Beispielrechnung, die als ZUGFeRD-E-Rechnung validiert wird',
     doc: 'Rechnung',
-    idle: 'EN 16931 · Maschinenebene',
-    fields: [
-      { bt: 'BT-1', name: 'Rechnungsnummer' },
-      { bt: 'BT-31', name: 'USt-IdNr. Verkäufer' },
-      { bt: 'BT-73/74', name: 'Leistungszeitraum' },
-      { bt: 'BT-131', name: 'Positions-Nettobetrag' },
-      { bt: 'BT-110', name: 'Umsatzsteuer gesamt' },
-      { bt: 'BT-112', name: 'Gesamtbetrag brutto' },
-    ],
+    items: ['Growth-Tarif · September', 'Zusätzliche Plätze × 3', 'Einrichtung'],
+    total: 'Gesamt inkl. 19 % USt.',
+    validated: 'ZUGFeRD · EN 16931 · validiert',
   },
   film: {
     eyebrow: 'In 36 Sekunden erklärt',
@@ -85,6 +78,7 @@ export const de: Messages = {
   standards: {
     label: 'Gebaut auf den offiziellen Standards',
     items: ['EN 16931', 'ZUGFeRD', 'Factur-X', 'XRechnung', 'PDF/A-3', 'Datenhaltung in der EU'],
+    notes: ['CEN · Semantisches Modell', 'DE · Hybrid-PDF', 'FR/DE · Hybrid', 'DE · Öffentlicher Sektor', 'ISO 19005-3', 'eu-central'],
   },
   deadline: {
     eyebrow: 'Der Zeitplan',
@@ -127,13 +121,6 @@ export const de: Messages = {
         body: 'Per E-Mail an Ihre Kunden versendet und für die gesetzliche Aufbewahrungsfrist gespeichert.',
       },
     ],
-    diagram: {
-      caption: 'Eine Datei, zwei Ebenen.',
-      pdfTitle: 'Rechnung',
-      pdfLayer: 'PDF — für Menschen',
-      xmlLayer: 'XML — für Maschinen',
-      fields: ['USt-IdNr. des Verkäufers', 'Leistungszeitraum', 'USt.-Aufschlüsselung', 'Käuferreferenz'],
-    },
   },
   features: {
     eyebrow: 'Funktionen',
@@ -219,6 +206,31 @@ export const de: Messages = {
     cta: 'Frühzugang sichern',
     vatNote: 'Preise zzgl. USt.',
   },
+  trust: {
+    eyebrow: 'Die Person dahinter',
+    h2: 'Wer hinter Siegel steht',
+    h2Accent: 'Siegel',
+    name: 'Jitesh Raghav',
+    role: 'Gründer · Softwareentwickler',
+    location: 'Indien · arbeitet remote mit Kunden in der EU',
+    bio: 'Ich bin Softwareentwickler bei Western Union und baue dort skalierbare Backend-Systeme mit Java und Spring Boot. Siegel entwickle ich unabhängig, und jeden Kunden im Frühzugang betreue ich persönlich.',
+    highlights: [
+      { k: 'Hauptberuf', v: 'Western Union' },
+      { k: 'Stack', v: 'Java · Spring Boot · Kafka' },
+      { k: 'Veröffentlicht', v: '6 eigene Produkte' },
+    ],
+    linkedin: 'https://www.linkedin.com/in/jitesh-raghav-6541a924a/',
+    github: 'https://github.com/Jitesh-Raghav',
+    x: 'https://x.com/okayjitesh',
+    portfolio: 'https://jiteshraghav.vercel.app/',
+    linkedinLabel: 'LinkedIn',
+    emailLabel: 'E-Mail schreiben',
+    portfolioLabel: 'Portfolio',
+    samplesTitle: 'Beispiel herunterladen',
+    samplesBody: 'Sehen Sie genau, was Ihre Kunden erhalten und was Siegel vor dem Versand prüft.',
+    samplePdf: 'Beispiel-ZUGFeRD-Rechnung (PDF)',
+    sampleReport: 'Prüfbericht',
+  },
   faq: {
     eyebrow: 'FAQ',
     h2: 'Fragen, klar beantwortet.',
@@ -251,6 +263,26 @@ export const de: Messages = {
         q: 'Ist das Steuerberatung?',
         a: 'Nein. Siegel ist eine Software, die Dateien gegen offizielle technische Regeln validiert. Für Ihre steuerliche Situation bleibt Ihre Steuerberatung verantwortlich.',
       },
+      {
+        id: 'free',
+        q: 'Warum bezahlen, wenn es kostenlose Konverter gibt?',
+        a: 'Kostenlose Tools wandeln eine Rechnung nach der anderen von Hand um. Siegel läuft automatisch bei jeder Stripe-Rechnung, inklusive anteiliger Abrechnungen, Rabatte, Reverse Charge und Gutschriften, und prüft, versendet und archiviert jede Datei.',
+      },
+      {
+        id: 'stripe-builds',
+        q: 'Was, wenn Stripe das selbst baut?',
+        a: 'Dann haben Sie die Wahl. Bis dahin funktioniert Siegel schon heute, und Ihre archivierten Dateien bleiben jederzeit exportierbar.',
+      },
+      {
+        id: 'avv',
+        q: 'Schließen Sie einen Auftragsverarbeitungsvertrag (AVV) ab?',
+        a: 'Ja. Ein AVV steht jedem Kunden zur Verfügung.',
+      },
+      {
+        id: 'who',
+        q: 'Wer steckt hinter Siegel?',
+        a: 'Jitesh Raghav, ein unabhängiger Softwareentwickler. Siehe „Wer hinter Siegel steht“ oben, oder schreiben Sie mir direkt.',
+      },
     ],
   },
   finalCta: {
@@ -259,6 +291,17 @@ export const de: Messages = {
     sub: 'Sichern Sie sich den Frühzugang. Die ersten Kunden betreue ich persönlich.',
   },
   footer: {
+    product: 'Produkt',
+    company: 'Über uns',
+    legal: 'Rechtliches',
+    film: 'Der Film',
+    founder: 'Wer dahinter steht',
+    status: 'Frühzugang offen',
+    statement: 'Bereit für die E-⁠Rechnungspflicht 2027.',
+    statementAccent: '2027.',
+    builtOn: 'Gebaut auf EN 16931 · ZUGFeRD · XRechnung',
+    backToTop: 'Nach oben',
+    madeBy: 'Entwickelt von',
     tagline: 'Software, keine Steuerberatung.',
     disclaimer: 'Siegel ist ein unabhängiges Produkt und steht in keiner Verbindung zu Stripe.',
     impressum: 'Impressum',

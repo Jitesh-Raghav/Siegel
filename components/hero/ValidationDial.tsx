@@ -21,8 +21,8 @@ const MINOR = tickPath(false)
 function Ticks({ lit }: { lit: boolean }) {
   return (
     <g fill="none" strokeLinecap="round">
-      <path d={MINOR} stroke={lit ? '#17382D' : '#CDC6B1'} strokeWidth="0.8" />
-      <path d={MAJOR} stroke={lit ? '#B4894A' : '#CDC6B1'} strokeWidth="1.3" />
+      <path d={MINOR} stroke={lit ? '#17382D' : '#D3DBD6'} strokeWidth="0.8" />
+      <path d={MAJOR} stroke={lit ? '#3FA77A' : '#D3DBD6'} strokeWidth="1.3" />
     </g>
   )
 }
@@ -46,18 +46,18 @@ export const ValidationDial = memo(function ValidationDial({
           <linearGradient id="dial-arc" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stopColor="#17382D" />
             <stop offset="0.65" stopColor="#2C5A48" />
-            <stop offset="1" stopColor="#B4894A" />
+            <stop offset="1" stopColor="#3FA77A" />
           </linearGradient>
           <radialGradient id="dial-face" cx="0.5" cy="0.4" r="0.6">
             <stop offset="0" stopColor="#FFFFFF" />
-            <stop offset="1" stopColor="#F1EDE2" />
+            <stop offset="1" stopColor="#F2F6F3" />
           </radialGradient>
         </defs>
         <g transform="translate(80 80)">
           <circle r="62" fill="url(#dial-face)" />
           <Ticks lit={false} />
-          <circle r="64.5" fill="none" stroke="#CDC6B1" strokeWidth="0.6" strokeDasharray="0.6 2.4" />
-          <circle r="55" fill="none" stroke="#E3DDCB" strokeWidth="6" />
+          <circle r="64.5" fill="none" stroke="#D3DBD6" strokeWidth="0.6" strokeDasharray="0.6 2.4" />
+          <circle r="55" fill="none" stroke="#E6ECE8" strokeWidth="6" />
           <circle
             r="55"
             fill="none"
@@ -69,7 +69,7 @@ export const ValidationDial = memo(function ValidationDial({
             transform="rotate(-90)"
             style={{ strokeDashoffset: 'calc(1 - var(--dial, 1))', opacity: 'min(1, calc(var(--dial, 1) * 300))' }}
           />
-          <circle r="45.5" fill="none" stroke="#CDC6B1" strokeWidth="0.6" strokeDasharray="2 2.5" />
+          <circle r="45.5" fill="none" stroke="#D3DBD6" strokeWidth="0.6" strokeDasharray="2 2.5" />
         </g>
       </svg>
       {/* Lit ticks, revealed clockwise by a conic mask driven by --dial */}

@@ -128,7 +128,7 @@ export function InvoiceCard({ locale, t }: { locale: Locale; t: Messages['card']
 
   async function copy() {
     try {
-      await navigator.clipboard.writeText(`${t.profile} — ${t.files}`)
+      await navigator.clipboard.writeText(`${t.profile} · ${t.files}`)
       setCopied(true)
       window.setTimeout(() => setCopied(false), 1400)
     } catch {
@@ -165,7 +165,7 @@ export function InvoiceCard({ locale, t }: { locale: Locale; t: Messages['card']
               )}
               <span
                 className="relative size-[7px] rounded-full transition-colors duration-700"
-                style={{ background: validated ? 'var(--verified)' : '#C4BFAE' }}
+                style={{ background: validated ? 'var(--verified)' : '#C8D1CB' }}
               />
             </span>
             {t.validated}

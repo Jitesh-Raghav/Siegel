@@ -9,6 +9,8 @@ import { FinalCta } from '@/components/sections/FinalCta'
 import { HowItWorks } from '@/components/sections/HowItWorks'
 import { Pricing } from '@/components/sections/Pricing'
 import { Standards } from '@/components/sections/Standards'
+import { Trust } from '@/components/sections/Trust'
+import { BlueprintRails, SectionDivider } from '@/components/ui/Blueprint'
 import { getMessages, isLocale } from '@/lib/i18n'
 
 // Re-render hourly so the server-rendered countdown stays current.
@@ -20,15 +22,22 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
   const t = getMessages(locale)
 
   return (
-    <main>
+    <main className="bp-main">
+      <BlueprintRails />
       <Hero locale={locale} t={t} />
       <Standards t={t.standards} />
       <Film locale={locale} t={t.film} />
+      <SectionDivider />
       <Deadline t={t.deadline} />
       <HowItWorks t={t.how} />
       <Features t={t.features} />
+      <SectionDivider />
       <Audience t={t.audience} />
+      <SectionDivider />
       <Pricing locale={locale} t={t.pricing} />
+      <SectionDivider />
+      <Trust t={t.trust} />
+      <SectionDivider />
       <Faq t={t.faq} />
       <FinalCta locale={locale} t={t} />
     </main>

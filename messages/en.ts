@@ -3,9 +3,9 @@
 
 export const en = {
   meta: {
-    title: 'Siegel — Validated German e-invoices for Stripe',
+    title: 'Siegel · Validated German e-invoices for Stripe',
     description:
-      'Siegel turns every Stripe invoice into a validated ZUGFeRD or XRechnung file — automatically, before it reaches your customer. Be ready for the German e-invoicing mandate.',
+      'Siegel turns every Stripe invoice into a validated ZUGFeRD or XRechnung file, automatically, before it reaches your customer. Be ready for the German e-invoicing mandate.',
     ogTitle: 'Every Stripe invoice, sealed as an e-invoice.',
   },
   nav: {
@@ -22,11 +22,11 @@ export const en = {
   },
   hero: {
     badge: 'E-Rechnung · Be ready before the deadline',
-    badgeShort: 'E-Rechnung · Get ready',
+    badgeShort: 'E-Rechnung · Be ready',
     h1a: 'Every Stripe invoice,',
     h1b: 'sealed as an e-invoice.',
     h1bAccent: 'sealed',
-    sub: 'Germany’s e-invoicing obligation starts rolling out in 2027. Siegel turns each Stripe invoice into a validated ZUGFeRD or XRechnung file — automatically, without changing how you bill.',
+    sub: 'From 1 Jan 2027, larger German businesses must send e-invoices to other businesses, and everyone else from 2028. Siegel turns each Stripe invoice into a validated ZUGFeRD or XRechnung file, automatically, without changing how you bill.',
     ctaPrimary: 'Join early access',
     ctaSecondary: 'See how it works',
     trust: ['Validated against official rules', 'Data stored in the EU', 'Keep invoicing in Stripe'],
@@ -58,19 +58,12 @@ export const en = {
       archived: 'Archived',
     },
   },
-  xray: {
-    label: 'An invoice as people see it, with the machine-readable EN 16931 data underneath, revealed through a moving lens.',
-    hint: 'Move your cursor over the invoice',
-    doc: 'Rechnung',
-    idle: 'EN 16931 · machine layer',
-    fields: [
-      { bt: 'BT-1', name: 'Invoice number' },
-      { bt: 'BT-31', name: 'Seller VAT ID' },
-      { bt: 'BT-73/74', name: 'Service period' },
-      { bt: 'BT-131', name: 'Line net amount' },
-      { bt: 'BT-110', name: 'VAT total' },
-      { bt: 'BT-112', name: 'Total incl. VAT' },
-    ],
+  heroInvoice: {
+    label: 'Example invoice being validated as a ZUGFeRD e-invoice',
+    doc: 'Invoice',
+    items: ['Growth plan · September', 'Extra seats × 3', 'Onboarding'],
+    total: 'Total incl. 19% VAT',
+    validated: 'ZUGFeRD · EN 16931 · validated',
   },
   film: {
     eyebrow: 'The 36-second version',
@@ -82,6 +75,7 @@ export const en = {
   standards: {
     label: 'Built on the official standards',
     items: ['EN 16931', 'ZUGFeRD', 'Factur-X', 'XRechnung', 'PDF/A-3', 'EU data residency'],
+    notes: ['CEN · semantic model', 'DE · hybrid PDF', 'FR/DE · hybrid', 'DE · public sector', 'ISO 19005-3', 'eu-central'],
   },
   deadline: {
     eyebrow: 'The timeline',
@@ -124,13 +118,6 @@ export const en = {
         body: 'Sent to your customer by email and stored for the legal retention period.',
       },
     ],
-    diagram: {
-      caption: 'One file, two layers.',
-      pdfTitle: 'Invoice',
-      pdfLayer: 'PDF — for humans',
-      xmlLayer: 'XML — for machines',
-      fields: ['Seller VAT ID', 'Service period', 'VAT breakdown', 'Buyer reference'],
-    },
   },
   features: {
     eyebrow: 'Features',
@@ -216,6 +203,31 @@ export const en = {
     cta: 'Join early access',
     vatNote: 'Prices excl. VAT.',
   },
+  trust: {
+    eyebrow: 'The person behind it',
+    h2: 'Who’s building Siegel',
+    h2Accent: 'Siegel',
+    name: 'Jitesh Raghav',
+    role: 'Founder · Software engineer',
+    location: 'India · works remotely with EU customers',
+    bio: 'I’m a software engineer at Western Union, where I build scalable backend systems in Java and Spring Boot. I’m building Siegel independently, and I onboard every early customer personally.',
+    highlights: [
+      { k: 'Day job', v: 'Western Union' },
+      { k: 'Stack', v: 'Java · Spring Boot · Kafka' },
+      { k: 'Shipped', v: '6 indie products' },
+    ],
+    linkedin: 'https://www.linkedin.com/in/jitesh-raghav-6541a924a/',
+    github: 'https://github.com/Jitesh-Raghav',
+    x: 'https://x.com/okayjitesh',
+    portfolio: 'https://jiteshraghav.vercel.app/',
+    linkedinLabel: 'LinkedIn',
+    emailLabel: 'Email me',
+    portfolioLabel: 'Portfolio',
+    samplesTitle: 'Download a sample',
+    samplesBody: 'See exactly what your customers receive, and what Siegel checks before sending it.',
+    samplePdf: 'Sample ZUGFeRD invoice (PDF)',
+    sampleReport: 'Validation report',
+  },
   faq: {
     eyebrow: 'FAQ',
     h2: 'Questions, answered plainly.',
@@ -248,6 +260,26 @@ export const en = {
         q: 'Is this tax advice?',
         a: 'No. Siegel is software that validates files against official technical rules. Your tax advisor remains responsible for your tax situation.',
       },
+      {
+        id: 'free',
+        q: 'Why pay when free converters exist?',
+        a: 'Free tools convert one invoice at a time, by hand. Siegel runs automatically on every Stripe invoice, including prorations, discounts, reverse charge and credit notes, then validates, delivers and archives each file.',
+      },
+      {
+        id: 'stripe-builds',
+        q: 'What if Stripe builds this?',
+        a: 'Then you’ll have a choice. Until then, Siegel works today, and your archived files stay exportable at any time.',
+      },
+      {
+        id: 'avv',
+        q: 'Do you sign a data processing agreement (AVV)?',
+        a: 'Yes. A DPA/AVV is available for every customer.',
+      },
+      {
+        id: 'who',
+        q: 'Who is behind Siegel?',
+        a: 'Jitesh Raghav, an independent software engineer. See “Who’s building Siegel” above, or email me directly.',
+      },
     ],
   },
   finalCta: {
@@ -256,6 +288,17 @@ export const en = {
     sub: 'Join early access. I’ll onboard the first customers personally.',
   },
   footer: {
+    product: 'Product',
+    company: 'Company',
+    legal: 'Legal',
+    film: 'The film',
+    founder: 'Who’s behind it',
+    status: 'Early access open',
+    statement: 'Ready for the 2027 e-invoicing mandate.',
+    statementAccent: '2027',
+    builtOn: 'Built on EN 16931 · ZUGFeRD · XRechnung',
+    backToTop: 'Back to top',
+    madeBy: 'Made by',
     tagline: 'Software, not tax advice.',
     disclaimer: 'Siegel is an independent product and is not affiliated with or endorsed by Stripe.',
     impressum: 'Impressum',

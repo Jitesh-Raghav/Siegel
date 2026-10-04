@@ -22,7 +22,7 @@ export function Deadline({ t }: { t: Messages['deadline'] }) {
     <section id="deadline" data-section="deadline" className="section defer-render" aria-labelledby="deadline-title">
       <div className="container-ledger">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:items-end">
-          <SectionHeader id="deadline-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} body={t.body} />
+          <SectionHeader num={2} id="deadline-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} body={t.body} />
           <div className="surface relative overflow-hidden p-8 sm:p-10" {...reveal(3)}>
             <div className="hatch absolute -top-10 -right-10 size-40 rotate-45 opacity-60" aria-hidden="true" />
             <Countdown
@@ -55,7 +55,7 @@ export function Deadline({ t }: { t: Messages['deadline'] }) {
               <span
                 key={i}
                 className={`absolute top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rotate-45 border ${
-                  i === 1 ? 'border-gold-deep bg-[linear-gradient(135deg,#8c6a3a,#e2c893,#a47e46)] shadow-[0_0_0_5px_rgb(180_137_74/0.15)]' : 'border-ink bg-paper'
+                  i === 1 ? 'border-gold-deep bg-[linear-gradient(135deg,#1f7a55,#7fcba6,#2f9168)] shadow-[0_0_0_5px_rgb(63_167_122/0.15)]' : 'border-ink bg-paper'
                 }`}
                 style={{ left: `${p * 100}%` }}
               />
@@ -79,7 +79,7 @@ export function Deadline({ t }: { t: Messages['deadline'] }) {
                 key={e.date}
                 className={`relative rounded-[18px] border p-6 transition-shadow ${
                   key
-                    ? 'border-gold/50 bg-white shadow-[0_1px_0_rgb(255_255_255)_inset,0_20px_40px_-24px_rgb(116_85_42/0.45)]'
+                    ? 'border-gold/50 bg-white shadow-[0_1px_0_rgb(255_255_255)_inset,0_20px_40px_-24px_rgb(31_122_85/0.45)]'
                     : 'border-hairline bg-white/45'
                 } ${i === 1 ? 'md:text-center' : ''} ${i === 2 ? 'md:text-right' : ''}`}
                 {...reveal(3 + i)}

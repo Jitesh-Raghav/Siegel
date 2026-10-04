@@ -1,16 +1,18 @@
 import { AccentTitle } from '@/components/ui/AccentTitle'
+import { Eyebrow } from '@/components/ui/SectionHeader'
 import { reveal } from '@/components/ui/reveal'
+import { CONTACT_EMAIL } from '@/lib/contact'
 import type { Messages } from '@/messages/en'
 
 /** Native <details> accordion: works without JS. faq_open is tracked by a delegated listener in Analytics. */
 export function Faq({ t }: { t: Messages['faq'] }) {
   return (
-    <section id="faq" data-section="faq" className="section border-t border-hairline defer-render" aria-labelledby="faq-title">
+    <section id="faq" data-section="faq" className="section defer-render" aria-labelledby="faq-title">
       <div className="container-ledger grid gap-12 md:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] md:gap-16">
         <header className="md:sticky md:top-28 md:self-start">
-          <p className="eyebrow" {...reveal(0)}>
+          <Eyebrow num={8} {...reveal(0)}>
             {t.eyebrow}
-          </p>
+          </Eyebrow>
           <AccentTitle id="faq-title" text={t.h2} accent={t.h2Accent} className="h2 mt-6" index={1} />
           <p className="lede mt-6 max-w-[34ch]" {...reveal(3)}>
             {t.sub}
@@ -45,7 +47,21 @@ export function Faq({ t }: { t: Messages['faq'] }) {
                 </span>
               </summary>
               <div className="faq-answer">
-                <p className="lede max-w-[60ch] pb-7 pl-12">{item.a}</p>
+                <p className="lede max-w-[60ch] pb-7 pl-12">
+                  {item.a}
+                  {item.id === 'who' && (
+                    <>
+                      {' '}
+                      <a href="#founder" className="text-ink underline decoration-gold underline-offset-4" aria-label="Siegel founder">
+                        ↑
+                      </a>
+                      {' · '}
+                      <a href={`mailto:${CONTACT_EMAIL}`} className="text-ink underline decoration-gold underline-offset-4">
+                        {CONTACT_EMAIL}
+                      </a>
+                    </>
+                  )}
+                </p>
               </div>
             </details>
           ))}

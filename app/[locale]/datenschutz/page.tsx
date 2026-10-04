@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { LegalPage } from '@/components/legal/LegalPage'
+import { CONTACT_EMAIL } from '@/lib/contact'
 import { isLocale } from '@/lib/i18n'
 import { notFound } from 'next/navigation'
 
@@ -13,7 +14,7 @@ export default async function Datenschutz({ params }: PageProps<'/[locale]/daten
       locale={locale}
       title="Datenschutzerklärung"
       sections={[
-        { heading: '1. Verantwortlicher', body: ['TODO: Name, Anschrift und Kontaktdaten des Verantwortlichen.'] },
+        { heading: '1. Verantwortlicher', body: ['TODO: Name und Anschrift des Verantwortlichen.', `Kontakt: ${CONTACT_EMAIL}`] },
         {
           heading: '2. Warteliste',
           body: [

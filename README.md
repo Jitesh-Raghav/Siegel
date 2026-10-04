@@ -17,13 +17,16 @@ npm run dev
 | `npm run lint` / `typecheck` | ESLint (flat config) / `tsc --noEmit` |
 | `npm run screenshots` | Full-page screenshots at 375/1280/1536 px (`BASE_URL`, `PATHS=/,/de`, `SHOT_DIR`, `SLICE=1400`) |
 | `npm run export:hero` | Renders the fallback posters `public/hero-engraved.webp` and `public/hero-engraved-dark.webp` (needs `npm run dev` running) |
+| `node scripts/render-audio.mjs && node scripts/render-video.mjs` | Synthesises the soundtrack, then renders the explainer films (EN/DE, 1080p, with sound) and posters |
+| `node scripts/make-icons.mjs` | Regenerates favicon, `icon.svg` and the Apple icon from `components/nav/LogoMark.tsx` |
 | `node scripts/subset-fonts.mjs` | Rebuilds the subset webfonts in `app/fonts/` (rerun if copy gains new characters) |
 
 ## Environment variables (Vercel)
 
 | Variable | Required | Notes |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | yes | Public origin, e.g. `https://siegel.example`. Used for canonical, hreflang, sitemap, OG. |
+| `NEXT_PUBLIC_SITE_URL` | yes | Public origin, e.g. `https://siegel.de`. Used for canonical, hreflang, sitemap, OG. Falls back to Vercel's `VERCEL_PROJECT_PRODUCTION_URL`, never localhost. |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | yes | Shown in the footer, FAQ, trust section and legal pages. |
 | `SUPABASE_URL` | yes, for the waitlist | EU-region project. |
 | `SUPABASE_SERVICE_ROLE_KEY` | yes, for the waitlist | Server-only. Never expose to the client. |
 | `NEXT_PUBLIC_POSTHOG_KEY` | optional | Empty = analytics off. |
@@ -46,6 +49,19 @@ the files at build time). Without a photo, a procedural placeholder scene is use
 
 The posters are only downloaded by visitors without JS or without WebGL; everyone else gets the live
 WebGL engraving, which renders in a Web Worker (OffscreenCanvas) so it never blocks the main thread.
+
+## Founder section
+
+- Copy (name, role, bio, highlights, LinkedIn/GitHub/X/portfolio): `trust` in `messages/en.ts` and `messages/de.ts`.
+- Photo: `public/founder.jpg` (shown as a fir/mint duotone, full colour on hover).
+- Samples: add `public/samples/sample-zugferd.pdf` **and** `public/samples/validation-report.html`. The
+  "Download a sample" card only appears when both exist at build time.
+
+## Language routing
+
+English lives at `/`, German at `/de`. Browsers whose `Accept-Language` starts with `de` are sent to
+`/de` on their first visit (no cookies). The language switcher's English link carries `?lang=en`, which
+stops the redirect; the parameter is removed from the address bar afterwards.
 
 ## Notes
 

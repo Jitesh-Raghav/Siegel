@@ -21,6 +21,12 @@ export function Analytics() {
   useEffect(() => {
     captureAttribution()
     initAnalytics()
+    // ?lang=en only exists to stop the Accept-Language redirect; drop it from the address bar.
+    const url = new URL(window.location.href)
+    if (url.searchParams.has('lang')) {
+      url.searchParams.delete('lang')
+      window.history.replaceState(window.history.state, '', url.pathname + url.search + url.hash)
+    }
   }, [])
 
   // FAQ items are server-rendered <details>; 'toggle' doesn't bubble, so listen in the capture phase.

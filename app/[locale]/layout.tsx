@@ -15,7 +15,7 @@ export function generateStaticParams() {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#F3F0E6',
+  themeColor: '#FAFBFA',
   colorScheme: 'light',
 }
 
@@ -59,11 +59,11 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
       <head>
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>
-      <body>
+      <body id="top">
         <WaitlistProvider locale={locale} t={t.form}>
           <Nav locale={locale} t={t.nav} />
           {children}
-          <Footer locale={locale} t={t.footer} />
+          <Footer locale={locale} t={t} />
         </WaitlistProvider>
         <Analytics />
       </body>

@@ -4,7 +4,7 @@ import { getMessages, isLocale } from '@/lib/i18n'
 
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
-export const alt = 'Siegel — validated German e-invoices for Stripe'
+export const alt = 'Siegel · validated German e-invoices for Stripe'
 
 async function loadSerif(): Promise<ArrayBuffer | null> {
   try {
@@ -32,7 +32,7 @@ export default async function OgImage({ params }: { params: Promise<{ locale: st
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-start',
-          background: '#F3F0E6',
+          background: '#FAFBFA',
           padding: '64px 72px 176px',
           position: 'relative',
         }}
@@ -40,14 +40,14 @@ export default async function OgImage({ params }: { params: Promise<{ locale: st
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <svg width="52" height="52" viewBox="0 0 32 32">
             <path d={MARK.sheet} fill="#0F2A22" />
-            <path d={MARK.fold} fill="#C79B57" />
+            <path d={MARK.fold} fill="#3FA77A" />
             {MARK.dots.map(([x, y]) => (
               <circle key={`${x}-${y}`} cx={x} cy={y} r="0.7" fill="#0F2A22" />
             ))}
             {[...MARK.lines, MARK.lastLine].map((d) => (
-              <path key={d} d={d} stroke="#F3F0E6" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+              <path key={d} d={d} stroke="#FAFBFA" strokeWidth="1.6" strokeLinecap="round" fill="none" />
             ))}
-            <rect x={MARK.cell.x} y={MARK.cell.y} width={MARK.cell.w} height={MARK.cell.h} rx={MARK.cell.r} fill="#C79B57" />
+            <rect x={MARK.cell.x} y={MARK.cell.y} width={MARK.cell.w} height={MARK.cell.h} rx={MARK.cell.r} fill="#3FA77A" />
           </svg>
           <span style={{ fontSize: 40, fontFamily: serif ? 'Instrument Serif' : 'serif', letterSpacing: '-0.02em' }}>Siegel</span>
         </div>
@@ -77,7 +77,7 @@ export default async function OgImage({ params }: { params: Promise<{ locale: st
             </div>
           ))}
         </div>
-        <div style={{ display: 'flex', marginTop: 28, fontSize: 20, color: '#74552A', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+        <div style={{ display: 'flex', marginTop: 28, fontSize: 20, color: '#1F7A55', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
           ZUGFeRD · XRechnung · EN 16931
         </div>
       </div>

@@ -1,35 +1,24 @@
 import type { Messages } from '@/messages/en'
 
-function Item({ text }: { text: string }) {
-  return (
-    <li className="flex shrink-0 items-center gap-6 font-serif text-[22px] tracking-[-0.01em] whitespace-nowrap text-ink/80 italic">
-      <span className="size-[5px] rotate-45 bg-gold" aria-hidden="true" />
-      {text}
-    </li>
-  )
-}
-
-/** Quiet strip of the standards Siegel is built around. Static on wide screens, slow marquee below. */
+/**
+ * The standards Siegel is built on, as a crisp "logo wall": six cells with hairline dividers and
+ * crosshair corners. Six columns on wide screens, three on tablets, two on phones.
+ */
 export function Standards({ t }: { t: Messages['standards'] }) {
   return (
-    <section aria-label={t.label} className="mt-20 border-y border-hairline bg-white/35 sm:mt-28">
-      <div className="container-ledger flex flex-col gap-4 py-7 xl:flex-row xl:items-center xl:gap-10">
-        <p className="eyebrow shrink-0">{t.label}</p>
-        <ul className="hidden flex-1 items-center justify-between gap-6 xl:flex">
-          {t.items.map((x) => (
-            <Item key={x} text={x} />
-          ))}
-        </ul>
-        <div className="marquee overflow-hidden xl:hidden" aria-hidden="true">
-          <ul className="marquee-track flex w-max gap-6 pr-6">
-            {[...t.items, ...t.items].map((x, i) => (
-              <Item key={i} text={x} />
-            ))}
-          </ul>
-        </div>
-        <ul className="sr-only-ledger xl:hidden">
-          {t.items.map((x) => (
-            <li key={x}>{x}</li>
+    <section aria-labelledby="standards-label" className="mt-20 sm:mt-28">
+      <div className="container-ledger">
+        <p id="standards-label" className="eyebrow mx-auto flex w-max">
+          {t.label}
+        </p>
+        <ul className="std-wall mt-8 grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6">
+          {t.items.map((x, i) => (
+            <li key={x} className="std-cell group">
+              <span className="text-[17px] leading-none font-medium tracking-[-0.015em] text-ink/75 transition-colors duration-300 group-hover:text-ink sm:text-[18px]">
+                {x}
+              </span>
+              <span className="mt-2.5 font-mono text-[10px] tracking-[0.12em] text-muted uppercase">{t.notes[i]}</span>
+            </li>
           ))}
         </ul>
       </div>

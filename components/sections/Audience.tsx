@@ -6,9 +6,9 @@ const NUMERALS = ['I', 'II', 'III']
 
 export function Audience({ t }: { t: Messages['audience'] }) {
   return (
-    <section data-section="audience" className="section border-t border-hairline bg-paper-2/60 defer-render" aria-labelledby="audience-title">
+    <section data-section="audience" className="section bg-paper-2/60 defer-render" aria-labelledby="audience-title">
       <div className="container-ledger">
-        <SectionHeader id="audience-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} />
+        <SectionHeader num={5} id="audience-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} />
         <ul className="mt-16 grid gap-5 md:grid-cols-3">
           {t.items.map((a, i) => (
             <li

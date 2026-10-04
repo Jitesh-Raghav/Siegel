@@ -163,8 +163,8 @@ function CornerMarks() {
     <>
       {corners.map((c) => (
         <svg key={c} className={`pointer-events-none absolute size-5 ${c}`} viewBox="0 0 20 20" aria-hidden="true">
-          <path d="M1 12V1h11" fill="none" stroke="#B4894A" strokeWidth="1.2" />
-          <path d="M4.5 8V4.5H8" fill="none" stroke="#B4894A" strokeWidth="0.8" strokeOpacity="0.7" />
+          <path d="M1 12V1h11" fill="none" stroke="#3FA77A" strokeWidth="1.2" />
+          <path d="M4.5 8V4.5H8" fill="none" stroke="#3FA77A" strokeWidth="0.8" strokeOpacity="0.7" />
         </svg>
       ))}
     </>

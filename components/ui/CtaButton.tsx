@@ -37,10 +37,10 @@ export function CtaButton({
   className?: string
 }) {
   const { open } = useWaitlist()
-  return (
+  const link = (
     <a
       href="#join"
-      className={`btn btn-${variant} ${size ? `btn-${size}` : ''} ${attract ? 'btn-attract' : ''} ${pulse ? 'btn-pulse' : ''} ${className}`}
+      className={`btn btn-${variant} ${size ? `btn-${size}` : ''} ${attract ? 'btn-attract' : ''} ${className}`}
       onClick={(e) => {
         e.preventDefault()
         track('cta_click', { location })
@@ -51,4 +51,6 @@ export function CtaButton({
       {arrow && <Arrow />}
     </a>
   )
+  // The pulse ring lives on a wrapper: the button itself clips its sheen with overflow: hidden.
+  return pulse ? <span className="btn-pulse w-full sm:w-auto [&>a]:w-full">{link}</span> : link
 }

@@ -1,4 +1,4 @@
-import { SealMark } from '@/components/nav/SealMark'
+import { LogoMark } from '@/components/nav/LogoMark'
 import { CtaButton } from '@/components/ui/CtaButton'
 import { SectionHeader } from '@/components/ui/SectionHeader'
 import { reveal } from '@/components/ui/reveal'
@@ -6,42 +6,63 @@ import { formatEuro } from '@/lib/format'
 import type { Locale } from '@/lib/i18n'
 import type { Messages } from '@/messages/en'
 
+function Check({ dark = false }: { dark?: boolean }) {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" className="mt-[3px] shrink-0">
+      <circle cx="7" cy="7" r="6.3" fill="none" stroke={dark ? '#D8BE8E' : '#B4894A'} strokeOpacity="0.6" />
+      <path d="M4.2 7.2l1.9 1.9 3.7-3.9" fill="none" stroke={dark ? '#F1EDE2' : '#17382D'} strokeWidth="1.3" strokeLinecap="round" />
+    </svg>
+  )
+}
+
 export function Pricing({ locale, t }: { locale: Locale; t: Messages['pricing'] }) {
   return (
-    <section id="pricing" data-section="pricing" className="section border-t border-hairline" aria-labelledby="pricing-title">
+    <section id="pricing" data-section="pricing" className="section defer-render" aria-labelledby="pricing-title">
       <div className="container-ledger">
-        <SectionHeader id="pricing-title" eyebrow={t.eyebrow} title={t.h2} />
+        <SectionHeader id="pricing-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} align="center" />
 
-        <ul className="mt-14 grid border-y border-hairline md:grid-cols-3">
+        <ul className="mt-16 grid gap-5 lg:grid-cols-3 lg:items-stretch">
           {t.plans.map((p, i) => {
             const featured = p.id === 'growth'
+            const features = [p.limit, ...t.includes, ...p.extras]
             return (
               <li
                 key={p.id}
-                className={`relative flex flex-col py-10 md:px-8 ${i > 0 ? 'border-t border-hairline md:border-t-0 md:border-l' : 'md:pl-0'} ${
-                  i === 2 ? 'md:pr-0' : ''
+                className={`relative flex flex-col rounded-[24px] p-8 sm:p-9 ${
+                  featured
+                    ? 'on-dark spotlight shadow-[0_40px_80px_-40px_rgb(11_31_25/0.8),0_0_0_1px_rgb(180_137_74/0.35)] lg:-my-4 lg:py-12'
+                    : 'surface spotlight'
                 }`}
                 {...reveal(2 + i)}
               >
-                {featured && <span className="absolute -top-px right-0 left-0 h-[2px] bg-engrave-ink md:left-8 md:right-8" aria-hidden="true" />}
-                <h3 className="label text-ink">{p.name}</h3>
-                <p className="mt-5 flex items-baseline gap-1">
-                  <span className="font-serif text-[52px] leading-none tracking-[-0.03em]">
-                    {formatEuro(locale, p.price, 0)}
-                  </span>
-                  <span className="text-[15px] text-muted">{t.perMonth}</span>
+                <div className="flex items-center justify-between">
+                  <h3 className={`mono-label ${featured ? 'text-gold-soft' : 'text-muted'}`}>{p.name}</h3>
+                  {featured && (
+                    <span className="rounded-full bg-[linear-gradient(115deg,#8c6a3a,#e2c893_40%,#a47e46_60%,#f0dfb2)] px-3 py-1 text-[11px] font-medium text-ink">
+                      {t.popular}
+                    </span>
+                  )}
+                </div>
+                <p className="mt-8 flex items-baseline gap-1.5">
+                  <span className="font-serif text-[72px] leading-[0.9] tracking-[-0.03em]">{formatEuro(locale, p.price, 0)}</span>
+                  <span className={`text-[15px] ${featured ? 'text-on-dark-muted' : 'text-muted'}`}>{t.perMonth}</span>
                 </p>
-                <p className="mt-4 font-mono text-[13px]">{p.limit}</p>
-                <ul className="mt-3 grid gap-1.5 text-[15px] text-muted">
-                  {p.extras.map((x) => (
-                    <li key={x} className="flex items-center gap-2">
-                      <span className="h-px w-3 bg-muted" aria-hidden="true" />
+                <div
+                  className={`mt-8 h-px ${featured ? 'bg-[linear-gradient(90deg,transparent,rgb(216_190_142/0.5),transparent)]' : 'bg-hairline'}`}
+                />
+                <ul className="mt-8 grid gap-3 text-[15px]">
+                  {features.map((x, idx) => (
+                    <li
+                      key={x}
+                      className={`flex gap-3 ${idx === 0 ? 'font-medium' : featured ? 'text-on-dark-muted' : 'text-muted'}`}
+                    >
+                      <Check dark={featured} />
                       {x}
                     </li>
                   ))}
                 </ul>
-                <div className="mt-auto pt-8">
-                  <CtaButton location={`pricing_${p.id}`} variant={featured ? 'primary' : 'secondary'} className="w-full">
+                <div className="mt-auto pt-10">
+                  <CtaButton location={`pricing_${p.id}`} variant={featured ? 'gold' : 'primary'} attract={featured} className="w-full">
                     {t.cta}
                   </CtaButton>
                 </div>
@@ -50,33 +71,16 @@ export function Pricing({ locale, t }: { locale: Locale; t: Messages['pricing'] 
           })}
         </ul>
 
-        <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-center md:justify-between" {...reveal(5)}>
-          <div>
-            <p className="label text-muted">{t.includesTitle}</p>
-            <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-[15px]">
-              {t.includes.map((x) => (
-                <li key={x} className="flex items-center gap-2">
-                  <Check />
-                  {x}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <p className="inline-flex items-center gap-3 self-start rounded-[2px] border border-engrave-ink/25 bg-engrave-paper px-4 py-3 text-[15px] md:self-auto">
-            <SealMark size={22} className="shrink-0 text-engrave-ink" />
+        <div className="mt-12 flex flex-col items-center gap-4 text-center" {...reveal(5)}>
+          <p className="relative inline-flex items-center gap-3 rounded-full bg-white/70 py-2.5 pr-5 pl-2.5 text-left text-[15px] shadow-[0_0_0_1px_rgb(180_137_74/0.45),0_14px_30px_-18px_rgb(116_85_42/0.6)]">
+            <span className="grid size-8 shrink-0 place-items-center rounded-full bg-ink">
+              <LogoMark size={20} tone="dark" />
+            </span>
             {t.founding}
           </p>
+          <p className="text-[13px] text-muted">{t.vatNote}</p>
         </div>
-        <p className="mt-6 text-[13px] text-muted">{t.vatNote}</p>
       </div>
     </section>
-  )
-}
-
-function Check() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" className="text-engrave-ink">
-      <path d="M1.5 6.5l3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.4" />
-    </svg>
   )
 }

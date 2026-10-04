@@ -6,7 +6,7 @@ export const en = {
     title: 'Siegel — Validated German e-invoices for Stripe',
     description:
       'Siegel turns every Stripe invoice into a validated ZUGFeRD or XRechnung file — automatically, before it reaches your customer. Be ready for the German e-invoicing mandate.',
-    ogTitle: 'Stripe sends PDFs. Germany now wants e-invoices.',
+    ogTitle: 'Every Stripe invoice, sealed as an e-invoice.',
   },
   nav: {
     home: 'Siegel home',
@@ -21,13 +21,16 @@ export const en = {
     closeMenu: 'Close menu',
   },
   hero: {
-    badge: 'E-Rechnung 2027 · Be ready before the deadline',
-    badgeShort: 'E-Rechnung 2027 · Get ready',
-    h1a: 'Stripe sends PDFs.',
-    h1b: 'Germany now wants e-invoices.',
-    sub: 'Siegel turns every Stripe invoice into a validated ZUGFeRD or XRechnung file — automatically, before it reaches your customer.',
+    badge: 'E-Rechnung · Be ready before the deadline',
+    badgeShort: 'E-Rechnung · Get ready',
+    h1a: 'Every Stripe invoice,',
+    h1b: 'sealed as an e-invoice.',
+    h1bAccent: 'sealed',
+    sub: 'Germany’s e-invoicing obligation starts rolling out in 2027. Siegel turns each Stripe invoice into a validated ZUGFeRD or XRechnung file — automatically, without changing how you bill.',
     ctaPrimary: 'Join early access',
     ctaSecondary: 'See how it works',
+    trust: ['Validated against official rules', 'Data stored in the EU', 'Keep invoicing in Stripe'],
+    callouts: ['XRechnung · 0 errors', 'Delivered · 09:41', 'Archived · SHA-256'],
     bannerAlt:
       'Line engraving in ink blue and cream of historic brick warehouses along a canal, in the style of a banknote.',
   },
@@ -55,9 +58,38 @@ export const en = {
       archived: 'Archived',
     },
   },
+  xray: {
+    label: 'An invoice as people see it, with the machine-readable EN 16931 data underneath, revealed through a moving lens.',
+    hint: 'Move your cursor over the invoice',
+    doc: 'Rechnung',
+    idle: 'EN 16931 · machine layer',
+    fields: [
+      { bt: 'BT-1', name: 'Invoice number' },
+      { bt: 'BT-31', name: 'Seller VAT ID' },
+      { bt: 'BT-73/74', name: 'Service period' },
+      { bt: 'BT-131', name: 'Line net amount' },
+      { bt: 'BT-110', name: 'VAT total' },
+      { bt: 'BT-112', name: 'Total incl. VAT' },
+    ],
+  },
+  film: {
+    eyebrow: 'The 36-second version',
+    h2: 'What Siegel does, in 36 seconds.',
+    h2Accent: 'in 36 seconds.',
+    play: 'Play the film',
+    label: 'Explainer video: why German invoices must become e-invoices, and how Siegel handles it for Stripe',
+  },
+  standards: {
+    label: 'Built on the official standards',
+    items: ['EN 16931', 'ZUGFeRD', 'Factur-X', 'XRechnung', 'PDF/A-3', 'EU data residency'],
+  },
   deadline: {
     eyebrow: 'The timeline',
     h2: 'The PDF era ends for German B2B.',
+    h2Accent: 'ends',
+    body: 'Germany is moving domestic B2B invoicing to structured e-invoices. Once the obligation applies to you, a PDF from Stripe no longer counts.',
+    daysOne: 'day until 1 Jan 2027',
+    daysMany: 'days until 1 Jan 2027',
     events: [
       { date: '1 Jan 2025', text: 'Every business must be able to receive e-invoices.' },
       { date: '1 Jan 2027', text: 'Businesses above €800k turnover must send them.' },
@@ -74,6 +106,7 @@ export const en = {
   how: {
     eyebrow: 'How it works',
     h2: 'Three steps. Then you forget about it.',
+    h2Accent: 'forget about it.',
     steps: [
       {
         n: '01',
@@ -102,6 +135,18 @@ export const en = {
   features: {
     eyebrow: 'Features',
     h2: 'Everything an e-invoice needs. Nothing you have to learn.',
+    h2Accent: 'Nothing you have to learn.',
+    visuals: {
+      checks: ['Schema (XSD)', 'EN 16931 business rules', 'XRechnung CIUS', 'PDF/A-3 conformance'],
+      queued: 'Queued',
+      sent: 'Sent',
+      delivered: 'Delivered',
+      locked: 'Write-protected · EU',
+      backfill: 'Last 90 days',
+      creditNote: 'Credit note',
+      reverseCharge: 'Reverse charge',
+      intraEu: 'Intra-EU',
+    },
     items: [
       {
         title: 'ZUGFeRD & XRechnung',
@@ -132,6 +177,7 @@ export const en = {
   audience: {
     eyebrow: 'Who it’s for',
     h2: 'Built for companies that already bill through Stripe.',
+    h2Accent: 'through Stripe.',
     items: [
       {
         title: 'SaaS on Stripe Billing',
@@ -150,6 +196,8 @@ export const en = {
   pricing: {
     eyebrow: 'Early access pricing',
     h2: 'Priced by invoice volume. Cancel anytime.',
+    h2Accent: 'Cancel anytime.',
+    popular: 'Most popular',
     perMonth: '/mo',
     plans: [
       { id: 'starter', name: 'Starter', price: 29, limit: 'Up to 50 invoices/mo', extras: [] as string[] },
@@ -171,6 +219,7 @@ export const en = {
   faq: {
     eyebrow: 'FAQ',
     h2: 'Questions, answered plainly.',
+    h2Accent: 'plainly.',
     sub: 'Something missing? Join early access and ask me directly.',
     items: [
       {
@@ -203,6 +252,7 @@ export const en = {
   },
   finalCta: {
     h2: 'Be ready before January.',
+    h2Accent: 'January.',
     sub: 'Join early access. I’ll onboard the first customers personally.',
   },
   footer: {

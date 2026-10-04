@@ -9,7 +9,7 @@ export const de: Messages = {
     title: 'Siegel — Validierte E-⁠Rechnungen für Stripe',
     description:
       'Siegel macht aus jeder Stripe-Rechnung eine validierte ZUGFeRD- oder XRechnung-Datei — automatisch, bevor sie Ihren Kunden erreicht. Bereit für die E-⁠Rechnungspflicht.',
-    ogTitle: 'Stripe verschickt PDFs. Deutschland verlangt jetzt E-⁠Rechnungen.',
+    ogTitle: 'Jede Stripe-Rechnung, als E-⁠Rechnung besiegelt.',
   },
   nav: {
     home: 'Siegel Startseite',
@@ -24,13 +24,16 @@ export const de: Messages = {
     closeMenu: 'Menü schließen',
   },
   hero: {
-    badge: 'E-⁠Rechnung 2027 · Vor der Frist bereit sein',
-    badgeShort: 'E-⁠Rechnung 2027 · Jetzt vorbereiten',
-    h1a: 'Stripe verschickt PDFs.',
-    h1b: 'Deutschland verlangt jetzt E-⁠Rechnungen.',
-    sub: 'Siegel macht aus jeder Stripe-Rechnung eine validierte ZUGFeRD- oder XRechnung-Datei — automatisch, bevor sie Ihren Kunden erreicht.',
+    badge: 'E-⁠Rechnung · Vor der Frist bereit sein',
+    badgeShort: 'E-⁠Rechnung · Jetzt vorbereiten',
+    h1a: 'Jede Stripe-Rechnung,',
+    h1b: 'als E-⁠Rechnung besiegelt.',
+    h1bAccent: 'besiegelt.',
+    sub: 'Die E-⁠Rechnungspflicht in Deutschland startet 2027. Siegel macht aus jeder Stripe-Rechnung eine validierte ZUGFeRD- oder XRechnung-Datei — automatisch, ohne dass Sie Ihre Abrechnung ändern müssen.',
     ctaPrimary: 'Frühzugang sichern',
     ctaSecondary: 'So funktioniert’s',
+    trust: ['Geprüft nach offiziellen Regeln', 'Datenhaltung in der EU', 'Weiter in Stripe abrechnen'],
+    callouts: ['XRechnung · 0 Fehler', 'Zugestellt · 09:41', 'Archiviert · SHA-256'],
     bannerAlt:
       'Linienstich in Tintenblau und Creme: historische Backstein-Speicher an einem Kanal, im Stil einer Banknote.',
   },
@@ -58,9 +61,38 @@ export const de: Messages = {
       archived: 'Archiviert',
     },
   },
+  xray: {
+    label: 'Eine Rechnung, wie Menschen sie sehen, darunter die maschinenlesbaren EN-16931-Daten, sichtbar durch eine bewegliche Lupe.',
+    hint: 'Fahren Sie mit der Maus über die Rechnung',
+    doc: 'Rechnung',
+    idle: 'EN 16931 · Maschinenebene',
+    fields: [
+      { bt: 'BT-1', name: 'Rechnungsnummer' },
+      { bt: 'BT-31', name: 'USt-IdNr. Verkäufer' },
+      { bt: 'BT-73/74', name: 'Leistungszeitraum' },
+      { bt: 'BT-131', name: 'Positions-Nettobetrag' },
+      { bt: 'BT-110', name: 'Umsatzsteuer gesamt' },
+      { bt: 'BT-112', name: 'Gesamtbetrag brutto' },
+    ],
+  },
+  film: {
+    eyebrow: 'In 36 Sekunden erklärt',
+    h2: 'Was Siegel macht, in 36 Sekunden.',
+    h2Accent: 'in 36 Sekunden.',
+    play: 'Film abspielen',
+    label: 'Erklärvideo: warum Rechnungen in Deutschland zu E-Rechnungen werden und wie Siegel das für Stripe übernimmt',
+  },
+  standards: {
+    label: 'Gebaut auf den offiziellen Standards',
+    items: ['EN 16931', 'ZUGFeRD', 'Factur-X', 'XRechnung', 'PDF/A-3', 'Datenhaltung in der EU'],
+  },
   deadline: {
     eyebrow: 'Der Zeitplan',
     h2: 'Im B2B-Geschäft endet die Ära der PDF-Rechnung.',
+    h2Accent: 'endet',
+    body: 'Deutschland stellt inländische B2B-Rechnungen auf strukturierte E-⁠Rechnungen um. Sobald die Pflicht für Sie gilt, reicht ein PDF aus Stripe nicht mehr aus.',
+    daysOne: 'Tag bis zum 1. Januar 2027',
+    daysMany: 'Tage bis zum 1. Januar 2027',
     events: [
       { date: '1. Jan. 2025', text: 'Alle Unternehmen müssen E-⁠Rechnungen empfangen können.' },
       { date: '1. Jan. 2027', text: 'Unternehmen mit mehr als 800.000 € Vorjahresumsatz müssen sie versenden.' },
@@ -77,6 +109,7 @@ export const de: Messages = {
   how: {
     eyebrow: 'So funktioniert’s',
     h2: 'Drei Schritte. Danach müssen Sie nicht mehr daran denken.',
+    h2Accent: 'nicht mehr daran denken.',
     steps: [
       {
         n: '01',
@@ -105,6 +138,18 @@ export const de: Messages = {
   features: {
     eyebrow: 'Funktionen',
     h2: 'Alles, was eine E-⁠Rechnung braucht. Nichts, was Sie lernen müssen.',
+    h2Accent: 'Nichts, was Sie lernen müssen.',
+    visuals: {
+      checks: ['Schema (XSD)', 'EN-16931-Geschäftsregeln', 'XRechnung-CIUS', 'PDF/A-3-Konformität'],
+      queued: 'In Warteschlange',
+      sent: 'Gesendet',
+      delivered: 'Zugestellt',
+      locked: 'Schreibgeschützt · EU',
+      backfill: 'Letzte 90 Tage',
+      creditNote: 'Gutschrift',
+      reverseCharge: 'Reverse Charge',
+      intraEu: 'Innergemeinschaftlich',
+    },
     items: [
       {
         title: 'ZUGFeRD & XRechnung',
@@ -135,6 +180,7 @@ export const de: Messages = {
   audience: {
     eyebrow: 'Für wen',
     h2: 'Für Unternehmen, die bereits über Stripe abrechnen.',
+    h2Accent: 'über Stripe abrechnen.',
     items: [
       {
         title: 'SaaS mit Stripe Billing',
@@ -153,6 +199,8 @@ export const de: Messages = {
   pricing: {
     eyebrow: 'Preise im Frühzugang',
     h2: 'Abgerechnet nach Rechnungsvolumen. Monatlich kündbar.',
+    h2Accent: 'Monatlich kündbar.',
+    popular: 'Am beliebtesten',
     perMonth: '/Monat',
     plans: [
       { id: 'starter', name: 'Starter', price: 29, limit: 'Bis zu 50 Rechnungen/Monat', extras: [] },
@@ -174,6 +222,7 @@ export const de: Messages = {
   faq: {
     eyebrow: 'FAQ',
     h2: 'Fragen, klar beantwortet.',
+    h2Accent: 'klar beantwortet.',
     sub: 'Etwas fehlt? Sichern Sie sich den Frühzugang und fragen Sie mich direkt.',
     items: [
       {
@@ -206,6 +255,7 @@ export const de: Messages = {
   },
   finalCta: {
     h2: 'Bereit sein vor dem Januar.',
+    h2Accent: 'Januar.',
     sub: 'Sichern Sie sich den Frühzugang. Die ersten Kunden betreue ich persönlich.',
   },
   footer: {

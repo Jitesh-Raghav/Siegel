@@ -16,3 +16,5 @@ export function prefersReducedMotion(): boolean {
 }
 
 export const ENGRAVED_EVENT = 'siegel:engraved'
+/** Fired by the hero invoice card once its validation animation completes. */
+export const VALIDATED_EVENT = 'siegel:validated'

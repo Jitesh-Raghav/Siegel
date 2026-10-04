@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { daysUntilMandate } from '@/lib/deadline'
-import { fill } from '@/lib/format'
 
 /** Server renders the day count; the client recomputes it in Europe/Berlin time. */
 export function Countdown({
@@ -21,15 +20,22 @@ export function Countdown({
     return () => window.clearInterval(id)
   }, [])
 
-  const text =
-    days > 1 ? fill(t.many, { n: days }) : days === 1 ? fill(t.one, { n: 1 }) : days === 0 ? t.today : t.past
+  if (days <= 0) {
+    return <p className="font-serif text-[40px] leading-tight">{days === 0 ? t.today : t.past}</p>
+  }
 
   return (
-    <p className="inline-flex h-11 items-center gap-2.5 rounded-[2px] border border-hairline bg-white px-4 font-mono text-[13px] tracking-[0.02em] whitespace-nowrap">
-      <span className="size-1.5 rounded-full bg-engrave-ink" aria-hidden="true" />
-      <span className="tabular" suppressHydrationWarning>
-        {text}
-      </span>
-    </p>
+    <div>
+      <p
+        className="tabular font-serif text-[120px] leading-[0.82] tracking-[-0.04em] sm:text-[168px]"
+        suppressHydrationWarning
+      >
+        {days}
+      </p>
+      <div className="foil-rule mt-5 w-24" aria-hidden="true" />
+      <p className="mono-label mt-4 text-muted" suppressHydrationWarning>
+        {days === 1 ? t.one : t.many}
+      </p>
+    </div>
   )
 }

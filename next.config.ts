@@ -6,12 +6,14 @@ const posthogHost = process.env.POSTHOG_HOST ?? 'https://eu.i.posthog.com'
 const posthogAssets = process.env.POSTHOG_ASSETS_HOST ?? 'https://eu-assets.i.posthog.com'
 
 // Resolved once at build time: serverless functions can't see /public at runtime.
-const hasHeroPoster = existsSync(join(process.cwd(), 'public', 'hero-engraved.png'))
+const hasHeroPoster = existsSync(join(process.cwd(), 'public', 'hero-engraved.webp'))
+const hasHeroPosterDark = existsSync(join(process.cwd(), 'public', 'hero-engraved-dark.webp'))
 const hasHeroSource = existsSync(join(process.cwd(), 'public', 'hero-source.jpg'))
 
 const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_HERO_POSTER: hasHeroPoster ? '1' : '',
+    NEXT_PUBLIC_HERO_POSTER_DARK: hasHeroPosterDark ? '1' : '',
     NEXT_PUBLIC_HERO_SOURCE: hasHeroSource ? '1' : '',
   },
   // Required for PostHog's trailing-slash API endpoints behind the /ingest proxy.

@@ -9,9 +9,11 @@ function hexToVec3(hex: string): [number, number, number] {
   return [((v >> 16) & 255) / 255, ((v >> 8) & 255) / 255, (v & 255) / 255]
 }
 
-const INK = hexToVec3('#1F3A7A')
-const CREAM = hexToVec3('#F2E8CC')
-const PAPER = hexToVec3('#FAF6EA')
+// light: navy lines on ivory. dark: white-line engraving in gold and cream on midnight.
+const PALETTES = {
+  light: { ink: hexToVec3('#17382D'), cream: hexToVec3('#E6DCC0'), paper: hexToVec3('#F5F1E4'), invert: 0 },
+  dark: { ink: hexToVec3('#E0C896'), cream: hexToVec3('#25433A'), paper: hexToVec3('#0B1F19'), invert: 1 },
+} as const
 
 const INTRO_MS = 1800
 const FRAME_MS = 1000 / 30
@@ -33,6 +35,7 @@ export type RendererConfig = {
   noGrain?: boolean
   /** Absolute URL of the source photo, or null for the procedural placeholder. */
   sourceUrl?: string | null
+  palette?: keyof typeof PALETTES
 }
 
 export type RendererEvents = {
@@ -75,6 +78,27 @@ async function loadSource(url: string | null | undefined): Promise<TextureSource
     }
   }
   return drawPlaceholderSource()
+}
+
+/** 2nd / 98th percentile luminance of a small downsample: auto-levels so any photo uses the full range. */
+function computeLevels(source: TextureSource): [number, number] {
+  try {
+    const n = 64
+    const canvas: OffscreenCanvas | HTMLCanvasElement =
+      typeof OffscreenCanvas !== 'undefined' ? new OffscreenCanvas(n, n) : Object.assign(document.createElement('canvas'), { width: n, height: n })
+    const g = canvas.getContext('2d') as OffscreenCanvasRenderingContext2D | CanvasRenderingContext2D | null
+    if (!g) return [0, 1]
+    g.drawImage(source, 0, 0, n, n)
+    const px = g.getImageData(0, 0, n, n).data
+    const lum: number[] = []
+    for (let i = 0; i < px.length; i += 4) lum.push((0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2]) / 255)
+    lum.sort((a, b) => a - b)
+    const lo = lum[Math.floor(lum.length * 0.02)]
+    const hi = lum[Math.floor(lum.length * 0.98)]
+    return hi - lo > 0.1 ? [lo, hi] : [0, 1]
+  } catch {
+    return [0, 1]
+  }
 }
 
 function compile(gl: WebGL2RenderingContext, type: number, src: string) {
@@ -146,9 +170,12 @@ export function createRenderer(canvas: Canvas, config: RendererConfig, events: R
   const uFrame = u('uFrame')
   const uDrift = u('uDrift')
   const uOffset = u('uOffset')
-  gl.uniform3fv(u('uInk'), INK)
-  gl.uniform3fv(u('uCream'), CREAM)
-  gl.uniform3fv(u('uPaper'), PAPER)
+  const palette = PALETTES[config.palette ?? 'light']
+  gl.uniform3fv(u('uInk'), palette.ink)
+  gl.uniform3fv(u('uCream'), palette.cream)
+  gl.uniform3fv(u('uPaper'), palette.paper)
+  gl.uniform1f(u('uInvert'), palette.invert)
+  gl.uniform2f(u('uLevels'), 0, 1)
   gl.uniform1i(u('uImage'), 0)
   gl.uniform1f(u('uGrain'), config.noGrain ? 0 : 0.03)
   const crop = config.crop ?? [0, 0, 1, 1]
@@ -231,6 +258,8 @@ export function createRenderer(canvas: Canvas, config: RendererConfig, events: R
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
     gl.uniform2f(uImageSize, source.width, source.height)
+    const [lo, hi] = computeLevels(source)
+    gl.uniform2f(gl.getUniformLocation(program, 'uLevels'), lo, hi)
     if ('close' in source) source.close()
     textureReady = true
     if (still) {

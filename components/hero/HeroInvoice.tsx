@@ -70,7 +70,7 @@ export function HeroInvoice({ locale, t }: { locale: Locale; t: Messages['heroIn
 
           <div className="hi-card relative overflow-hidden rounded-[26px] bg-white">
             {/* engraved header band */}
-            <div className="hi-band flex items-center justify-between px-8 py-3 sm:px-9">
+            <div className="hi-band flex items-center justify-between px-5 py-3 sm:px-9">
               <span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.16em] text-gold-deep uppercase">
                 <LogoMark size={14} />
                 Siegel
@@ -78,14 +78,14 @@ export function HeroInvoice({ locale, t }: { locale: Locale; t: Messages['heroIn
               <span className="font-mono text-[10px] tracking-[0.14em] text-muted uppercase">EN 16931</span>
             </div>
 
-            <div className="px-8 pt-6 pb-8 sm:px-9 sm:pb-9">
+            <div className="px-5 pt-6 pb-8 sm:px-9 sm:pb-9">
               {/* header */}
-              <div className="flex items-start justify-between">
+              <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
                 <div>
-                  <p className="font-serif text-[26px] leading-none tracking-[-0.01em]">Muster GmbH</p>
+                  <p className="font-serif text-[clamp(22px,6.4vw,26px)] leading-none tracking-[-0.01em]">Muster GmbH</p>
                   <p className="mt-2 text-[12px] text-muted">Musterstraße 1 · Berlin</p>
                 </div>
-                <div className="text-right">
+                <div className="text-left min-[340px]:text-right">
                   <p className="font-mono text-[10.5px] tracking-[0.14em] text-muted uppercase">{t.doc}</p>
                   <p className="mt-1.5 font-mono text-[12.5px] text-ink">INV-2026-0142</p>
                 </div>
@@ -94,14 +94,14 @@ export function HeroInvoice({ locale, t }: { locale: Locale; t: Messages['heroIn
               <div className="mt-6 h-px bg-hairline" />
 
               {/* line items */}
-              <ul className="mt-6 grid gap-5">
+              <ul className="mt-6 grid grid-cols-1 gap-5">
                 {LINES.map((l, i) => (
-                  <li key={i} className="flex items-center gap-4">
+                  <li key={i} className="flex items-center gap-3 sm:gap-4">
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-[13.5px] text-ink">{t.items[i]}</p>
+                      <p className="truncate text-[13px] text-ink sm:text-[13.5px]">{t.items[i]}</p>
                       <span className="mt-2 block h-1.5 rounded-full bg-paper-2" style={{ width: l.bar }} />
                     </div>
-                    <span className="tabular text-[13.5px] text-muted">{eur(l.amount)}</span>
+                    <span className="tabular shrink-0 text-[13px] text-muted sm:text-[13.5px]">{eur(l.amount)}</span>
                     <span className="relative grid size-5 shrink-0 place-items-center">
                       <span className="hi-ring absolute inset-0 rounded-full border border-[#3FA77A]" style={d(i)} />
                       <span className="hi-check grid size-5 place-items-center rounded-full bg-[#3FA77A] text-white" style={d(i)}>
@@ -117,9 +117,9 @@ export function HeroInvoice({ locale, t }: { locale: Locale; t: Messages['heroIn
               <div className="mt-7 h-px bg-hairline" />
 
               {/* total */}
-              <div className="mt-6 flex items-end justify-between">
+              <div className="mt-6 flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
                 <p className="text-[13px] text-muted">{t.total}</p>
-                <p className="tabular font-serif text-[40px] leading-none tracking-[-0.02em]">{eur(TOTAL)}</p>
+                <p className="tabular font-serif text-[clamp(32px,9.5vw,40px)] leading-none tracking-[-0.02em]">{eur(TOTAL)}</p>
               </div>
             </div>
 
@@ -129,7 +129,7 @@ export function HeroInvoice({ locale, t }: { locale: Locale; t: Messages['heroIn
           </div>
 
           {/* embedded XML attachment, slides out once validated */}
-          <div className="hi-attach absolute top-[70%] -right-3 inline-flex items-center gap-2 rounded-xl border border-hairline bg-white py-2 pr-3 pl-2.5 font-mono text-[11px] text-ink sm:-right-12">
+          <div className="hi-attach absolute top-[70%] right-3 inline-flex items-center gap-2 rounded-xl border border-hairline bg-white py-2 pr-3 pl-2.5 font-mono text-[11px] text-ink sm:-right-12">
             <svg width="14" height="14" viewBox="0 0 24 24" className="text-gold-deep">
               <path
                 d="M21 11.5l-8.6 8.6a5.5 5.5 0 0 1-7.8-7.8l8.6-8.6a3.7 3.7 0 0 1 5.2 5.2l-8.6 8.6a1.8 1.8 0 0 1-2.6-2.6l7.9-7.9"

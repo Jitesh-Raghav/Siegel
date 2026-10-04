@@ -22,7 +22,7 @@ export function Hero({ locale, t }: { locale: Locale; t: Messages }) {
       </div>
       <HeroLines />
 
-      <div className="container-ledger grid items-center gap-10 xl:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] xl:gap-14">
+      <div className="container-ledger grid grid-cols-1 items-center gap-10 xl:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] xl:gap-14">
         <div className="flex flex-col items-start text-left xl:pr-4">
         <a
           href="#deadline"

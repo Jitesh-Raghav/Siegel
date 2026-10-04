@@ -20,7 +20,7 @@ export function HowItWorks({ t }: { t: Messages['how'] }) {
           {/* the rail that joins the three steps */}
           <div className="how-rail absolute top-[22px] right-[16.66%] left-[16.66%] hidden md:block" {...reveal(2, 'rule')} />
 
-          <ol className="relative grid gap-12 md:grid-cols-3 md:gap-x-6 md:gap-y-0">
+          <ol className="relative grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-x-6 md:gap-y-0">
             {t.steps.map((s, i) => (
               <li key={s.n} className="group relative flex flex-col md:row-span-3 md:grid md:grid-rows-subgrid md:gap-0" {...reveal(2 + i)}>
                 <div className="flex items-center gap-4 md:flex-col md:gap-0">
@@ -63,7 +63,7 @@ function StepProof({ index }: { index: number }) {
   )
   if (index === 0) {
     return (
-      <div className="grid gap-2" aria-hidden="true">
+      <div className="grid grid-cols-1 gap-2" aria-hidden="true">
         <div className={row}>
           <span className="text-on-dark">acct_1Pz…7Qk</span>
           <span className="flex items-center gap-2 text-gold-soft">
@@ -82,7 +82,7 @@ function StepProof({ index }: { index: number }) {
   }
   if (index === 1) {
     return (
-      <div className="grid gap-2" aria-hidden="true">
+      <div className="grid grid-cols-1 gap-2" aria-hidden="true">
         {['schema.xsd', 'en16931.sch', 'xrechnung-cius'].map((x, k) => (
           <div key={x} className={`${row} how-check`} style={{ '--k': k } as React.CSSProperties}>
             <span className="text-on-dark">{x}</span>
@@ -93,7 +93,7 @@ function StepProof({ index }: { index: number }) {
     )
   }
   return (
-    <div className="grid gap-2" aria-hidden="true">
+    <div className="grid grid-cols-1 gap-2" aria-hidden="true">
       <div className={row}>
         <span className="text-on-dark-muted">sent</span>
         <span className="text-on-dark">buchhaltung@muster.de</span>

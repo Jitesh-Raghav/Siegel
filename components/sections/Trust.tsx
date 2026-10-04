@@ -28,12 +28,12 @@ export function Trust({ t }: { t: Messages['trust'] }) {
       <div className="container-ledger">
         <SectionHeader num={7} id="trust-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} />
 
-        <div className={`mt-14 grid gap-5 ${HAS_SAMPLES ? 'lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]' : ''}`}>
+        <div className={`mt-14 grid grid-cols-1 gap-5 ${HAS_SAMPLES ? 'lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]' : ''}`}>
           <article className="surface spotlight relative overflow-hidden p-7 sm:p-10" {...reveal(2)}>
             {/* engraved line texture in the corner */}
             <div className="founder-lines pointer-events-none absolute -top-10 -right-10 h-[260px] w-[420px]" aria-hidden="true" />
 
-            <div className="relative grid gap-8 md:grid-cols-[auto_minmax(0,1fr)] md:gap-12">
+            <div className="relative grid grid-cols-1 gap-8 md:grid-cols-[auto_minmax(0,1fr)] md:gap-12">
               {/* Portrait: fir-green duotone that turns to full colour on hover */}
               <div className="founder-photo group relative size-40 shrink-0 sm:size-48">
                 <span className="absolute -inset-2 rounded-full border border-dashed border-gold/50" aria-hidden="true" />
@@ -65,7 +65,7 @@ export function Trust({ t }: { t: Messages['trust'] }) {
                 <p className="mt-1 text-[13.5px] text-muted">{t.location}</p>
                 <p className="lede mt-5 max-w-[58ch] text-[16.5px]">{t.bio}</p>
 
-                <dl className="mt-7 grid gap-px overflow-hidden rounded-2xl border border-hairline bg-hairline sm:grid-cols-3">
+                <dl className="mt-7 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-hairline bg-hairline sm:grid-cols-3">
                   {t.highlights.map((h) => (
                     <div key={h.k} className="bg-white px-4 py-3.5">
                       <dt className="font-mono text-[10.5px] tracking-[0.1em] text-muted uppercase">{h.k}</dt>
@@ -109,7 +109,7 @@ export function Trust({ t }: { t: Messages['trust'] }) {
                 <p className="h3">{t.samplesTitle}</p>
                 <p className="lede mt-3 text-[16px]">{t.samplesBody}</p>
               </div>
-              <div className="grid gap-3">
+              <div className="grid grid-cols-1 gap-3">
                 <a href="/samples/sample-zugferd.pdf" download className="btn btn-gold w-full">
                   {t.samplePdf}
                 </a>

@@ -8,7 +8,7 @@ import type { Messages } from '@/messages/en'
 export function Faq({ t }: { t: Messages['faq'] }) {
   return (
     <section id="faq" data-section="faq" className="section defer-render" aria-labelledby="faq-title">
-      <div className="container-ledger grid gap-12 md:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] md:gap-16">
+      <div className="container-ledger grid grid-cols-1 gap-12 md:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] md:gap-16">
         <header className="md:sticky md:top-28 md:self-start">
           <Eyebrow num={8} {...reveal(0)}>
             {t.eyebrow}
@@ -35,7 +35,7 @@ export function Faq({ t }: { t: Messages['faq'] }) {
                 <span className="w-7 shrink-0 font-mono text-[11px] tracking-[0.1em] text-muted">
                   {String(idx + 1).padStart(2, '0')}
                 </span>
-                <span className="flex-1 font-serif text-[24px] leading-[1.15] tracking-[-0.01em] transition-colors group-hover:text-engrave-ink">
+                <span className="min-w-0 flex-1 font-serif text-[clamp(20px,5.6vw,24px)] leading-[1.15] break-words hyphens-auto tracking-[-0.01em] transition-colors group-hover:text-engrave-ink">
                   {item.q}
                 </span>
                 <span

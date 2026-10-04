@@ -1039,6 +1039,18 @@
       box-shadow 200ms var(--ease);
   }
 
+  .segmented span {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 400px) {
+    .segmented span {
+      padding-inline: 2px;
+      font-size: 11.5px;
+      letter-spacing: -0.02em;
+    }
+  }
+
   .segmented input:hover + span {
     color: var(--ink);
     background: rgb(15 42 34 / 0.04);

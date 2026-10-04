@@ -95,7 +95,7 @@ export function Footer({ locale, t }: { locale: Locale; t: Messages }) {
           {columns.map((col) => (
             <nav key={col.title} aria-label={col.title}>
               <p className="font-mono text-[11px] tracking-[0.14em] text-gold-soft uppercase">{col.title}</p>
-              <ul className="mt-4 grid">
+              <ul className="mt-4 grid grid-cols-1">
                 {col.links.map((l) => (
                   <li key={l.label}>
                     <a

@@ -8,7 +8,7 @@ export function Standards({ t }: { t: Messages['standards'] }) {
   return (
     <section aria-labelledby="standards-label" className="mt-20 sm:mt-28">
       <div className="container-ledger">
-        <p id="standards-label" className="eyebrow mx-auto flex w-max">
+        <p id="standards-label" className="eyebrow mx-auto flex w-fit max-w-full text-center">
           {t.label}
         </p>
         <ul className="std-wall mt-8 grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6">

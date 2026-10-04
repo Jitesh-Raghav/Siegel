@@ -23,6 +23,44 @@ export function Analytics() {
     initAnalytics()
   }, [])
 
+  // FAQ items are server-rendered <details>; 'toggle' doesn't bubble, so listen in the capture phase.
+  useEffect(() => {
+    const onToggle = (e: Event) => {
+      const el = e.target as HTMLDetailsElement
+      if (el.open && el.dataset.faq) track('faq_open', { id: el.dataset.faq })
+    }
+    document.addEventListener('toggle', onToggle, true)
+    return () => document.removeEventListener('toggle', onToggle, true)
+  }, [])
+
+  // One delegated listener drives every .spotlight surface (--mx / --my follow the pointer).
+  useEffect(() => {
+    if (window.matchMedia('(hover: none)').matches) return
+    let frame = 0
+    let target: HTMLElement | null = null
+    let x = 0
+    let y = 0
+    const onMove = (e: PointerEvent) => {
+      target = (e.target as Element | null)?.closest?.('.spotlight') as HTMLElement | null
+      if (!target) return
+      x = e.clientX
+      y = e.clientY
+      if (frame) return
+      frame = requestAnimationFrame(() => {
+        frame = 0
+        if (!target) return
+        const r = target.getBoundingClientRect()
+        target.style.setProperty('--mx', `${x - r.left}px`)
+        target.style.setProperty('--my', `${y - r.top}px`)
+      })
+    }
+    document.addEventListener('pointermove', onMove, { passive: true })
+    return () => {
+      document.removeEventListener('pointermove', onMove)
+      cancelAnimationFrame(frame)
+    }
+  }, [])
+
   useEffect(() => {
     window.__siegelReveal = true
     const root = document.documentElement

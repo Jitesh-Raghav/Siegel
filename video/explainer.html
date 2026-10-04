@@ -1,0 +1,755 @@
+<!doctype html>
+<!--
+  Siegel explainer — a 36-second motion graphic, rendered frame by frame by scripts/render-video.mjs.
+  Every frame is a pure function of time: window.render(t) positions everything for second t.
+  Open it directly in a browser to preview (it plays in real time); ?lang=de for German.
+-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Siegel explainer</title>
+    <style>
+      @font-face {
+        font-family: 'Instrument';
+        src: url('../app/fonts/instrument-serif.woff2') format('woff2');
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Instrument';
+        src: url('../app/fonts/instrument-serif-italic.woff2') format('woff2');
+        font-style: italic;
+      }
+      @font-face {
+        font-family: 'Geist';
+        src: url('../app/fonts/geist-sans.woff2') format('woff2');
+        font-weight: 400 500;
+      }
+      @font-face {
+        font-family: 'GeistMono';
+        src: url('../app/fonts/geist-mono.woff2') format('woff2');
+      }
+
+      :root {
+        --paper: #f3f0e6;
+        --paper-2: #e9e5d7;
+        --ink: #0f2a22;
+        --muted: #56625b;
+        --hairline: #ddd8c8;
+        --hairline-strong: #c9c1ab;
+        --engrave: #17382d;
+        --midnight: #0b1f19;
+        --gold: #b4894a;
+        --gold-soft: #d8be8e;
+        --gold-deep: #74552a;
+        --verified: #2e7d4f;
+        --danger: #a8392a;
+        --foil: linear-gradient(115deg, #8c6a3a 0%, #e2c893 32%, #a47e46 52%, #f0dfb2 70%, #9a7442 100%);
+        --foil-deep: linear-gradient(115deg, #5e4520 0%, #8f6d38 35%, #6b4e22 55%, #9c7a44 75%, #5e4520 100%);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+
+      html,
+      body {
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: var(--paper);
+      }
+
+      #stage {
+        position: relative;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background:
+          radial-gradient(900px 520px at 50% 18%, rgb(216 190 142 / 0.35), transparent 70%),
+          var(--paper);
+        color: var(--ink);
+        font-family: 'Geist', system-ui, sans-serif;
+      }
+
+      .abs {
+        position: absolute;
+        will-change: transform, opacity;
+      }
+
+      .serif {
+        font-family: 'Instrument', Georgia, serif;
+        font-weight: 400;
+        letter-spacing: -0.02em;
+      }
+
+      .italic {
+        font-style: italic;
+      }
+
+      .foil {
+        background: var(--foil-deep);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        padding-right: 0.08em;
+      }
+
+      .foil-bright {
+        background: var(--foil);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        padding-right: 0.08em;
+      }
+
+      .mono {
+        font-family: 'GeistMono', ui-monospace, monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+      }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .eyebrow::before {
+        content: '';
+        width: 7px;
+        height: 7px;
+        transform: rotate(45deg);
+        background: var(--foil);
+      }
+
+      .card {
+        background: #fff;
+        border: 1px solid var(--hairline);
+        border-radius: 18px;
+        box-shadow:
+          0 1px 0 #fff inset,
+          0 30px 60px -30px rgb(15 42 34 / 0.35);
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 14px 7px 8px;
+        border-radius: 999px;
+        background: #fff;
+        border: 1px solid var(--hairline);
+        font-size: 14px;
+        white-space: nowrap;
+      }
+
+      .tick {
+        display: grid;
+        place-items: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        background: rgb(46 125 79 / 0.12);
+        color: var(--verified);
+        flex: none;
+      }
+
+      .line-row {
+        height: 7px;
+        border-radius: 999px;
+        background: var(--paper-2);
+      }
+
+      /* Persistent chrome: banknote frame, brand, scene marker, microprint, progress */
+      #frame {
+        position: absolute;
+        inset: 14px;
+        border-radius: 22px;
+        border: 1px solid var(--hairline-strong);
+        pointer-events: none;
+      }
+
+      #frame::before {
+        content: '';
+        position: absolute;
+        inset: 4px;
+        border-radius: 18px;
+        border: 1px solid rgb(180 137 74 / 0.35);
+      }
+
+      #micro {
+        position: absolute;
+        left: 40px;
+        right: 40px;
+        bottom: 24px;
+        font-family: 'GeistMono', monospace;
+        font-size: 7px;
+        letter-spacing: 0.32em;
+        color: rgb(23 56 45 / 0.45);
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      #progress {
+        position: absolute;
+        left: 40px;
+        bottom: 38px;
+        height: 1.5px;
+        width: 1200px;
+        transform-origin: left;
+        background: var(--foil);
+      }
+
+      #brand {
+        position: absolute;
+        left: 48px;
+        top: 40px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 26px;
+      }
+
+      #marker {
+        position: absolute;
+        right: 48px;
+        top: 48px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      /* Outro: dark ground */
+      #dark {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(800px 420px at 80% -10%, rgb(180 137 74 / 0.18), transparent 60%),
+          radial-gradient(700px 500px at 0% 110%, rgb(23 56 45 / 0.6), transparent 60%),
+          var(--midnight);
+      }
+
+      #dark-engraving {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 300px;
+        background: url('../public/hero-engraved-dark.webp') center 30% / cover no-repeat;
+        -webkit-mask-image: linear-gradient(to top, #000 10%, transparent 100%);
+        mask-image: linear-gradient(to top, #000 10%, transparent 100%);
+        opacity: 0.55;
+      }
+
+      .xml {
+        font-family: 'GeistMono', monospace;
+        font-size: 12.5px;
+        line-height: 2;
+        color: #8fa399;
+        white-space: nowrap;
+      }
+
+      .xml b {
+        font-weight: 400;
+        color: var(--gold-soft);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage">
+      <div id="dark" class="abs"><div id="dark-engraving"></div></div>
+
+      <!-- ============ Scene 1: WHY — the timeline ============ -->
+      <div id="s1" class="abs" style="inset: 0">
+        <p id="s1-eyebrow" class="abs mono eyebrow" style="left: 120px; top: 168px"></p>
+        <h1 id="s1-title" class="abs serif" style="left: 116px; top: 196px; font-size: 76px; line-height: 1"></h1>
+        <div id="s1-track" class="abs" style="left: 140px; top: 470px; width: 1000px; height: 2px; background: var(--hairline-strong)"></div>
+        <div id="s1-line" class="abs" style="left: 140px; top: 470px; width: 1000px; height: 2px; background: var(--foil); transform-origin: left"></div>
+        <div id="s1-m0" class="abs" style="left: 140px; top: 470px"></div>
+        <div id="s1-m1" class="abs" style="left: 640px; top: 470px"></div>
+        <div id="s1-m2" class="abs" style="left: 1140px; top: 470px"></div>
+      </div>
+
+      <!-- ============ Scene 2: PROBLEM — Stripe sends PDFs ============ -->
+      <div id="s2" class="abs" style="inset: 0">
+        <div id="s2-pdf" class="abs card" style="left: 150px; top: 150px; width: 340px; height: 430px; padding: 28px">
+          <div style="display: flex; justify-content: space-between; align-items: baseline">
+            <span class="serif" style="font-size: 24px">Muster GmbH</span>
+            <span class="mono" style="font-size: 11px; color: var(--muted)" id="s2-doc"></span>
+          </div>
+          <div style="margin-top: 26px; display: grid; gap: 10px">
+            <div class="line-row" style="width: 92%"></div>
+            <div class="line-row" style="width: 70%"></div>
+            <div class="line-row" style="width: 84%"></div>
+            <div class="line-row" style="width: 60%"></div>
+          </div>
+          <div style="margin-top: 30px; border-top: 1px solid var(--hairline); padding-top: 16px; display: grid; gap: 10px">
+            <div class="line-row" style="width: 100%"></div>
+            <div class="line-row" style="width: 100%"></div>
+            <div class="line-row" style="width: 76%"></div>
+          </div>
+          <div style="position: absolute; left: 28px; right: 28px; bottom: 28px; display: flex; justify-content: space-between; border-top: 1px solid var(--hairline); padding-top: 14px; font-size: 15px">
+            <span style="color: var(--muted)" id="s2-total-label"></span><span>4.760,00 €</span>
+          </div>
+          <span class="mono" style="position: absolute; top: -14px; right: 22px; background: var(--ink); color: var(--paper); font-size: 12px; padding: 5px 12px; border-radius: 999px">PDF</span>
+        </div>
+        <div id="s2-x" class="abs chip" style="left: 300px; top: 520px; border-color: rgb(168 57 42 / 0.35); color: var(--danger)">
+          <span class="tick" style="background: rgb(168 57 42 / 0.12); color: var(--danger)">✕</span><span id="s2-x-text"></span>
+        </div>
+        <h2 id="s2-title" class="abs serif" style="left: 600px; top: 230px; font-size: 70px; line-height: 1.02; width: 600px"></h2>
+        <h2 id="s2-title2" class="abs serif italic foil" style="left: 600px; top: 330px; font-size: 54px; line-height: 1.05; width: 620px"></h2>
+        <p id="s2-sub" class="abs" style="left: 604px; top: 470px; width: 520px; font-size: 19px; line-height: 1.5; color: var(--muted)"></p>
+      </div>
+
+      <!-- ============ Scene 3: WHAT — Siegel connects to Stripe ============ -->
+      <div id="s3" class="abs" style="inset: 0">
+        <h2 id="s3-title" class="abs serif" style="left: 0; right: 0; top: 130px; text-align: center; font-size: 68px"></h2>
+        <p id="s3-sub" class="abs" style="left: 0; right: 0; top: 222px; text-align: center; font-size: 20px; color: var(--muted)"></p>
+        <div id="s3-left" class="abs card" style="left: 150px; top: 330px; width: 320px; height: 150px; padding: 26px">
+          <p class="mono" style="font-size: 11px; color: var(--muted)" id="s3-left-label"></p>
+          <p class="serif" style="font-size: 32px; margin-top: 10px" id="s3-left-title"></p>
+          <p class="mono" style="font-size: 11px; margin-top: 12px; color: var(--engrave)">invoice.finalized</p>
+        </div>
+        <div id="s3-wire" class="abs" style="left: 470px; top: 404px; width: 340px; height: 2px; background: repeating-linear-gradient(to right, var(--gold) 0 8px, transparent 8px 14px); transform-origin: left"></div>
+        <div id="s3-dot0" class="abs" style="left: 470px; top: 397px; width: 16px; height: 16px; border-radius: 4px; background: var(--engrave); box-shadow: 0 0 0 4px rgb(23 56 45 / 0.12)"></div>
+        <div id="s3-dot1" class="abs" style="left: 470px; top: 397px; width: 16px; height: 16px; border-radius: 4px; background: var(--engrave); box-shadow: 0 0 0 4px rgb(23 56 45 / 0.12)"></div>
+        <div id="s3-dot2" class="abs" style="left: 470px; top: 397px; width: 16px; height: 16px; border-radius: 4px; background: var(--engrave); box-shadow: 0 0 0 4px rgb(23 56 45 / 0.12)"></div>
+        <div id="s3-right" class="abs card" style="left: 810px; top: 300px; width: 320px; height: 210px; display: grid; place-items: center; text-align: center">
+          <div>
+            <svg id="s3-seal" width="96" height="96" viewBox="0 0 32 32"></svg>
+            <p class="serif" style="font-size: 34px; margin-top: 8px">Siegel</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ Scene 4: HOW — converted, validated, sealed ============ -->
+      <div id="s4" class="abs" style="inset: 0">
+        <h2 id="s4-title" class="abs serif" style="left: 120px; top: 112px; font-size: 62px; line-height: 1"></h2>
+        <div id="s4-pdf" class="abs card" style="left: 120px; top: 230px; width: 270px; height: 360px; padding: 24px">
+          <div style="display: flex; justify-content: space-between">
+            <span class="serif" style="font-size: 21px">Muster GmbH</span>
+            <span class="mono" style="font-size: 10px; color: var(--muted)">PDF/A-3</span>
+          </div>
+          <div style="margin-top: 22px; display: grid; gap: 9px">
+            <div class="line-row" style="width: 90%"></div>
+            <div class="line-row" style="width: 66%"></div>
+            <div class="line-row" style="width: 80%"></div>
+            <div class="line-row" style="width: 54%"></div>
+            <div class="line-row" style="width: 88%"></div>
+          </div>
+          <p class="mono" style="position: absolute; left: 24px; bottom: 22px; font-size: 11px; color: var(--muted)" id="s4-pdf-label"></p>
+        </div>
+        <div id="s4-xml" class="abs" style="left: 120px; top: 230px; width: 300px; height: 360px; padding: 24px; border-radius: 18px; background: var(--midnight); box-shadow: 0 30px 60px -30px rgb(11 31 25 / 0.8)">
+          <p class="mono" style="font-size: 10px; color: #a9b5ad; margin-bottom: 10px">XML · EN 16931</p>
+          <div class="xml">&lt;ram:ID&gt;<b>INV-2026-0142</b></div>
+          <div class="xml">&lt;ram:TypeCode&gt;<b>380</b></div>
+          <div class="xml">&lt;ram:ID schemeID="VA"&gt;<b>DE123456789</b></div>
+          <div class="xml">&lt;ram:RateApplicablePercent&gt;<b>19</b></div>
+          <div class="xml">&lt;ram:GrandTotalAmount&gt;<b>4760.00</b></div>
+          <p class="mono" style="position: absolute; left: 24px; bottom: 22px; font-size: 11px; color: #a9b5ad" id="s4-xml-label"></p>
+        </div>
+        <div id="s4-checks" class="abs" style="left: 720px; top: 230px; width: 430px; display: grid; gap: 10px"></div>
+        <div id="s4-dial" class="abs" style="left: 720px; top: 470px; width: 150px; height: 150px"></div>
+        <p id="s4-dial-label" class="abs mono" style="left: 892px; top: 520px; font-size: 12px; color: var(--muted); width: 140px; line-height: 1.6"></p>
+        <svg id="s4-seal" class="abs" style="left: 1010px; top: 474px" width="140" height="140" viewBox="0 0 120 120"></svg>
+      </div>
+
+      <!-- ============ Scene 5: delivered & archived ============ -->
+      <div id="s5" class="abs" style="inset: 0">
+        <h2 id="s5-title" class="abs serif" style="left: 0; right: 0; top: 120px; text-align: center; font-size: 66px"></h2>
+        <div id="s5-mail" class="abs card" style="left: 170px; top: 270px; width: 440px; height: 220px; padding: 30px">
+          <div style="display: flex; align-items: center; gap: 14px">
+            <svg width="40" height="40" viewBox="0 0 40 40"><rect x="4" y="9" width="32" height="23" rx="3" fill="none" stroke="#17382D" stroke-width="1.6" /><path d="M5 11l15 11 15-11" fill="none" stroke="#17382D" stroke-width="1.6" /></svg>
+            <div>
+              <p class="mono" style="font-size: 11px; color: var(--muted)" id="s5-to"></p>
+              <p style="font-family: 'GeistMono'; font-size: 16px; margin-top: 4px">buchhaltung@muster.de</p>
+            </div>
+          </div>
+          <div id="s5-log" style="margin-top: 26px; display: grid; gap: 12px; font-family: 'GeistMono'; font-size: 14px"></div>
+        </div>
+        <div id="s5-vault" class="abs card" style="left: 670px; top: 270px; width: 440px; height: 220px; padding: 30px">
+          <div style="display: flex; align-items: center; gap: 14px">
+            <svg width="40" height="40" viewBox="0 0 22 22"><rect x="4" y="9.5" width="14" height="10" rx="2" fill="none" stroke="#74552A" stroke-width="1.1" /><path d="M7.5 9.5V7a3.5 3.5 0 0 1 7 0v2.5" fill="none" stroke="#74552A" stroke-width="1.1" /><circle cx="11" cy="14.5" r="1.2" fill="#74552A" /></svg>
+            <div>
+              <p class="mono" style="font-size: 11px; color: var(--muted)" id="s5-arch"></p>
+              <p class="serif" style="font-size: 26px; margin-top: 2px" id="s5-eu"></p>
+            </div>
+          </div>
+          <p style="font-family: 'GeistMono'; font-size: 14px; margin-top: 28px">sha256 9f2c41e8…7b0de81a</p>
+          <div id="s5-hash" style="margin-top: 14px; height: 6px; border-radius: 999px; background: var(--foil); transform-origin: left"></div>
+          <p class="mono" style="font-size: 11px; margin-top: 18px; color: var(--muted)" id="s5-lock"></p>
+        </div>
+      </div>
+
+      <!-- ============ Scene 6: outro ============ -->
+      <div id="s6" class="abs" style="inset: 0; color: #f1ede2">
+        <svg id="s6-seal" class="abs" style="left: 600px; top: 96px" width="80" height="80" viewBox="0 0 32 32"></svg>
+        <h2 id="s6-title" class="abs serif" style="left: 0; right: 0; top: 206px; text-align: center; font-size: 78px; line-height: 1.02"></h2>
+        <div id="s6-cta" class="abs" style="left: 0; right: 0; top: 410px; display: flex; justify-content: center">
+          <span id="s6-cta-pill" style="display: inline-flex; align-items: center; gap: 12px; padding: 16px 30px; border-radius: 999px; background: var(--foil); color: var(--ink); font-size: 20px; font-weight: 500; box-shadow: 0 16px 40px -14px rgb(180 137 74 / 0.7)"></span>
+        </div>
+        <p id="s6-note" class="abs mono" style="left: 0; right: 0; top: 500px; text-align: center; font-size: 12px; color: #a9b5ad"></p>
+      </div>
+
+      <!-- Persistent chrome -->
+      <div id="frame"></div>
+      <div id="brand"><svg id="brand-seal" width="30" height="30" viewBox="0 0 32 32"></svg><span class="serif" id="brand-word">Siegel</span></div>
+      <p id="marker" class="mono"></p>
+      <div id="progress"></div>
+      <div id="micro">SIEGEL · EN 16931 · ZUGFeRD · XRECHNUNG · VALIDATED · SIEGEL · EN 16931 · ZUGFeRD · XRECHNUNG · VALIDATED · SIEGEL · EN 16931 · ZUGFeRD · XRECHNUNG · VALIDATED · SIEGEL · EN 16931 · ZUGFeRD · XRECHNUNG · VALIDATED · SIEGEL · EN 16931</div>
+    </div>
+
+    <script>
+      // ---------------------------------------------------------------------------------------
+      // Copy (EN / DE). German marked NEEDS NATIVE REVIEW, like the site.
+      // ---------------------------------------------------------------------------------------
+      const COPY = {
+        en: {
+          markers: ['01 · Why', '02 · The gap', '03 · What', '04 · How', '05 · Done', ''],
+          s1Eyebrow: 'E-invoicing in Germany',
+          s1Title: ['From 2027, German B2B', 'invoices go <i class="foil">structured.</i>'],
+          milestones: [
+            ['1 Jan 2025', 'Everyone must receive'],
+            ['1 Jan 2027', 'Above €800k must send'],
+            ['1 Jan 2028', 'Everyone must send'],
+          ],
+          s2Doc: 'Invoice',
+          s2Total: 'Total',
+          s2Title: 'Stripe sends PDFs.',
+          s2Title2: 'A PDF isn’t an e-invoice.',
+          s2Sub: 'Once the obligation applies, your invoices need machine-readable data: ZUGFeRD or XRechnung.',
+          s2X: 'Not machine-readable',
+          s3Title: 'Siegel connects to Stripe.',
+          s3Sub: 'Install once. Keep invoicing exactly as you do today.',
+          s3LeftLabel: 'Your account',
+          s3LeftTitle: 'Stripe',
+          s4Title: 'Converted. Validated. <i class="foil">Sealed.</i>',
+          s4Pdf: 'For humans',
+          s4Xml: 'For machines',
+          checks: ['Schema (XSD)', 'EN 16931 business rules', 'XRechnung CIUS', 'PDF/A-3 conformance'],
+          dial: 'Rules<br />checked',
+          s5Title: 'Delivered. Archived. <i class="foil">Automatically.</i>',
+          s5To: 'To your customer',
+          log: [
+            ['09:41:02', 'Queued'],
+            ['09:41:03', 'Sent'],
+            ['09:41:05', 'Delivered'],
+          ],
+          s5Arch: 'Archive',
+          s5Eu: 'Stored in the EU',
+          s5Lock: 'Write-protected · legal retention',
+          s6Title: 'Every Stripe invoice,<br /><i class="foil-bright">sealed</i> as an e-invoice.',
+          s6Cta: 'Join early access',
+          s6Note: 'Siegel · Software, not tax advice',
+        },
+        de: {
+          // NEEDS NATIVE REVIEW
+          markers: ['01 · Warum', '02 · Die Lücke', '03 · Was', '04 · Wie', '05 · Fertig', ''],
+          s1Eyebrow: 'E-Rechnung in Deutschland',
+          s1Title: ['Ab 2027 werden B2B-Rechnungen', 'in Deutschland <i class="foil">strukturiert.</i>'],
+          milestones: [
+            ['1. Jan. 2025', 'Alle müssen empfangen'],
+            ['1. Jan. 2027', 'Über 800.000 € müssen senden'],
+            ['1. Jan. 2028', 'Alle müssen senden'],
+          ],
+          s2Doc: 'Rechnung',
+          s2Total: 'Gesamt',
+          s2Title: 'Stripe verschickt PDFs.',
+          s2Title2: 'Ein PDF ist keine E-Rechnung.',
+          s2Sub: 'Sobald die Pflicht gilt, brauchen Ihre Rechnungen maschinenlesbare Daten: ZUGFeRD oder XRechnung.',
+          s2X: 'Nicht maschinenlesbar',
+          s3Title: 'Siegel verbindet sich mit Stripe.',
+          s3Sub: 'Einmal installieren. Weiter abrechnen wie bisher.',
+          s3LeftLabel: 'Ihr Konto',
+          s3LeftTitle: 'Stripe',
+          s4Title: 'Umgewandelt. Geprüft. <i class="foil">Besiegelt.</i>',
+          s4Pdf: 'Für Menschen',
+          s4Xml: 'Für Maschinen',
+          checks: ['Schema (XSD)', 'EN-16931-Geschäftsregeln', 'XRechnung-CIUS', 'PDF/A-3-Konformität'],
+          dial: 'Regeln<br />geprüft',
+          s5Title: 'Zugestellt. Archiviert. <i class="foil">Automatisch.</i>',
+          s5To: 'An Ihre Kunden',
+          log: [
+            ['09:41:02', 'In Warteschlange'],
+            ['09:41:03', 'Gesendet'],
+            ['09:41:05', 'Zugestellt'],
+          ],
+          s5Arch: 'Archiv',
+          s5Eu: 'Gespeichert in der EU',
+          s5Lock: 'Schreibgeschützt · gesetzliche Aufbewahrung',
+          s6Title: 'Jede Stripe-Rechnung,<br />als E-Rechnung <i class="foil-bright">besiegelt.</i>',
+          s6Cta: 'Frühzugang sichern',
+          s6Note: 'Siegel · Software, keine Steuerberatung',
+        },
+      }
+      const lang = new URLSearchParams(location.search).get('lang') === 'de' ? 'de' : 'en'
+      const C = COPY[lang]
+
+      // ---------------------------------------------------------------------------------------
+      // Static content
+      // ---------------------------------------------------------------------------------------
+      const $ = (id) => document.getElementById(id)
+      const NOTCH = (() => {
+        const pts = []
+        for (let k = 0; k < 56; k++) {
+          const a = (k / 56) * Math.PI * 2 - Math.PI / 2
+          const r = k % 2 ? 14.2 : 15.5
+          pts.push(`${(16 + Math.cos(a) * r).toFixed(2)} ${(16 + Math.sin(a) * r).toFixed(2)}`)
+        }
+        return `M${pts.join('L')}Z`
+      })()
+      const S_PATH =
+        'M20.1 11.3c-.9-1.2-2.3-1.9-4-1.9-2.4 0-4 1.3-4 3.2 0 1.8 1.3 2.6 3.7 3.2 2.1.5 2.9 1 2.9 2.1 0 1.2-1.1 2-2.8 2-1.8 0-3.1-.8-3.9-2.2l-1.1.8c1 1.7 2.8 2.7 5 2.7 2.6 0 4.3-1.4 4.3-3.4 0-1.9-1.3-2.7-3.8-3.3-2-.5-2.8-.9-2.8-1.9 0-1.1 1-1.9 2.6-1.9 1.4 0 2.4.6 3 1.5z'
+      const sealMark = (fill, inner) =>
+        `<defs><linearGradient id="fg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8C6A3A"/><stop offset=".35" stop-color="#E2C893"/><stop offset=".55" stop-color="#A47E46"/><stop offset=".75" stop-color="#F0DFB2"/><stop offset="1" stop-color="#9A7442"/></linearGradient></defs>` +
+        `<path d="${NOTCH}" fill="${fill}"/><circle cx="16" cy="16" r="11.6" fill="none" stroke="${inner}" stroke-width=".8"/><path d="${S_PATH}" fill="${inner}"/>`
+      const logoMark = (sheet, line) =>
+        `<path d="M8 3H19L26 10V27A2 2 0 0 1 24 29H8A2 2 0 0 1 6 27V5A2 2 0 0 1 8 3Z" fill="${sheet}"/><path d="M19 3V8A2 2 0 0 0 21 10H26Z" fill="#C79B57"/><circle cx="20.9" cy="6.3" r=".7" fill="#0F2A22"/><circle cx="20.9" cy="8.3" r=".7" fill="#0F2A22"/><circle cx="22.9" cy="8.3" r=".7" fill="#0F2A22"/><g stroke="${line}" stroke-width="1.6" stroke-linecap="round" fill="none"><path d="M10 15H22"/><path d="M10 19H20"/><path d="M10 23H15"/></g><rect x="17" y="21.6" width="5" height="2.8" rx=".8" fill="#C79B57"/>`
+      $('brand-seal').innerHTML = logoMark('#0F2A22', '#F3F0E6')
+      $('s3-seal').innerHTML = logoMark('#0F2A22', '#F3F0E6')
+      $('s6-seal').innerHTML = logoMark('#F1EDE2', '#0F2A22')
+      $('s4-seal').innerHTML =
+        `<defs><linearGradient id="fg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8C6A3A"/><stop offset=".32" stop-color="#E2C893"/><stop offset=".52" stop-color="#A47E46"/><stop offset=".72" stop-color="#F0DFB2"/><stop offset="1" stop-color="#9A7442"/></linearGradient>` +
+        `<path id="tp" d="M60 60 m-38 0 a38 38 0 1 1 76 0 a38 38 0 1 1 -76 0"/></defs>` +
+        `<path d="${NOTCH}" transform="translate(2.5 2.5) scale(3.6)" fill="url(#fg2)"/>` +
+        `<circle cx="60" cy="60" r="45" fill="none" stroke="#FFF6DD" stroke-opacity=".7" stroke-width=".8"/>` +
+        `<circle cx="60" cy="60" r="31" fill="none" stroke="#5E4520" stroke-opacity=".5" stroke-width=".8"/>` +
+        `<text font-family="GeistMono" font-size="7.4" letter-spacing="2.2" fill="#4A3618"><textPath href="#tp">GEPRÜFT · VALIDATED · EN 16931 ·</textPath></text>` +
+        `<path d="${S_PATH}" transform="translate(24 24) scale(2.25)" fill="#4A3618"/>`
+
+      $('s1-eyebrow').textContent = C.s1Eyebrow
+      $('s1-title').innerHTML = `<span style="display:block">${C.s1Title[0]}</span><span style="display:block">${C.s1Title[1]}</span>`
+      C.milestones.forEach(([date, label], i) => {
+        const align = i === 0 ? 'left' : i === 1 ? 'center' : 'right'
+        const tx = i === 0 ? '0' : i === 1 ? '-50%' : '-100%'
+        $(`s1-m${i}`).innerHTML =
+          `<span style="position:absolute;left:-9px;top:-9px;width:18px;height:18px;transform:rotate(45deg);border:1.5px solid ${i === 1 ? '#74552A' : '#0F2A22'};background:${i === 1 ? 'linear-gradient(135deg,#8c6a3a,#e2c893,#a47e46)' : '#F3F0E6'}"></span>` +
+          `<div style="position:absolute;top:34px;transform:translateX(${tx});text-align:${align};white-space:nowrap">` +
+          `<p class="mono" style="font-size:13px;color:${i === 1 ? '#74552A' : '#56625B'}">${date}</p>` +
+          `<p class="serif" style="font-size:30px;margin-top:8px">${label}</p></div>`
+      })
+      $('s2-doc').textContent = C.s2Doc
+      $('s2-total-label').textContent = C.s2Total
+      $('s2-title').textContent = C.s2Title
+      $('s2-title2').textContent = C.s2Title2
+      $('s2-sub').textContent = C.s2Sub
+      $('s2-x-text').textContent = C.s2X
+      $('s3-title').textContent = C.s3Title
+      $('s3-sub').textContent = C.s3Sub
+      $('s3-left-label').textContent = C.s3LeftLabel
+      $('s3-left-title').textContent = C.s3LeftTitle
+      $('s4-title').innerHTML = C.s4Title
+      $('s4-pdf-label').textContent = C.s4Pdf
+      $('s4-xml-label').textContent = C.s4Xml
+      $('s4-checks').innerHTML = C.checks
+        .map(
+          (c, i) =>
+            `<div id="s4-c${i}" class="chip" style="font-size:16px;padding:12px 18px 12px 12px;border-radius:14px"><span class="tick"><svg width="11" height="11" viewBox="0 0 10 10"><path d="M1.8 5.2l2 2 4.4-4.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>${c}</div>`,
+        )
+        .join('')
+      $('s4-dial').innerHTML =
+        `<svg width="150" height="150" viewBox="0 0 160 160"><g transform="translate(80 80)">` +
+        `<circle r="62" fill="#fff"/><circle r="55" fill="none" stroke="#E3DDCB" stroke-width="7"/>` +
+        `<circle id="s4-arc" r="55" fill="none" stroke="#17382D" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1" transform="rotate(-90)"/>` +
+        `<circle r="66" fill="none" stroke="#CDC6B1" stroke-width=".7" stroke-dasharray="1 3"/></g>` +
+        `<text id="s4-pct" x="80" y="92" text-anchor="middle" font-family="Instrument" font-size="38" fill="#0F2A22">0%</text></svg>`
+      $('s4-dial-label').innerHTML = C.dial
+      $('s5-title').innerHTML = C.s5Title
+      $('s5-to').textContent = C.s5To
+      $('s5-log').innerHTML = C.log
+        .map(
+          ([time, label], i) =>
+            `<div id="s5-l${i}" style="display:flex;align-items:center;gap:14px"><span style="color:#56625B">${time}</span><span style="width:8px;height:8px;border-radius:999px;background:${['#C9C1AB', '#17382D', '#2E7D4F'][i]}"></span><span>${label}</span></div>`,
+        )
+        .join('')
+      $('s5-arch').textContent = C.s5Arch
+      $('s5-eu').textContent = C.s5Eu
+      $('s5-lock').textContent = C.s5Lock
+      $('s6-title').innerHTML = C.s6Title
+      $('s6-cta-pill').innerHTML = `${C.s6Cta} <svg width="18" height="18" viewBox="0 0 14 14"><path d="M1 7h11M8 3l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+      $('s6-note').textContent = C.s6Note
+
+      // ---------------------------------------------------------------------------------------
+      // Timeline helpers
+      // ---------------------------------------------------------------------------------------
+      const DURATION = 36
+      const clamp = (x) => Math.max(0, Math.min(1, x))
+      const outQuart = (x) => 1 - Math.pow(1 - clamp(x), 4)
+      const outBack = (x) => {
+        x = clamp(x)
+        const c1 = 1.5
+        return 1 + (c1 + 1) * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2)
+      }
+      const inOut = (x) => {
+        x = clamp(x)
+        return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2
+      }
+      // progress of an animation starting at a (s) lasting d (s)
+      const p = (t, a, d = 0.9, ease = outQuart) => ease((t - a) / d)
+      // visibility of a scene shown from a to b with soft fades
+      const vis = (t, a, b, f = 0.55) => Math.min(clamp((t - a) / f), clamp((b - t) / f))
+      const set = (id, { o, x = 0, y = 0, s = 1, r = 0, sx, blur } = {}) => {
+        const el = typeof id === 'string' ? $(id) : id
+        if (!el) return
+        if (o !== undefined) el.style.opacity = o.toFixed(3)
+        el.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px) scale(${s.toFixed(4)})${sx !== undefined ? ` scaleX(${sx.toFixed(4)})` : ''} rotate(${r.toFixed(2)}deg)`
+        if (blur !== undefined) el.style.filter = blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : 'none'
+      }
+      // fade + rise entrance
+      const rise = (id, t, a, dist = 24, d = 0.9) => {
+        const k = p(t, a, d)
+        set(id, { o: k, y: (1 - k) * dist, blur: (1 - k) * 6 })
+      }
+
+      // Scene windows (seconds)
+      const S = [
+        [0, 6.4],
+        [6.4, 12.4],
+        [12.4, 18.2],
+        [18.2, 26.4],
+        [26.4, 31.4],
+        [31.4, DURATION + 1],
+      ]
+
+      // ---------------------------------------------------------------------------------------
+      // render(t): the whole film as a function of time
+      // ---------------------------------------------------------------------------------------
+      window.render = function render(t) {
+        // chrome
+        const dark = clamp((t - 31.2) / 0.7)
+        $('dark').style.opacity = dark
+        $('frame').style.opacity = 1 - dark * 0.7
+        $('brand').style.opacity = 1 - dark
+        $('brand').style.transform = `translateY(${(1 - p(t, 0.1, 0.8)) * -10}px)`
+        $('micro').style.color = dark > 0.5 ? 'rgb(216 190 142 / 0.4)' : 'rgb(23 56 45 / 0.45)'
+        set('progress', { sx: clamp(t / DURATION), o: 1 - dark * 0.4 })
+        const scene = S.findIndex(([a, b]) => t >= a && t < b)
+        $('marker').textContent = C.markers[Math.max(0, scene)] || ''
+        $('marker').style.opacity = (scene < 5 ? 1 : 0) * Math.min(1, vis(t, S[Math.max(0, scene)][0], S[Math.max(0, scene)][1], 0.4))
+
+        // ---- Scene 1: timeline
+        $('s1').style.opacity = vis(t, ...S[0])
+        rise('s1-eyebrow', t, 0.3)
+        rise('s1-title', t, 0.55, 30, 1.1)
+        set('s1-track', { o: p(t, 1.4, 0.6) })
+        set('s1-line', { sx: p(t, 1.7, 2.6, inOut) })
+        ;[0, 1, 2].forEach((i) => {
+          const k = p(t, 1.9 + i * 1.05, 0.8, outBack)
+          set(`s1-m${i}`, { o: clamp((t - 1.9 - i * 1.05) / 0.4), y: (1 - k) * 16, s: 0.85 + 0.15 * k })
+        })
+
+        // ---- Scene 2: the PDF problem
+        $('s2').style.opacity = vis(t, ...S[1])
+        {
+          const k = p(t, 6.6, 1.1)
+          const dim = p(t, 9.6, 0.8)
+          set('s2-pdf', { o: k, y: (1 - k) * 60, r: -4 * k + dim * 1.5 })
+          $('s2-pdf').style.filter = `grayscale(${dim}) opacity(${1 - dim * 0.35})`
+          rise('s2-title', t, 7.0, 30)
+          rise('s2-title2', t, 8.3, 30)
+          rise('s2-sub', t, 9.0, 20)
+          const kx = p(t, 9.7, 0.7, outBack)
+          set('s2-x', { o: clamp((t - 9.7) / 0.3), s: 0.6 + 0.4 * kx, y: (1 - kx) * 10 })
+        }
+
+        // ---- Scene 3: connects to Stripe
+        $('s3').style.opacity = vis(t, ...S[2])
+        {
+          rise('s3-title', t, 12.6, 30)
+          rise('s3-sub', t, 13.1, 20)
+          const kl = p(t, 13.5, 0.9)
+          const kr = p(t, 13.8, 0.9)
+          set('s3-left', { o: kl, x: (1 - kl) * -50 })
+          set('s3-right', { o: kr, x: (1 - kr) * 50 })
+          set('s3-wire', { sx: p(t, 14.5, 1.0, inOut) })
+          // invoices travel along the wire into Siegel
+          ;[0, 1, 2].forEach((i) => {
+            const start = 15.3 + i * 0.75
+            const u = ((t - start) % 2.25) / 1.4
+            const live = t >= start && u >= 0 && u <= 1
+            const e = inOut(u)
+            set(`s3-dot${i}`, { o: live ? Math.min(1, u * 6, (1 - u) * 6) : 0, x: e * 324, r: e * 90 })
+          })
+          // the seal glows when invoices arrive
+          const glow = t > 16 ? 0.5 + 0.5 * Math.sin((t - 16) * 4.2) : 0
+          $('s3-right').style.boxShadow = `0 1px 0 #fff inset, 0 30px 60px -30px rgb(15 42 34 / .35), 0 0 0 ${(glow * 6).toFixed(1)}px rgb(180 137 74 / ${(0.25 * glow).toFixed(2)})`
+        }
+
+        // ---- Scene 4: converted, validated, sealed
+        $('s4').style.opacity = vis(t, ...S[3])
+        {
+          rise('s4-title', t, 18.4, 30)
+          const kin = p(t, 18.6, 0.9)
+          const split = p(t, 19.6, 1.2, inOut)
+          set('s4-xml', { o: kin, x: split * 290, y: (1 - kin) * 40 + split * 30, r: -3 + split * 3 })
+          set('s4-pdf', { o: kin, y: (1 - kin) * 40, r: -3 + split * 3 })
+          C.checks.forEach((_, i) => {
+            const a = 20.6 + i * 0.6
+            const k = p(t, a, 0.7)
+            set(`s4-c${i}`, { o: k, x: (1 - k) * 30 })
+          })
+          const dialP = p(t, 21.0, 2.6, inOut)
+          set('s4-dial', { o: p(t, 20.8, 0.6) })
+          set('s4-dial-label', { o: p(t, 21.0, 0.6) })
+          $('s4-arc').style.strokeDashoffset = (1 - dialP).toFixed(4)
+          $('s4-arc').style.stroke = dialP >= 1 ? '#B4894A' : '#17382D'
+          $('s4-pct').textContent = `${Math.round(dialP * 100)}%`
+          const ks = p(t, 23.9, 0.7, outBack)
+          set('s4-seal', { o: clamp((t - 23.9) / 0.25), s: 1.8 - 0.8 * ks, r: -30 + 18 * ks })
+          $('s4-seal').style.filter = `drop-shadow(0 ${(6 * ks).toFixed(1)}px ${(10 * ks).toFixed(1)}px rgb(94 69 32 / .4))`
+        }
+
+        // ---- Scene 5: delivered & archived
+        $('s5').style.opacity = vis(t, ...S[4])
+        {
+          rise('s5-title', t, 26.6, 30)
+          const km = p(t, 27.0, 0.9)
+          const kv = p(t, 27.3, 0.9)
+          set('s5-mail', { o: km, y: (1 - km) * 50 })
+          set('s5-vault', { o: kv, y: (1 - kv) * 50 })
+          C.log.forEach((_, i) => {
+            const k = p(t, 27.8 + i * 0.6, 0.6)
+            set(`s5-l${i}`, { o: 0.2 + 0.8 * k, x: (1 - k) * 12 })
+          })
+          set('s5-hash', { sx: p(t, 28.2, 1.6, inOut) })
+          set('s5-lock', { o: p(t, 29.4, 0.6) })
+        }
+
+        // ---- Scene 6: outro
+        $('s6').style.opacity = clamp((t - 31.5) / 0.6)
+        {
+          const ks = p(t, 31.7, 0.9, outBack)
+          set('s6-seal', { o: clamp((t - 31.7) / 0.4), s: 0.5 + 0.5 * ks, r: (1 - ks) * -40 })
+          rise('s6-title', t, 32.1, 30, 1.1)
+          const kc = p(t, 33.2, 0.8, outBack)
+          set('s6-cta', { o: clamp((t - 33.2) / 0.4), y: (1 - kc) * 14, s: 0.92 + 0.08 * kc })
+          rise('s6-note', t, 33.8, 10)
+          // a gold sheen crosses the CTA once
+          const sh = clamp((t - 34.4) / 0.9)
+          $('s6-cta-pill').style.backgroundImage = `linear-gradient(110deg, transparent ${(sh * 160 - 40).toFixed(1)}%, rgb(255 248 225 / .55) ${(sh * 160 - 25).toFixed(1)}%, transparent ${(sh * 160 - 10).toFixed(1)}%), linear-gradient(115deg, #8c6a3a 0%, #e2c893 32%, #a47e46 52%, #f0dfb2 70%, #9a7442 100%)`
+        }
+      }
+
+      window.DURATION = DURATION
+      window.ready = document.fonts.ready.then(() => {
+        const img = new Image()
+        img.src = '../public/hero-engraved-dark.webp'
+        return img.decode().catch(() => {})
+      })
+
+      // Real-time preview when opened directly (the renderer sets ?render=1 and drives time itself).
+      if (!new URLSearchParams(location.search).has('render')) {
+        const t0 = performance.now()
+        const loop = (now) => {
+          render(((now - t0) / 1000) % DURATION)
+          requestAnimationFrame(loop)
+        }
+        window.ready.then(() => requestAnimationFrame(loop))
+      } else {
+        render(0)
+      }
+    </script>
+  </body>
+</html>

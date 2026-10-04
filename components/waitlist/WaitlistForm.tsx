@@ -1,6 +1,7 @@
 'use client'
 
 import { useId, useState, type FormEvent } from 'react'
+import { Arrow } from '@/components/ui/CtaButton'
 import { track } from '@/lib/analytics'
 import { localePath, type Locale } from '@/lib/i18n'
 import { getAttribution } from '@/lib/utm'
@@ -15,11 +16,13 @@ export function WaitlistForm({
   t,
   location,
   autoFocus = false,
+  tone = 'light',
 }: {
   locale: Locale
   t: Messages['form']
   location: string
   autoFocus?: boolean
+  tone?: 'light' | 'dark'
 }) {
   const id = useId()
   const [status, setStatus] = useState<Status>('idle')
@@ -76,9 +79,9 @@ export function WaitlistForm({
 
   if (status === 'success' || status === 'already') {
     return (
-      <div role="status" className="flex items-start gap-3 border-t border-hairline pt-5">
+      <div role="status" className="flex items-start gap-3 border-t border-[var(--fg-rule)] pt-5 text-[var(--fg)]">
         <SealCheck />
-        <p className="text-[17px] leading-snug">{status === 'success' ? t.success : t.already}</p>
+        <p className="success-text text-[17px] leading-snug">{status === 'success' ? t.success : t.already}</p>
       </div>
     )
   }
@@ -103,7 +106,7 @@ export function WaitlistForm({
             className="input"
           />
           {emailError && (
-            <p id={`${id}-email-error`} className="mt-1.5 text-[13px] text-[#B42318]">
+            <p id={`${id}-email-error`} className="mt-1.5 text-[13px] text-[var(--fg-error)]">
               {t.invalidEmail}
             </p>
           )}
@@ -131,19 +134,21 @@ export function WaitlistForm({
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-[13px] leading-snug text-muted sm:max-w-[60%]">
+        <p className="text-[13px] leading-snug text-[var(--fg-muted)] sm:max-w-[60%]">
           {t.privacy}{' '}
-          <a href={localePath(locale, '/datenschutz')} className="underline underline-offset-2 hover:text-ink">
+          <a href={localePath(locale, '/datenschutz')} className="underline underline-offset-2 hover:text-[var(--fg)]">
             {t.privacyLink}
           </a>
           .
         </p>
-        <button type="submit" className="btn btn-primary" disabled={loading}>
+        <button type="submit" className={`btn ${tone === 'dark' ? 'btn-gold' : 'btn-primary'}`} disabled={loading}>
+          {loading && <span className="btn-spinner" aria-hidden="true" />}
           {loading ? t.submitting : t.submit}
+          {!loading && <Arrow />}
         </button>
       </div>
 
-      <p role="alert" aria-live="assertive" className="min-h-[1lh] text-[14px] text-[#B42318] empty:hidden">
+      <p role="alert" aria-live="assertive" className="min-h-[1lh] text-[14px] text-[var(--fg-error)] empty:hidden">
         {status === 'error' ? t.error : status === 'rate_limited' ? t.rateLimited : ''}
       </p>
     </form>
@@ -163,9 +168,9 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={htmlFor} className="label mb-2 flex items-baseline gap-2 text-ink">
+      <label htmlFor={htmlFor} className="label mb-2 flex items-baseline gap-2 text-[var(--fg)]">
         {label}
-        {optional && <span className="font-normal normal-case tracking-normal text-muted">({optional})</span>}
+        {optional && <span className="font-normal normal-case tracking-normal text-[var(--fg-muted)]">({optional})</span>}
       </label>
       {children}
     </div>
@@ -185,9 +190,9 @@ function Segmented({
 }) {
   return (
     <fieldset>
-      <legend className="label mb-2 flex items-baseline gap-2 text-ink">
+      <legend className="label mb-2 flex items-baseline gap-2 text-[var(--fg)]">
         {legend}
-        <span className="font-normal normal-case tracking-normal text-muted">({optional})</span>
+        <span className="font-normal normal-case tracking-normal text-[var(--fg-muted)]">({optional})</span>
       </legend>
       <div className="segmented" style={{ gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))` }}>
         {options.map((o) => (
@@ -203,7 +208,7 @@ function Segmented({
 
 function SealCheck() {
   return (
-    <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" className="mt-0.5 shrink-0 text-verified">
+    <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" className="success-seal mt-0.5 shrink-0 text-verified">
       <circle cx="14" cy="14" r="12.5" fill="none" stroke="currentColor" strokeDasharray="2 2" />
       <circle cx="14" cy="14" r="9" fill="currentColor" />
       <path d="M10 14.2l2.6 2.6L18.2 11" fill="none" stroke="#fff" strokeWidth="1.6" />

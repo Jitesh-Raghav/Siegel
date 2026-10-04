@@ -39,18 +39,18 @@ const XML_ROWS: { t: string; f?: number }[] = [
   { t: '    <ram:RateApplicablePercent>19</ram:RateApplicablePercent>', f: 2 },
 ]
 
-/** Tags muted, values in ink. */
+/** Tags in muted slate, values in gold, on the midnight sheet. */
 function XmlLine({ text }: { text: string }) {
   const parts = text.split(/(<[^>]+>)/g).filter(Boolean)
   return (
     <>
       {parts.map((p, i) =>
         p.startsWith('<') ? (
-          <span key={i} className="text-[#6B6A64]">
+          <span key={i} className="text-[#8FA399]">
             {p.replace(/ /g, ' ')}
           </span>
         ) : (
-          <span key={i} className="text-ink">
+          <span key={i} className="text-gold-soft">
             {p.replace(/ /g, ' ')}
           </span>
         ),
@@ -91,22 +91,23 @@ export function LayerDiagram({ t }: { t: Messages['how']['diagram'] }) {
     return () => window.clearInterval(id)
   }, [split, inView, reduced])
 
-  const stackedPdf = wide ? { x: '58%', rotate: 0 } : { y: 0 }
-  const stackedXml = wide ? { x: '-50%', rotate: -2, opacity: 0.9 } : { y: 0 }
+  // Stacked: two sheets lying on top of each other in perspective, before they separate.
+  const stackedPdf = wide ? { x: '56%', y: -18, rotateX: 28, rotateZ: -7, scale: 0.94 } : { y: 0 }
+  const stackedXml = wide ? { x: '-46%', y: 34, rotateX: 28, rotateZ: -7, scale: 0.9, opacity: 0.85 } : { y: 0 }
   const transition = { duration: reduced ? 0 : 1.1, ease: EASE }
 
   return (
     <LazyMotion features={loadFeatures} strict>
-      <figure ref={ref} className="mt-20 border-t border-hairline pt-12" aria-label={t.caption}>
+      <figure ref={ref} className="mt-24 border-t border-hairline pt-14" aria-label={t.caption}>
         <figcaption className="flex flex-wrap items-baseline justify-between gap-4">
           <span className="font-serif text-[22px] tracking-[-0.01em]">{t.caption}</span>
           <ul className="flex flex-wrap gap-2" aria-label="Fields">
             {t.fields.map((f, i) => (
               <li
                 key={f}
-                className={`rounded-[2px] border px-2.5 py-1 font-mono text-[11px] tracking-[0.04em] transition-colors duration-500 ${
+                className={`rounded-full border px-3 py-1 font-mono text-[11px] tracking-[0.04em] transition-all duration-500 ${
                   split && field === i
-                    ? 'border-engrave-ink bg-engrave-ink text-paper'
+                    ? 'border-ink bg-ink text-on-dark shadow-[0_0_0_3px_rgb(180_137_74/0.25)]'
                     : 'border-hairline bg-white text-muted'
                 }`}
               >
@@ -116,16 +117,16 @@ export function LayerDiagram({ t }: { t: Messages['how']['diagram'] }) {
           </ul>
         </figcaption>
 
-        <div className="relative mt-10 grid gap-10 md:grid-cols-[5fr_6fr] md:gap-12">
+        <div className="relative mt-12 grid gap-10 [perspective:1600px] md:grid-cols-[5fr_6fr] md:gap-12">
           {/* PDF — for humans */}
           <m.div
             className="relative z-10 min-w-0"
             initial={false}
-            animate={split ? { x: 0, y: 0, rotate: 0 } : stackedPdf}
+            animate={split ? { x: 0, y: 0, rotateX: 0, rotateZ: 0, scale: 1 } : stackedPdf}
             transition={transition}
           >
             <LayerLabel>{t.pdfLayer}</LayerLabel>
-            <div className="mt-3 rounded-[2px] border border-hairline bg-white p-6 shadow-[0_18px_40px_-24px_rgb(14_14_14/0.25)]">
+            <div className="mt-4 rounded-[18px] border border-hairline bg-white p-7 shadow-[0_1px_0_#fff_inset,0_30px_60px_-30px_rgb(15_42_34/0.35)]">
               <div className="flex items-baseline justify-between">
                 <span className="font-serif text-[20px]">Muster GmbH</span>
                 <span className="mono-label text-muted">{t.pdfTitle}</span>
@@ -137,8 +138,8 @@ export function LayerDiagram({ t }: { t: Messages['how']['diagram'] }) {
                   ) : (
                     <div
                       key={i}
-                      className={`-mx-2 flex justify-between gap-4 rounded-[2px] px-2 py-[3px] transition-colors duration-500 ${
-                        split && r.f === field ? 'bg-engrave-cream' : ''
+                      className={`-mx-2 flex justify-between gap-4 rounded-md px-2 py-[3px] transition-colors duration-500 ${
+                        split && r.f === field ? 'bg-gold-soft/45' : ''
                       } ${r.strong ? 'font-medium' : ''}`}
                     >
                       <span className={r.r ? 'text-muted' : 'text-muted'}>{r.l}</span>
@@ -154,17 +155,17 @@ export function LayerDiagram({ t }: { t: Messages['how']['diagram'] }) {
           <m.div
             className="relative min-w-0"
             initial={false}
-            animate={split ? { x: 0, y: 0, rotate: 0, opacity: 1 } : stackedXml}
+            animate={split ? { x: 0, y: 0, rotateX: 0, rotateZ: 0, scale: 1, opacity: 1 } : stackedXml}
             transition={transition}
           >
             <LayerLabel>{t.xmlLayer}</LayerLabel>
-            <div className="mt-3 overflow-hidden rounded-[2px] border border-hairline bg-[#FDFCF9] py-5 shadow-[0_18px_40px_-24px_rgb(31_58_122/0.3)]">
+            <div className="mt-4 overflow-hidden rounded-[18px] border border-white/10 bg-midnight py-6 shadow-[0_30px_60px_-30px_rgb(11_31_25/0.7)]">
               <pre className="font-mono text-[11px] leading-[1.85] sm:text-[11.5px]" aria-hidden="true">
                 {XML_ROWS.map((r, i) => (
                   <div
                     key={i}
                     className={`overflow-hidden border-l-2 px-5 text-ellipsis whitespace-nowrap transition-colors duration-500 ${
-                      split && r.f === field ? 'border-engrave-ink bg-engrave-cream/70' : 'border-transparent'
+                      split && r.f === field ? 'border-gold bg-gold/15' : 'border-transparent'
                     }`}
                   >
                     <XmlLine text={r.t} />
@@ -182,7 +183,7 @@ export function LayerDiagram({ t }: { t: Messages['how']['diagram'] }) {
 function LayerLabel({ children }: { children: React.ReactNode }) {
   return (
     <p className="flex items-center gap-2 font-mono text-[12px] tracking-[0.04em] text-ink">
-      <span className="h-px w-6 bg-ink" aria-hidden="true" />
+      <span className="h-px w-6 bg-gold" aria-hidden="true" />
       {children}
     </p>
   )

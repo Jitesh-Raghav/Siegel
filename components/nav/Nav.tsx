@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { CtaButton } from '@/components/ui/CtaButton'
 import { localePath, type Locale } from '@/lib/i18n'
 import type { Messages } from '@/messages/en'
-import { SealMark } from './SealMark'
+import { LogoMark } from './LogoMark'
 
 function switchLocalePath(pathname: string, to: Locale) {
   const bare = pathname.replace(/^\/de(?=\/|$)/, '') || '/'
@@ -34,21 +34,30 @@ export function Nav({ locale, t }: { locale: Locale; t: Messages['nav'] }) {
   ]
 
   return (
-    <header
-      className={`sticky top-0 z-40 border-b bg-paper/90 backdrop-blur-[6px] transition-colors duration-300 ${
-        scrolled ? 'border-hairline' : 'border-transparent'
-      }`}
-    >
-      <nav className="container-ledger flex h-16 items-center justify-between gap-4" aria-label="Main">
-        <Link href={home} className="flex items-center gap-2.5 rounded-[2px]" aria-label={t.home}>
-          <SealMark size={26} className="text-ink" />
-          <span className="font-serif text-[23px] leading-none tracking-[-0.02em]">Siegel</span>
+    <header className="sticky top-0 z-40 px-3 pt-3 sm:px-4">
+      {/* Full-width and transparent at the top; a floating glass pill once the page scrolls. */}
+      <div
+        className={`mx-auto border transition-[max-width,background-color,border-color,box-shadow,padding,border-radius] duration-500 ease-ledger ${
+          menuOpen ? 'rounded-[26px]' : 'rounded-full'
+        } ${
+          scrolled || menuOpen
+            ? 'max-w-[1100px] border-white/80 bg-paper/75 px-2 shadow-[0_1px_0_rgb(255_255_255/0.8)_inset,0_0_0_1px_var(--hairline),0_18px_40px_-20px_rgb(15_42_34/0.35)] backdrop-blur-xl sm:px-3'
+            : 'max-w-[calc(var(--content)+var(--gutter)*2)] border-transparent bg-transparent px-[calc(var(--gutter)-12px)] sm:px-[calc(var(--gutter)-16px)]'
+        }`}
+      >
+      <nav className="flex h-14 items-center justify-between gap-4 pl-3" aria-label="Main">
+        <Link href={home} className="group flex items-center gap-2.5 rounded-full" aria-label={t.home}>
+          <LogoMark size={28} className="transition-transform duration-500 ease-ledger group-hover:-rotate-6" />
+          <span className="font-serif text-[26px] leading-none tracking-[-0.02em]">Siegel</span>
         </Link>
 
         <ul className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
             <li key={l.href}>
-              <a href={l.href} className="text-[14px] text-muted transition-colors hover:text-ink">
+              <a
+                href={l.href}
+                className="relative py-1 text-[14px] text-muted transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-gold after:transition-transform after:duration-500 after:ease-ledger hover:text-ink hover:after:scale-x-100"
+              >
                 {l.label}
               </a>
             </li>
@@ -70,12 +79,12 @@ export function Nav({ locale, t }: { locale: Locale; t: Messages['nav'] }) {
             <span
               id="login-soon"
               role="tooltip"
-              className="pointer-events-none absolute top-full left-1/2 mt-1 -translate-x-1/2 rounded-[2px] bg-ink px-2 py-1 font-mono text-[11px] whitespace-nowrap text-paper opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100"
+              className="pointer-events-none absolute top-full left-1/2 mt-1 -translate-x-1/2 rounded-md bg-ink px-2 py-1 font-mono text-[11px] whitespace-nowrap text-paper opacity-0 transition-opacity group-focus-within:opacity-100 group-hover:opacity-100"
             >
               {t.soon}
             </span>
           </span>
-          <CtaButton location="nav" className="hidden sm:inline-flex">
+          <CtaButton location="nav" size="sm" attract className="hidden sm:inline-flex">
             {t.cta}
           </CtaButton>
           <button
@@ -97,8 +106,8 @@ export function Nav({ locale, t }: { locale: Locale; t: Messages['nav'] }) {
         </div>
       </nav>
 
-      <div id="mobile-menu" hidden={!menuOpen} className="border-t border-hairline bg-paper md:hidden">
-        <ul className="container-ledger flex flex-col py-2">
+      <div id="mobile-menu" hidden={!menuOpen} className="border-t border-hairline px-3 md:hidden">
+        <ul className="flex flex-col py-2">
           {links.map((l) => (
             <li key={l.href}>
               <a
@@ -116,6 +125,7 @@ export function Nav({ locale, t }: { locale: Locale; t: Messages['nav'] }) {
             </CtaButton>
           </li>
         </ul>
+      </div>
       </div>
     </header>
   )

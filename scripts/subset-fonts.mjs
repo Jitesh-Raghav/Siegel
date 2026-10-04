@@ -1,10 +1,10 @@
 // Builds the self-hosted, subset webfonts in app/fonts/. Run once (or after adding new characters):
 //   node scripts/subset-fonts.mjs
 //
-// - Newsreader (OFL, Google Fonts): weight pinned to 400, optical-size axis kept (24–72, the sizes the site uses).
+// - Instrument Serif (OFL, Google Fonts): regular and italic, the display face.
 // - Geist Sans (OFL): weight range limited to 400–500.
 // - Geist Mono (OFL): weight pinned to 400.
-// All three are reduced to the characters the site actually uses. This roughly halves the font
+// All are reduced to the characters the site actually uses. This roughly halves the font
 // payload, which is the biggest lever on Lighthouse's simulated LCP.
 import { readFileSync, readdirSync, statSync, writeFileSync, mkdirSync } from 'node:fs'
 import { join } from 'node:path'
@@ -35,14 +35,15 @@ function collectText() {
   return [...chars].filter((ch) => ch.codePointAt(0) >= 0x20).join('')
 }
 
-async function newsreaderSource() {
-  // A modern user agent gets the variable woff2 files, split by script; take the latin block.
-  const ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36'
-  const css = await (
-    await fetch('https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,200..800', { headers: { 'User-Agent': ua } })
-  ).text()
-  const url = css.match(/\/\* latin \*\/[^}]*?src: url\((.+?)\) format\('woff2'\)/)?.[1]
-  if (!url) throw new Error('Could not find the Newsreader latin woff2 URL')
+const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36'
+
+/** Google Fonts woff2 for one style; with a modern UA the CSS is split by script, take the latin block. */
+async function googleFont(family, style) {
+  const css = await (await fetch(`https://fonts.googleapis.com/css2?family=${family}`, { headers: { 'User-Agent': UA } })).text()
+  // The basic latin block is the one whose unicode-range starts at U+0000-00FF.
+  const block = css.split('@font-face').find((b) => b.includes(`font-style: ${style}`) && b.includes('U+0000-00FF'))
+  const url = block?.match(/src: url\((.+?)\) format\('woff2'\)/)?.[1]
+  if (!url) throw new Error(`Could not find the ${family} ${style} latin woff2 URL`)
   return Buffer.from(await (await fetch(url)).arrayBuffer())
 }
 
@@ -50,13 +51,14 @@ const text = collectText()
 const geist = 'node_modules/geist/dist/fonts'
 
 const jobs = [
-  { out: 'newsreader.woff2', src: await newsreaderSource(), axes: { wght: 400, opsz: { min: 24, max: 72 } } },
+  { out: 'instrument-serif.woff2', src: await googleFont('Instrument+Serif:ital@0;1', 'normal') },
+  { out: 'instrument-serif-italic.woff2', src: await googleFont('Instrument+Serif:ital@0;1', 'italic') },
   { out: 'geist-sans.woff2', src: readFileSync(`${geist}/geist-sans/Geist-Variable.woff2`), axes: { wght: { min: 400, max: 500 } } },
   { out: 'geist-mono.woff2', src: readFileSync(`${geist}/geist-mono/GeistMono-Variable.woff2`), axes: { wght: 400 } },
 ]
 
 for (const job of jobs) {
-  const buf = await subsetFont(job.src, text, { targetFormat: 'woff2', variationAxes: job.axes })
+  const buf = await subsetFont(job.src, text, { targetFormat: 'woff2', ...(job.axes && { variationAxes: job.axes }) })
   writeFileSync(join(OUT, job.out), buf)
   console.log(`${job.out}: ${(job.src.length / 1024).toFixed(0)} KB → ${(buf.length / 1024).toFixed(0)} KB`)
 }

@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og'
-import { SEAL_EDGE, SEAL_S } from '@/components/nav/SealMark'
+import { MARK } from '@/components/nav/LogoMark'
 import { getMessages, isLocale } from '@/lib/i18n'
 
 export const size = { width: 1200, height: 630 }
@@ -9,7 +9,7 @@ export const alt = 'Siegel — validated German e-invoices for Stripe'
 async function loadSerif(): Promise<ArrayBuffer | null> {
   try {
     // Without a browser UA, Google Fonts serves TrueType, which the OG renderer accepts.
-    const css = await (await fetch('https://fonts.googleapis.com/css2?family=Newsreader:opsz@72&display=swap')).text()
+    const css = await (await fetch('https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap')).text()
     const url = css.match(/src: url\((.+?)\) format\('(?:truetype|opentype)'\)/)?.[1]
     return url ? await (await fetch(url)).arrayBuffer() : null
   } catch {
@@ -21,7 +21,7 @@ export default async function OgImage({ params }: { params: Promise<{ locale: st
   const { locale } = await params
   const t = getMessages(isLocale(locale) ? locale : 'en')
   const serif = await loadSerif()
-  const [a, b] = [t.hero.h1a, t.hero.h1b]
+  const [a, b] = [t.hero.h1a, t.hero.h1b.replace(/⁠/g, '')]
 
   return new ImageResponse(
     (
@@ -32,29 +32,35 @@ export default async function OgImage({ params }: { params: Promise<{ locale: st
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-start',
-          background: '#FBFBF8',
+          background: '#F3F0E6',
           padding: '64px 72px 176px',
           position: 'relative',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <svg width="48" height="48" viewBox="0 0 32 32">
-            <path d={SEAL_EDGE} fill="#0E0E0E" />
-            <circle cx="16" cy="16" r="11.6" fill="none" stroke="#FBFBF8" strokeWidth="0.8" />
-            <path d={SEAL_S} fill="#FBFBF8" />
+          <svg width="52" height="52" viewBox="0 0 32 32">
+            <path d={MARK.sheet} fill="#0F2A22" />
+            <path d={MARK.fold} fill="#C79B57" />
+            {MARK.dots.map(([x, y]) => (
+              <circle key={`${x}-${y}`} cx={x} cy={y} r="0.7" fill="#0F2A22" />
+            ))}
+            {[...MARK.lines, MARK.lastLine].map((d) => (
+              <path key={d} d={d} stroke="#F3F0E6" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+            ))}
+            <rect x={MARK.cell.x} y={MARK.cell.y} width={MARK.cell.w} height={MARK.cell.h} rx={MARK.cell.r} fill="#C79B57" />
           </svg>
-          <span style={{ fontSize: 40, fontFamily: serif ? 'Newsreader' : 'serif', letterSpacing: '-0.02em' }}>Siegel</span>
+          <span style={{ fontSize: 40, fontFamily: serif ? 'Instrument Serif' : 'serif', letterSpacing: '-0.02em' }}>Siegel</span>
         </div>
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
-            fontSize: 56,
+            fontSize: 72,
             marginTop: 'auto',
             lineHeight: 1.05,
             letterSpacing: '-0.02em',
-            color: '#0E0E0E',
-            fontFamily: serif ? 'Newsreader' : 'serif',
+            color: '#0F2A22',
+            fontFamily: serif ? 'Instrument Serif' : 'serif',
           }}
         >
           <span>{a}</span>
@@ -67,15 +73,15 @@ export default async function OgImage({ params }: { params: Promise<{ locale: st
               key={i}
               style={{ height: 4, display: 'flex', alignItems: 'center' }}
             >
-              <div style={{ width: '100%', height: 0.6 + (i / 29) * 2.6, background: '#1F3A7A', opacity: 0.25 + (i / 29) * 0.75 }} />
+              <div style={{ width: '100%', height: 0.6 + (i / 29) * 2.6, background: '#17382D', opacity: 0.25 + (i / 29) * 0.75 }} />
             </div>
           ))}
         </div>
-        <div style={{ display: 'flex', marginTop: 28, fontSize: 20, color: '#1F3A7A', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+        <div style={{ display: 'flex', marginTop: 28, fontSize: 20, color: '#74552A', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
           ZUGFeRD · XRechnung · EN 16931
         </div>
       </div>
     ),
-    { ...size, fonts: serif ? [{ name: 'Newsreader', data: serif, style: 'normal', weight: 400 }] : undefined },
+    { ...size, fonts: serif ? [{ name: 'Instrument Serif', data: serif, style: 'normal', weight: 400 }] : undefined },
   )
 }

@@ -5,24 +5,31 @@ import { LayerDiagram } from './LayerDiagram'
 
 export function HowItWorks({ t }: { t: Messages['how'] }) {
   return (
-    <section id="how-it-works" data-section="how" className="section border-t border-hairline" aria-labelledby="how-title">
+    <section
+      id="how-it-works"
+      data-section="how"
+      className="section relative border-t border-hairline bg-paper-2/60 defer-render"
+      aria-labelledby="how-title"
+    >
       <div className="container-ledger">
-        <SectionHeader id="how-title" eyebrow={t.eyebrow} title={t.h2} />
+        <SectionHeader id="how-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} />
 
-        <ol className="mt-14 grid gap-10 md:grid-cols-3 md:gap-0">
-          {t.steps.map((s, i) => (
-            <li
-              key={s.n}
-              className={`md:px-8 ${i === 0 ? 'md:pl-0' : 'md:border-l md:border-hairline'} ${i === 2 ? 'md:pr-0' : ''}`}
-              {...reveal(2 + i)}
-            >
-              <StepIcon index={i} />
-              <p className="mt-6 font-mono text-[12px] tracking-[0.06em] text-muted">{s.n}</p>
-              <h3 className="h3 mt-2">{s.title}</h3>
-              <p className="lede mt-3 max-w-[36ch]">{s.body}</p>
-            </li>
-          ))}
-        </ol>
+        <div className="relative mt-16">
+          <ol className="relative grid gap-5 md:grid-cols-3 md:gap-6">
+            {t.steps.map((s, i) => (
+              <li key={s.n} className="surface spotlight group relative p-7 sm:p-8" {...reveal(2 + i)}>
+                <div className="flex items-start justify-between">
+                  <div className="grid size-[60px] place-items-center rounded-2xl border border-hairline bg-paper shadow-[0_1px_0_#fff_inset]">
+                    <StepIcon index={i} />
+                  </div>
+                  <span className="accent foil-text text-[56px] leading-none">{s.n}</span>
+                </div>
+                <h3 className="h3 mt-8">{s.title}</h3>
+                <p className="lede mt-3 max-w-[36ch] text-[16px]">{s.body}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
 
         <LayerDiagram t={t.diagram} />
       </div>
@@ -34,7 +41,7 @@ export function HowItWorks({ t }: { t: Messages['how'] }) {
 function StepIcon({ index }: { index: number }) {
   const id = `hatch-${index}`
   return (
-    <svg width="72" height="56" viewBox="0 0 72 56" aria-hidden="true" className="text-engrave-ink">
+    <svg width="42" height="33" viewBox="0 0 72 56" aria-hidden="true" className="text-engrave-ink">
       <defs>
         <pattern id={id} width="3" height="3" patternUnits="userSpaceOnUse">
           <path d="M0 1.5h3" stroke="currentColor" strokeWidth="0.9" />

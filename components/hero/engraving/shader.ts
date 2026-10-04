@@ -22,6 +22,8 @@ uniform float uGrain;     // paper grain amount (0 for exports: keeps the PNG sm
 uniform vec3 uInk;
 uniform vec3 uCream;
 uniform vec3 uPaper;
+uniform vec2 uLevels;      // source black / white points (auto-levels for photos)
+uniform float uInvert;     // 1 = white-line engraving on a dark ground
 
 out vec4 outColor;
 
@@ -85,8 +87,11 @@ void main() {
   L += luma(tex(uv + t)) + luma(tex(uv - t))
      + luma(tex(uv + vec2(t.x, -t.y))) + luma(tex(uv + vec2(-t.x, t.y)));
   L /= 16.0;
-  L = smoothstep(0.04, 0.96, L);
-  float dark = pow(1.0 - L, 1.45);
+  L = clamp((L - uLevels.x) / max(uLevels.y - uLevels.x, 0.05), 0.0, 1.0);
+  L = smoothstep(0.02, 0.98, L);
+  // tone = how light the paper stays. On a dark ground the lines carry the light instead.
+  L = mix(L, 1.0 - L, uInvert);
+  float dark = pow(1.0 - L, 1.6);
 
   // Broad tone (mip-blurred) bends the line phase so strokes follow forms, like a burin.
   float broad = luma(texLod(uv, 5.0));

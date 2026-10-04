@@ -1,22 +1,56 @@
 @import 'tailwindcss';
 
 /* ---------------------------------------------------------------------------
-   Design tokens — "The Engraved Ledger"
+   Design tokens — "Refined Ledger"
+   Deep navy ink on warm ivory, with a muted gold-foil accent.
    ------------------------------------------------------------------------- */
 :root {
-  --paper: #fbfbf8;
-  --ink: #0e0e0e;
-  --muted: #5f5f5a;
-  --hairline: #e7e5df;
-  --engrave-ink: #1f3a7a;
-  --engrave-cream: #f2e8cc;
-  --engrave-paper: #faf6ea;
-  --verified: #15803d;
+  --paper: #f3f0e6;
+  --paper-2: #e9e5d7;
+  --ink: #0f2a22;
+  --ink-2: #1a3a2f;
+  --muted: #56625b;
+  --hairline: #ddd8c8;
+  --hairline-strong: #c9c1ab;
+
+  --engrave-ink: #17382d;
+  --engrave-cream: #e6dcc0;
+  --engrave-paper: #f5f1e4;
+
+  --midnight: #0b1f19;
+  --midnight-2: #12291f;
+  --on-dark: #f1ede2;
+  --on-dark-muted: #a9b5ad;
+
+  --gold: #b4894a;
+  --gold-deep: #74552a;
+  --gold-soft: #d8be8e;
+  --verified: #2e7d4f;
+  --danger: #b42318;
+
+  /* Bright foil for dark surfaces and ornament; deep foil for text on ivory (readable bronze). */
+  --foil: linear-gradient(115deg, #8c6a3a 0%, #e2c893 32%, #a47e46 52%, #f0dfb2 70%, #9a7442 100%);
+  --foil-deep: linear-gradient(115deg, #5e4520 0%, #8f6d38 35%, #6b4e22 55%, #9c7a44 75%, #5e4520 100%);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.36, 0.64, 1);
   --content: 1200px;
   --gutter: 20px;
-  --section-y: clamp(72px, 9vw, 120px);
+  --section-y: clamp(88px, 11vw, 148px);
+  --radius: 14px;
+
+  /* Foreground roles that flip on dark bands (used by the waitlist form). */
+  --fg: var(--ink);
+  --fg-muted: var(--muted);
+  --fg-error: var(--danger);
+  --fg-rule: var(--hairline);
+  --radius-lg: 22px;
+
+  --shadow-soft:
+    0 1px 0 rgb(255 255 255 / 0.7) inset, 0 1px 2px rgb(15 42 34 / 0.04), 0 12px 28px -14px rgb(15 42 34 / 0.16);
+  --shadow-lift:
+    0 1px 0 rgb(255 255 255 / 0.8) inset, 0 2px 4px rgb(15 42 34 / 0.04), 0 24px 48px -20px rgb(15 42 34 / 0.22),
+    0 48px 96px -48px rgb(23 56 45 / 0.3);
 }
 
 @media (min-width: 768px) {
@@ -27,15 +61,26 @@
 
 @theme inline {
   --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
   --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
   --color-muted: var(--muted);
   --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
   --color-engrave-ink: var(--engrave-ink);
   --color-engrave-cream: var(--engrave-cream);
   --color-engrave-paper: var(--engrave-paper);
+  --color-midnight: var(--midnight);
+  --color-midnight-2: var(--midnight-2);
+  --color-on-dark: var(--on-dark);
+  --color-on-dark-muted: var(--on-dark-muted);
+  --color-gold: var(--gold);
+  --color-gold-deep: var(--gold-deep);
+  --color-gold-soft: var(--gold-soft);
   --color-verified: var(--verified);
+  --color-danger: var(--danger);
 
-  --font-serif: var(--font-newsreader), ui-serif, Georgia, serif;
+  --font-serif: var(--font-instrument), 'Times New Roman', ui-serif, Georgia, serif;
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, 'SFMono-Regular', monospace;
 
@@ -43,15 +88,12 @@
 }
 
 @layer base {
-  /* ---------------------------------------------------------------------------
-     Base
-     ------------------------------------------------------------------------- */
   html {
     background: var(--paper);
     color: var(--ink);
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
-    scroll-padding-top: 80px;
+    scroll-padding-top: 96px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -79,44 +121,59 @@
     inset: 0;
     z-index: 60;
     pointer-events: none;
-    opacity: 0.025;
+    opacity: 0.03;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.4 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
+  /* Tailwind v4's reset gives buttons the default arrow; every interactive element gets a pointer. */
+  button:not(:disabled):not([aria-disabled='true']),
+  [role='button'],
+  summary,
+  select,
+  label:has(> input[type='radio']),
+  label:has(> input[type='checkbox']),
+  input[type='radio'],
+  input[type='checkbox'] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled='true'] {
+    cursor: not-allowed;
+  }
+
   ::selection {
-    background: var(--engrave-cream);
+    background: var(--gold-soft);
     color: var(--ink);
   }
 
   :focus-visible {
     outline: 2px solid var(--engrave-ink);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: 6px;
   }
 }
 
 /* Component classes live in the components layer so Tailwind utilities can override them. */
 @layer components {
-  /* ---------------------------------------------------------------------------
-     Typography helpers
-     ------------------------------------------------------------------------- */
+  /* -------------------------------------------------------------------------
+     Typography
+     ----------------------------------------------------------------------- */
   .display {
     font-family: var(--font-serif);
     font-weight: 400;
-    font-optical-sizing: auto;
-    letter-spacing: -0.02em;
-    font-size: clamp(44px, 6vw, 76px);
-    line-height: 1.05;
+    letter-spacing: -0.022em;
+    font-size: clamp(50px, 7.4vw, 100px);
+    line-height: 0.98;
     text-wrap: balance;
   }
 
   .h2 {
     font-family: var(--font-serif);
     font-weight: 400;
-    font-optical-sizing: auto;
     letter-spacing: -0.02em;
-    font-size: clamp(34px, 4.2vw, 52px);
-    line-height: 1.08;
+    font-size: clamp(40px, 5.2vw, 68px);
+    line-height: 1;
     text-wrap: balance;
   }
 
@@ -124,8 +181,56 @@
     font-family: var(--font-serif);
     font-weight: 400;
     letter-spacing: -0.01em;
-    font-size: 24px;
-    line-height: 1.2;
+    font-size: 30px;
+    line-height: 1.08;
+  }
+
+  .accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    letter-spacing: -0.01em;
+  }
+
+  /* Foil text: deep bronze on ivory (readable), bright foil on dark. */
+  .foil-text {
+    background: var(--foil-deep);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    padding-right: 0.06em;
+  }
+
+  .on-dark .foil-text,
+  .foil-text-bright {
+    background-image: var(--foil);
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    transform: rotate(45deg);
+    background: var(--foil);
+    box-shadow: 0 0 0 3px rgb(180 137 74 / 0.14);
+  }
+
+  .on-dark .eyebrow {
+    color: var(--on-dark-muted);
   }
 
   .label {
@@ -134,15 +239,15 @@
     line-height: 1.4;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
   }
 
   .mono-label {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 11.5px;
     line-height: 1.4;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.1em;
   }
 
   .tabular {
@@ -154,9 +259,13 @@
     text-wrap: pretty;
   }
 
-  /* ---------------------------------------------------------------------------
-     Layout
-     ------------------------------------------------------------------------- */
+  .on-dark .lede {
+    color: var(--on-dark-muted);
+  }
+
+  /* -------------------------------------------------------------------------
+     Layout & surfaces
+     ----------------------------------------------------------------------- */
   .container-ledger {
     width: 100%;
     max-width: calc(var(--content) + var(--gutter) * 2);
@@ -168,40 +277,141 @@
     padding-block: var(--section-y);
   }
 
+  /* Below-the-fold sections: skip style, layout and paint until they near the viewport. */
+  .defer-render {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1100px;
+  }
+
   .rule {
     height: 1px;
     background: var(--hairline);
     transform-origin: left center;
   }
 
-  /* ---------------------------------------------------------------------------
+  .foil-rule {
+    height: 1px;
+    background: var(--foil);
+    transform-origin: left center;
+  }
+
+  .surface {
+    background: rgb(255 255 255 / 0.62);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .glass {
+    background: rgb(255 255 255 / 0.78);
+    -webkit-backdrop-filter: blur(12px) saturate(1.3);
+    backdrop-filter: blur(12px) saturate(1.3);
+    border: 1px solid rgb(255 255 255 / 0.75);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .glass-dark {
+    background: rgb(255 255 255 / 0.045);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgb(255 255 255 / 0.1);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.06) inset,
+      0 40px 80px -40px rgb(0 0 0 / 0.6);
+  }
+
+  /* Pointer-following highlight. A delegated listener in components/Analytics.tsx sets --mx / --my. */
+  .spotlight {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .spotlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: radial-gradient(
+      460px circle at var(--mx, 50%) var(--my, 0%),
+      rgb(216 190 142 / 0.28),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 500ms var(--ease);
+    pointer-events: none;
+  }
+
+  .spotlight::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), rgb(180 137 74 / 0.85), transparent 70%);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 500ms var(--ease);
+    pointer-events: none;
+  }
+
+  .spotlight:hover::before,
+  .spotlight:hover::after {
+    opacity: 1;
+  }
+
+  /* Dark band (final CTA, footer) */
+  .on-dark {
+    --fg: var(--on-dark);
+    --fg-muted: var(--on-dark-muted);
+    --fg-error: #f4a99f;
+    --fg-rule: rgb(255 255 255 / 0.12);
+    background:
+      radial-gradient(900px 420px at 80% -10%, rgb(180 137 74 / 0.12), transparent 60%),
+      radial-gradient(800px 500px at 0% 110%, rgb(23 56 45 / 0.55), transparent 60%),
+      var(--midnight);
+    color: var(--on-dark);
+  }
+
+  /* -------------------------------------------------------------------------
      Buttons
-     ------------------------------------------------------------------------- */
+     ----------------------------------------------------------------------- */
   .btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    height: 44px;
-    padding-inline: 20px;
-    border-radius: 2px;
+    gap: 10px;
+    height: 48px;
+    padding-inline: 24px;
+    border-radius: 999px;
     font-family: var(--font-sans);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.005em;
     white-space: nowrap;
     cursor: pointer;
     user-select: none;
+    overflow: hidden;
+    isolation: isolate;
     transition:
-      background-color 180ms var(--ease),
-      border-color 180ms var(--ease),
-      color 180ms var(--ease),
-      transform 120ms var(--ease);
+      background-color 220ms var(--ease),
+      border-color 220ms var(--ease),
+      color 220ms var(--ease),
+      box-shadow 320ms var(--ease),
+      transform 160ms var(--ease);
+  }
+
+  .btn:hover:not(:disabled) {
+    transform: translateY(-1px);
   }
 
   .btn:active:not(:disabled) {
-    transform: scale(0.98);
+    transform: translateY(0) scale(0.98);
   }
 
   .btn:focus-visible {
@@ -214,29 +424,135 @@
     opacity: 0.55;
   }
 
+  .btn .btn-arrow {
+    transition: transform 320ms var(--ease);
+  }
+
+  .btn:hover .btn-arrow {
+    transform: translateX(3px);
+  }
+
+  /* Gold sheen sweeping across on hover */
+  .btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(110deg, transparent 30%, rgb(240 223 178 / 0.35) 48%, transparent 66%);
+    transform: translateX(-120%);
+    transition: transform 900ms var(--ease);
+    pointer-events: none;
+  }
+
+  .btn:hover::after {
+    transform: translateX(120%);
+  }
+
   .btn-primary {
-    background: var(--ink);
-    color: var(--paper);
+    background: linear-gradient(180deg, #1d4033 0%, var(--ink) 100%);
+    color: var(--on-dark);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.14) inset,
+      0 0 0 1px rgb(15 42 34 / 0.9),
+      0 10px 24px -10px rgb(15 42 34 / 0.55);
   }
 
   .btn-primary:hover:not(:disabled) {
-    background: #000;
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.18) inset,
+      0 0 0 1px rgb(15 42 34 / 0.9),
+      0 0 0 4px rgb(180 137 74 / 0.18),
+      0 14px 30px -12px rgb(15 42 34 / 0.6);
   }
 
   .btn-secondary {
-    background: var(--paper);
+    background: rgb(255 255 255 / 0.66);
     color: var(--ink);
-    border: 1px solid rgb(14 14 14 / 0.15);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.9) inset,
+      0 0 0 1px var(--hairline-strong);
   }
 
   .btn-secondary:hover:not(:disabled) {
-    background: #f1f0eb;
-    border-color: rgb(14 14 14 / 0.28);
+    background: #fff;
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.9) inset,
+      0 0 0 1px var(--gold);
   }
 
-  /* ---------------------------------------------------------------------------
-     Texture: hero margin hairlines and banner ticks
-     ------------------------------------------------------------------------- */
+  .btn-gold {
+    background: var(--foil);
+    background-size: 160% 100%;
+    color: var(--ink);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.4) inset,
+      0 10px 30px -12px rgb(180 137 74 / 0.65);
+    transition:
+      background-position 800ms var(--ease),
+      box-shadow 320ms var(--ease),
+      transform 160ms var(--ease);
+  }
+
+  .btn-gold:hover:not(:disabled) {
+    background-position: 100% 0;
+  }
+
+  .btn-sm {
+    height: 40px;
+    padding-inline: 18px;
+    font-size: 13px;
+  }
+
+  /* -------------------------------------------------------------------------
+     Banknote framing, microprint, textures
+     ----------------------------------------------------------------------- */
+  .note-frame {
+    position: relative;
+    padding: 7px;
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.7), rgb(255 255 255 / 0.35));
+    box-shadow:
+      0 0 0 1px var(--hairline-strong),
+      var(--shadow-lift);
+  }
+
+  .note-frame::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 17px;
+    border: 1px solid rgb(180 137 74 / 0.35);
+    pointer-events: none;
+  }
+
+  .on-dark .note-frame {
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.06), rgb(255 255 255 / 0.02));
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 0.1),
+      0 40px 80px -40px rgb(0 0 0 / 0.7);
+  }
+
+  /* Text lives in a pseudo-element: it's ornament, not content. */
+  .microprint::before {
+    content: attr(data-text);
+  }
+
+  .microprint {
+    font-family: var(--font-mono);
+    font-size: 7.5px;
+    line-height: 1;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    color: rgb(23 56 45 / 0.55);
+    user-select: none;
+  }
+
+  .on-dark .microprint {
+    color: rgb(216 190 142 / 0.45);
+  }
+
   .margin-hairlines {
     position: relative;
   }
@@ -245,14 +561,14 @@
   .margin-hairlines::after {
     content: '';
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: 6%;
+    bottom: 6%;
     width: calc((100vw - 100%) / 2);
     pointer-events: none;
     background-image: repeating-linear-gradient(
       to bottom,
-      rgb(14 14 14 / 0.06) 0,
-      rgb(14 14 14 / 0.06) 1px,
+      rgb(23 56 45 / 0.09) 0,
+      rgb(23 56 45 / 0.09) 1px,
       transparent 1px,
       transparent 6px
     );
@@ -260,24 +576,23 @@
 
   .margin-hairlines::before {
     right: 100%;
-    -webkit-mask-image: linear-gradient(to left, #000 0%, #000 30%, transparent 100%);
-    mask-image: linear-gradient(to left, #000 0%, #000 30%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to left, #000 0%, #000 25%, transparent 100%);
+    mask-image: linear-gradient(to left, #000 0%, #000 25%, transparent 100%);
   }
 
   .margin-hairlines::after {
     left: 100%;
-    -webkit-mask-image: linear-gradient(to right, #000 0%, #000 30%, transparent 100%);
-    mask-image: linear-gradient(to right, #000 0%, #000 30%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, #000 0%, #000 25%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 0%, #000 25%, transparent 100%);
   }
 
-  .banner-ticks {
-    height: 10px;
+  .hatch {
     background-image: repeating-linear-gradient(
-      to right,
-      rgb(14 14 14 / 0.28) 0,
-      rgb(14 14 14 / 0.28) 1px,
+      -45deg,
+      rgb(23 56 45 / 0.16) 0,
+      rgb(23 56 45 / 0.16) 1px,
       transparent 1px,
-      transparent 12px
+      transparent 5px
     );
   }
 
@@ -285,33 +600,74 @@
   .engrave-fallback {
     background-color: var(--engrave-paper);
     background-image:
-      linear-gradient(to bottom, transparent 45%, rgb(31 58 122 / 0.08) 100%),
+      linear-gradient(to bottom, transparent 45%, rgb(23 56 45 / 0.1) 100%),
       repeating-linear-gradient(
         to bottom,
-        rgb(31 58 122 / 0.22) 0,
-        rgb(31 58 122 / 0.22) 1px,
+        rgb(23 56 45 / 0.22) 0,
+        rgb(23 56 45 / 0.22) 1px,
         transparent 1px,
         transparent 3px
       );
   }
 
-  /* ---------------------------------------------------------------------------
+  .on-dark .engrave-fallback {
+    background-color: var(--midnight);
+    background-image:
+      linear-gradient(to bottom, rgb(11 31 25 / 0.4), transparent 60%),
+      repeating-linear-gradient(
+        to bottom,
+        rgb(216 190 142 / 0.22) 0,
+        rgb(216 190 142 / 0.22) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+  }
+
+  /* Marquee (standards strip on small screens) */
+  .marquee {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent);
+  }
+
+  .marquee-track {
+    animation: marquee 38s linear infinite;
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+
+  /* -------------------------------------------------------------------------
      Reveal system. Content is visible by default; only hidden when JS is on.
-     ------------------------------------------------------------------------- */
+     ----------------------------------------------------------------------- */
   html.js [data-reveal] {
     opacity: 0;
-    transform: translate3d(0, 12px, 0);
+    transform: translate3d(0, 18px, 0);
     transition:
-      opacity 700ms var(--ease),
-      transform 700ms var(--ease);
-    transition-delay: calc(var(--i, 0) * 60ms);
+      opacity 900ms var(--ease),
+      transform 900ms var(--ease);
+    transition-delay: calc(var(--i, 0) * 70ms);
   }
 
   html.js [data-reveal='rule'] {
     opacity: 1;
     transform: scaleX(0);
-    transition: transform 800ms var(--ease);
-    transition-delay: calc(var(--i, 0) * 60ms);
+    transition: transform 1200ms var(--ease);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
+
+  html.js [data-reveal='word'] {
+    display: inline-block;
+    transform: translate3d(0, 0.4em, 0);
+    transition-delay: calc(var(--i, 0) * 70ms + var(--w, 0) * 38ms);
   }
 
   html.js [data-reveal].in {
@@ -321,10 +677,44 @@
 
   @media (prefers-reduced-motion: reduce) {
     html.js [data-reveal],
-    html.js [data-reveal='rule'] {
+    html.js [data-reveal='rule'],
+    html.js [data-reveal='word'] {
       opacity: 1;
       transform: none;
       transition: none;
+    }
+  }
+
+  /* Hero entrance: pure CSS so it never waits on JS (keeps LCP at first paint). */
+  .hero-rise {
+    animation: hero-rise 1000ms var(--ease) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+
+  .hero-word {
+    display: inline-block;
+    animation: hero-word 1100ms var(--ease) both;
+    animation-delay: calc(120ms + var(--w, 0) * 55ms);
+  }
+
+  @keyframes hero-rise {
+    from {
+      opacity: 0.001;
+      transform: translate3d(0, 14px, 0);
+    }
+  }
+
+  @keyframes hero-word {
+    from {
+      opacity: 0.001;
+      transform: translate3d(0, 0.38em, 0) rotate(1.5deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-rise,
+    .hero-word {
+      animation: none;
     }
   }
 
@@ -341,54 +731,54 @@
     border: 0;
   }
 
-  /* ---------------------------------------------------------------------------
-     Form controls
-     ------------------------------------------------------------------------- */
+  /* -------------------------------------------------------------------------
+     Form controls (light and dark)
+     ----------------------------------------------------------------------- */
   .input {
     display: block;
     width: 100%;
-    height: 44px;
-    padding-inline: 12px;
-    border: 1px solid rgb(14 14 14 / 0.15);
-    border-radius: 2px;
-    background: #fff;
+    height: 48px;
+    padding-inline: 14px;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 12px;
+    background: rgb(255 255 255 / 0.85);
     font-size: 16px;
     color: var(--ink);
-    transition: border-color 160ms var(--ease);
+    transition:
+      border-color 200ms var(--ease),
+      box-shadow 200ms var(--ease);
   }
 
   .input::placeholder {
-    color: #9b9a93;
+    color: #8a9189;
   }
 
   .input:hover {
-    border-color: rgb(14 14 14 / 0.3);
+    border-color: #b5ab90;
   }
 
   .input:focus-visible {
-    outline: 2px solid var(--engrave-ink);
-    outline-offset: 0;
+    outline: none;
     border-color: var(--engrave-ink);
+    box-shadow: 0 0 0 4px rgb(23 56 45 / 0.12);
   }
 
   .input[aria-invalid='true'] {
-    border-color: #b42318;
+    border-color: var(--danger);
   }
 
   .segmented {
     display: grid;
-    border: 1px solid rgb(14 14 14 / 0.15);
-    border-radius: 2px;
-    background: #fff;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid var(--hairline-strong);
+    border-radius: 14px;
+    background: rgb(255 255 255 / 0.7);
   }
 
   .segmented label {
     position: relative;
     display: block;
-  }
-
-  .segmented label + label {
-    border-left: 1px solid rgb(14 14 14 / 0.1);
   }
 
   .segmented input {
@@ -402,66 +792,113 @@
   .segmented span {
     display: grid;
     place-items: center;
-    height: 42px;
+    height: 38px;
     padding-inline: 6px;
+    border-radius: 10px;
     font-family: var(--font-mono);
     font-size: 13px;
     color: var(--muted);
     transition:
-      background-color 160ms var(--ease),
-      color 160ms var(--ease);
+      background-color 200ms var(--ease),
+      color 200ms var(--ease),
+      box-shadow 200ms var(--ease);
   }
 
   .segmented input:hover + span {
     color: var(--ink);
-    background: #f4f3ee;
+    background: rgb(15 42 34 / 0.04);
   }
 
   .segmented input:checked + span {
     background: var(--ink);
-    color: var(--paper);
+    color: var(--on-dark);
+    box-shadow: 0 6px 14px -8px rgb(15 42 34 / 0.6);
   }
 
   .segmented input:focus-visible + span {
     outline: 2px solid var(--engrave-ink);
-    outline-offset: -2px;
+    outline-offset: 1px;
   }
 
-  /* ---------------------------------------------------------------------------
+  .on-dark .input {
+    background: rgb(255 255 255 / 0.05);
+    border-color: rgb(255 255 255 / 0.14);
+    color: var(--on-dark);
+  }
+
+  .on-dark .input::placeholder {
+    color: #7f8f86;
+  }
+
+  .on-dark .input:hover {
+    border-color: rgb(255 255 255 / 0.26);
+  }
+
+  .on-dark .input:focus-visible {
+    border-color: var(--gold-soft);
+    box-shadow: 0 0 0 4px rgb(216 190 142 / 0.16);
+  }
+
+  .on-dark .segmented {
+    background: rgb(255 255 255 / 0.04);
+    border-color: rgb(255 255 255 / 0.12);
+  }
+
+  .on-dark .segmented span {
+    color: var(--on-dark-muted);
+  }
+
+  .on-dark .segmented input:hover + span {
+    color: var(--on-dark);
+    background: rgb(255 255 255 / 0.06);
+  }
+
+  .on-dark .segmented input:checked + span {
+    background: var(--foil);
+    color: var(--ink);
+  }
+
+  .on-dark .segmented input:focus-visible + span {
+    outline-color: var(--gold-soft);
+  }
+
+  /* -------------------------------------------------------------------------
      Waitlist dialog
-     ------------------------------------------------------------------------- */
+     ----------------------------------------------------------------------- */
   .waitlist-dialog {
-    width: min(640px, calc(100vw - 24px));
+    width: min(660px, calc(100vw - 24px));
     max-width: none;
     max-height: calc(100dvh - 24px);
     margin: auto;
     padding: 0;
-    border: 1px solid var(--hairline);
-    border-radius: 2px;
-    background: var(--paper);
+    border: 1px solid rgb(255 255 255 / 0.8);
+    border-radius: var(--radius-lg);
+    background: rgb(247 244 236 / 0.96);
     color: var(--ink);
     box-shadow:
-      0 1px 2px rgb(14 14 14 / 0.06),
-      0 24px 64px -16px rgb(14 14 14 / 0.28);
+      0 0 0 1px var(--hairline-strong),
+      0 40px 100px -30px rgb(15 42 34 / 0.45);
     overflow: auto;
   }
 
   .waitlist-dialog::backdrop {
-    background: rgb(14 14 14 / 0.38);
+    background: rgb(11 31 25 / 0.5);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
   }
 
   .waitlist-dialog[open] {
-    animation: dialog-in 420ms var(--ease);
+    animation: dialog-in 520ms var(--ease);
   }
 
   .waitlist-dialog[open]::backdrop {
-    animation: backdrop-in 320ms var(--ease);
+    animation: backdrop-in 360ms var(--ease);
   }
 
   @keyframes dialog-in {
     from {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(14px) scale(0.985);
     }
   }
 
@@ -478,22 +915,52 @@
     }
   }
 
-  /* ---------------------------------------------------------------------------
-     Invoice card
-     ------------------------------------------------------------------------- */
+  /* -------------------------------------------------------------------------
+     Invoice card & seal stamp
+     ----------------------------------------------------------------------- */
   .invoice-card {
-    box-shadow:
-      0 1px 2px rgb(14 14 14 / 0.04),
-      0 12px 32px -12px rgb(14 14 14 / 0.18),
-      0 32px 64px -32px rgb(31 58 122 / 0.22);
     transition:
-      opacity 800ms var(--ease),
-      transform 800ms var(--ease);
+      opacity 1000ms var(--ease),
+      transform 1000ms var(--ease);
   }
 
   html.js .invoice-card[data-phase='idle'] {
     opacity: 0;
-    transform: translate3d(0, 28px, 0);
+    transform: translate3d(0, 36px, 0) scale(0.985);
+  }
+
+  .seal-stamp {
+    transform-origin: 50% 50%;
+  }
+
+  html.js .invoice-card[data-stamped='false'] .seal-stamp {
+    opacity: 0;
+    transform: scale(1.7) rotate(-28deg);
+  }
+
+  html.js .invoice-card[data-stamped='true'] .seal-stamp {
+    animation: stamp 700ms var(--ease-out-back) both;
+  }
+
+  @keyframes stamp {
+    0% {
+      opacity: 0;
+      transform: scale(1.7) rotate(-28deg);
+      filter: blur(2px);
+    }
+    60% {
+      opacity: 1;
+      transform: scale(0.94) rotate(-10deg);
+      filter: none;
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(-12deg);
+    }
+  }
+
+  .seal-stamp {
+    transform: rotate(-12deg);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -501,13 +968,19 @@
       opacity: 1;
       transform: none;
     }
+
+    html.js .invoice-card[data-stamped] .seal-stamp {
+      opacity: 1;
+      animation: none;
+      transform: rotate(-12deg);
+    }
   }
 
-  /* ---------------------------------------------------------------------------
+  /* -------------------------------------------------------------------------
      Engraved banner: poster first, canvas fades in once WebGL has painted.
-     ------------------------------------------------------------------------- */
+     ----------------------------------------------------------------------- */
   .banner-poster {
-    transition: opacity 500ms var(--ease);
+    transition: opacity 600ms var(--ease);
   }
 
   html.js .banner[data-gl='pending'] .banner-poster,
@@ -517,7 +990,7 @@
 
   .banner-canvas {
     opacity: 0;
-    transition: opacity 240ms var(--ease);
+    transition: opacity 300ms var(--ease);
   }
 
   .banner[data-gl='ready'] .banner-canvas {
@@ -536,8 +1009,8 @@
       block-size: 0;
       overflow: hidden;
       transition:
-        block-size 450ms var(--ease),
-        content-visibility 450ms allow-discrete;
+        block-size 520ms var(--ease),
+        content-visibility 520ms allow-discrete;
     }
 
     .faq-item[open]::details-content {
@@ -551,24 +1024,344 @@
     }
   }
 
-  /* -------------------------------------------------------------------------
-     Hero entrance: pure CSS so it never waits on JS (keeps LCP at first paint).
-     ----------------------------------------------------------------------- */
-  .hero-rise {
-    animation: hero-rise 800ms var(--ease) both;
-    animation-delay: calc(var(--i, 0) * 70ms);
+  /* Bento micro-visual animations, started when the tile is revealed (.in). */
+  .tick-in {
+    opacity: 0.25;
+    transition: opacity 500ms var(--ease);
   }
 
-  @keyframes hero-rise {
+  .in .tick-in,
+  html:not(.js) .tick-in {
+    opacity: 1;
+    transition-delay: calc(400ms + var(--k, 0) * 260ms);
+  }
+
+  .bar-fill {
+    transform: scaleY(0.08);
+    transform-origin: bottom;
+    transition: transform 1100ms var(--ease);
+  }
+
+  .in .bar-fill,
+  html:not(.js) .bar-fill {
+    transform: none;
+    transition-delay: calc(300ms + var(--k, 0) * 45ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tick-in,
+    .bar-fill {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* Scroll parallax driven by <Parallax> (--p from −1 to 1) */
+  .parallax-slow {
+    transform: translate3d(0, calc(var(--p, 0) * 34px), 0);
+    will-change: transform;
+  }
+
+  .parallax-fast {
+    transform: translate3d(0, calc(var(--p, 0) * -26px), 0);
+    will-change: transform;
+  }
+
+  /* Hero ambient glow */
+  .hero-glow {
+    background:
+      radial-gradient(closest-side, rgb(216 190 142 / 0.38), transparent),
+      radial-gradient(closest-side at 70% 60%, rgb(23 56 45 / 0.08), transparent);
+  }
+
+  /* Hero annotation callouts: line draws, ring pops, chip rises — in sequence per callout. */
+  .callout-line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 900ms var(--ease);
+    transition-delay: calc(var(--k, 0) * 260ms);
+  }
+
+  .callout-ring,
+  .callout-chip {
+    transition:
+      opacity 700ms var(--ease),
+      transform 700ms var(--ease-out-back);
+  }
+
+  .callout-ring {
+    transition-delay: calc(var(--k, 0) * 260ms);
+  }
+
+  .callout-chip {
+    transition-delay: calc(var(--k, 0) * 260ms + 420ms);
+  }
+
+  html.js .callouts[data-state='idle'] .callout-line {
+    stroke-dashoffset: 1;
+  }
+
+  html.js .callouts[data-state='idle'] .callout-ring {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+
+  html.js .callouts[data-state='idle'] .callout-chip {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.js .callouts[data-state='idle'] .callout-line {
+      stroke-dashoffset: 0;
+    }
+
+    html.js .callouts[data-state='idle'] .callout-ring,
+    html.js .callouts[data-state='idle'] .callout-chip {
+      opacity: 1;
+      transform: none;
+    }
+
+    html.js .callouts[data-state='idle'] .callout-ring {
+      transform: translate(-50%, -50%);
+    }
+
+    .callout-line,
+    .callout-ring,
+    .callout-chip {
+      transition: none;
+    }
+  }
+
+  /* -------------------------------------------------------------------------
+     Waitlist CTAs: an occasional gold sheen, a soft pulse ring on the hero CTA,
+     and an arrow that nudges forward. All off for reduced motion.
+     ----------------------------------------------------------------------- */
+  .btn-attract::after {
+    animation: btn-sheen 6s var(--ease) 2.4s infinite;
+  }
+
+  .btn-attract:hover::after {
+    animation: none;
+  }
+
+  .btn-attract .btn-arrow {
+    animation: arrow-nudge 6s var(--ease) 2.4s infinite;
+  }
+
+  .btn-attract:hover .btn-arrow {
+    animation: none;
+  }
+
+  @keyframes btn-sheen {
+    0%,
+    100% {
+      transform: translateX(-120%);
+    }
+    18% {
+      transform: translateX(120%);
+    }
+    18.01%,
+    99.99% {
+      transform: translateX(120%);
+    }
+  }
+
+  @keyframes arrow-nudge {
+    0%,
+    12%,
+    30%,
+    100% {
+      transform: translateX(0);
+    }
+    18% {
+      transform: translateX(4px);
+    }
+    24% {
+      transform: translateX(-1px);
+    }
+  }
+
+  .btn-pulse {
+    animation: btn-pulse 3.2s var(--ease) 1.6s infinite;
+  }
+
+  .btn-pulse:hover {
+    animation: none;
+  }
+
+  @keyframes btn-pulse {
+    0% {
+      box-shadow:
+        0 1px 0 rgb(255 255 255 / 0.14) inset,
+        0 0 0 1px rgb(15 42 34 / 0.9),
+        0 0 0 0 rgb(180 137 74 / 0.5),
+        0 10px 24px -10px rgb(15 42 34 / 0.55);
+    }
+    70%,
+    100% {
+      box-shadow:
+        0 1px 0 rgb(255 255 255 / 0.14) inset,
+        0 0 0 1px rgb(15 42 34 / 0.9),
+        0 0 0 14px rgb(180 137 74 / 0),
+        0 10px 24px -10px rgb(15 42 34 / 0.55);
+    }
+  }
+
+  /* Submit: spinner while sending, seal stamp on success */
+  .btn-spinner {
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    border: 1.5px solid currentColor;
+    border-right-color: transparent;
+    animation: spin 700ms linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .success-seal {
+    animation: stamp-in 700ms var(--ease-out-back) both;
+  }
+
+  .success-text {
+    animation: hero-rise 700ms var(--ease) 250ms both;
+  }
+
+  @keyframes stamp-in {
     from {
-      opacity: 0.001;
-      transform: translate3d(0, 10px, 0);
+      opacity: 0;
+      transform: scale(1.8) rotate(-30deg);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-rise {
+    .btn-attract::after,
+    .btn-attract .btn-arrow,
+    .btn-pulse,
+    .success-seal,
+    .success-text {
       animation: none;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: none;
+    }
+  }
+
+  /* Film play button ring */
+  .film-ring {
+    box-shadow: 0 0 0 0 rgb(226 200 147 / 0.55);
+    animation: film-ring 2.6s var(--ease) infinite;
+  }
+
+  @keyframes film-ring {
+    70%,
+    100% {
+      box-shadow: 0 0 0 22px rgb(226 200 147 / 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .film-ring {
+      animation: none;
+    }
+  }
+
+  /* -------------------------------------------------------------------------
+     Invoice X-ray (hero): tilted sheet, lens-masked machine layer
+     ----------------------------------------------------------------------- */
+  .xray {
+    perspective: 1500px;
+  }
+
+  .xray-sheet {
+    transform-style: preserve-3d;
+    transform: rotateY(calc(-11deg + var(--ry, 0deg))) rotateX(calc(6deg + var(--rx, 0deg))) rotateZ(1.2deg);
+    border-radius: 20px;
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.9) inset,
+      0 2px 6px rgb(15 42 34 / 0.06),
+      0 30px 60px -24px rgb(15 42 34 / 0.35),
+      -40px 60px 80px -50px rgb(15 42 34 / 0.45);
+  }
+
+  .xray-machine {
+    -webkit-mask-image: radial-gradient(circle var(--r) at var(--lx) var(--ly), #000 calc(var(--r) - 1px), transparent var(--r));
+    mask-image: radial-gradient(circle var(--r) at var(--lx) var(--ly), #000 calc(var(--r) - 1px), transparent var(--r));
+  }
+
+  .xray-lens {
+    left: var(--lx);
+    top: var(--ly);
+    width: calc(var(--r) * 2);
+    height: calc(var(--r) * 2);
+    transform: translate(-50%, -50%);
+    border-radius: 999px;
+    box-shadow:
+      0 0 0 1px rgb(15 42 34 / 0.25),
+      0 18px 40px -16px rgb(15 42 34 / 0.6);
+  }
+
+  .xray-ticks {
+    transform-origin: 50px 50px;
+    animation: spin 40s linear infinite;
+  }
+
+  .xray-row {
+    transition:
+      background-color 350ms var(--ease),
+      box-shadow 350ms var(--ease);
+  }
+
+  .xray-paper .xray-row[data-active] {
+    background: rgb(216 190 142 / 0.3);
+    box-shadow: inset 2px 0 0 var(--gold);
+  }
+
+  .xray-machine .xray-row[data-active] {
+    background: rgb(216 190 142 / 0.12);
+    box-shadow: inset 2px 0 0 var(--gold-soft);
+  }
+
+  .xray-scan {
+    top: 0;
+    bottom: 0;
+    height: auto;
+    background: linear-gradient(to bottom, transparent 0%, rgb(180 137 74 / 0.16) 5%, rgb(180 137 74 / 0.32) 5.4%, transparent 5.6%);
+    animation: xray-scan 7s var(--ease) 1.5s infinite;
+    transform: translateY(-10%);
+  }
+
+  @keyframes xray-scan {
+    0% {
+      transform: translateY(-10%);
+    }
+    55%,
+    100% {
+      transform: translateY(100%);
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .xray-sheet {
+      transform: rotateY(calc(-6deg + var(--ry, 0deg))) rotateX(calc(4deg + var(--rx, 0deg)));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .xray-ticks,
+    .xray-scan {
+      animation: none;
+    }
+
+    .xray-scan {
+      display: none;
     }
   }
 }

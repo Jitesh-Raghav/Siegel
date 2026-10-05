@@ -1577,39 +1577,68 @@
     mask-image: radial-gradient(closest-side, #000, transparent);
   }
 
-  /* Hero line field: fades out under the headline, drifts very slowly (compositor only) */
-  .hero-lines {
-    -webkit-mask-image: linear-gradient(to right, rgb(0 0 0 / 0.25) 0%, #000 55%, #000 100%), linear-gradient(to bottom, #000 70%, transparent 100%);
+  /* Hero background: forest light through textured glass. Two masks intersect: a vertical
+     one (white sky above, soft fade into the page below) and a diagonal one that keeps the
+     headline column clear. Below xl the layout stacks, so the glass rises behind the card. */
+  .hero-glass {
+    background: url('/hero-glass.webp') 60% 40% / cover no-repeat;
+    -webkit-mask-image:
+      linear-gradient(to bottom, transparent 0%, #000 34%, #000 74%, transparent 100%),
+      linear-gradient(100deg, rgb(0 0 0 / 0.06) 24%, #000 62%);
     -webkit-mask-composite: source-in;
-    mask-image: linear-gradient(to right, rgb(0 0 0 / 0.25) 0%, #000 55%, #000 100%), linear-gradient(to bottom, #000 70%, transparent 100%);
+    mask-image:
+      linear-gradient(to bottom, transparent 0%, #000 34%, #000 74%, transparent 100%),
+      linear-gradient(100deg, rgb(0 0 0 / 0.06) 24%, #000 62%);
     mask-composite: intersect;
   }
 
-  .hero-lines-svg {
-    animation: lines-drift 28s ease-in-out infinite alternate;
-  }
-
-  @keyframes lines-drift {
-    from {
-      transform: translate3d(-4%, 0, 0);
-    }
-    to {
-      transform: translate3d(0, -10px, 0);
+  @media (max-width: 1279px) {
+    .hero-glass {
+      background-image: url('/hero-glass-sm.webp');
+      background-position: 40% 60%;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 36%, #000 58%, #000 86%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 36%, #000 58%, #000 86%, transparent 100%);
     }
   }
 
-  @media (max-width: 1023px) {
-    .hero-lines {
-      opacity: 0.6;
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 45%, transparent 100%);
-      mask-image: linear-gradient(to bottom, transparent 0%, #000 45%, transparent 100%);
-    }
+  /* Hero buttons, after the reference: near-black and paper-white rounded rectangles */
+  .btn-noir,
+  .btn-paper {
+    border-radius: 12px;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .hero-lines-svg {
-      animation: none;
-    }
+  .btn-noir {
+    background: linear-gradient(180deg, #23302a 0%, #0c1411 100%);
+    color: #f6f8f6;
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.14) inset,
+      0 0 0 1px #0c1411,
+      0 4px 8px -2px rgb(0 0 0 / 0.22),
+      0 18px 30px -12px rgb(0 0 0 / 0.5);
+  }
+
+  .btn-noir:hover:not(:disabled) {
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.18) inset,
+      0 0 0 1px #0c1411,
+      0 6px 12px -2px rgb(0 0 0 / 0.25),
+      0 24px 40px -14px rgb(0 0 0 / 0.55);
+  }
+
+  .btn-paper {
+    background: #fff;
+    color: var(--ink);
+    box-shadow:
+      0 0 0 1px rgb(15 42 34 / 0.12),
+      0 1px 2px rgb(15 42 34 / 0.06),
+      0 10px 22px -14px rgb(15 42 34 / 0.3);
+  }
+
+  .btn-paper:hover:not(:disabled) {
+    box-shadow:
+      0 0 0 1px rgb(15 42 34 / 0.22),
+      0 1px 2px rgb(15 42 34 / 0.06),
+      0 14px 28px -14px rgb(15 42 34 / 0.35);
   }
 
   /* Footer: CSS line texture under the WebGL field (visible if WebGL is unavailable) */
@@ -1643,50 +1672,50 @@
     perspective: 1600px;
   }
 
-  .hi-glow {
-    background:
-      radial-gradient(closest-side at 50% 55%, rgb(127 203 166 / 0.45), transparent 70%),
-      radial-gradient(closest-side at 70% 30%, rgb(255 255 255 / 0.9), transparent 70%);
-  }
-
+  /* Kept flat (no preserve-3d): Chrome drops backdrop-filter inside a 3D rendering context,
+     so each layer carries its own perspective() instead. */
   .hi-float {
-    --ry: -13deg;
+    --ry: -11deg;
     position: relative;
-    transform-style: preserve-3d;
-    transform: rotateX(7deg) rotateY(var(--ry)) rotateZ(1deg);
+    transform: perspective(1600px) rotateX(6deg) rotateY(var(--ry)) rotateZ(0.8deg);
     animation: hi-float 7s ease-in-out infinite alternate;
   }
 
   @keyframes hi-float {
     from {
-      transform: rotateX(7deg) rotateY(var(--ry)) rotateZ(1deg) translate3d(0, 0, 0);
+      transform: perspective(1600px) rotateX(6deg) rotateY(var(--ry)) rotateZ(0.8deg) translate3d(0, 0, 0);
     }
     to {
-      transform: rotateX(5deg) rotateY(calc(var(--ry) + 4deg)) rotateZ(0.4deg) translate3d(0, -12px, 0);
+      transform: perspective(1600px) rotateX(4deg) rotateY(calc(var(--ry) + 4deg)) rotateZ(0.3deg) translate3d(0, -12px, 0);
     }
   }
 
+  /* Frosted glass over the forest: a light white veil, strong blur and saturation, a bright
+     rim on the top edge and a deep green drop shadow. */
   .hi-card {
-    border: 1px solid transparent;
     background:
-      linear-gradient(#fff, #fff) padding-box,
-      linear-gradient(155deg, #ffffff 0%, #cfeadc 45%, #e1e6e3 70%, #ffffff 100%) border-box;
+      linear-gradient(165deg, rgb(255 255 255 / 0.22) 0%, rgb(255 255 255 / 0.07) 45%, rgb(255 255 255 / 0.03) 100%),
+      rgb(22 56 28 / 0.34);
+    -webkit-backdrop-filter: blur(22px) saturate(1.5);
+    backdrop-filter: blur(22px) saturate(1.5);
+    border: 1px solid rgb(255 255 255 / 0.5);
+    text-shadow: 0 1px 2px rgb(10 30 12 / 0.18);
     box-shadow:
-      0 1px 0 #fff inset,
-      0 2px 6px rgb(15 42 34 / 0.05),
-      0 30px 60px -24px rgb(15 42 34 / 0.3),
-      -50px 70px 100px -60px rgb(15 42 34 / 0.45);
+      0 1px 0 rgb(255 255 255 / 0.65) inset,
+      0 -1px 0 rgb(255 255 255 / 0.12) inset,
+      0 2px 6px rgb(10 30 12 / 0.08),
+      0 34px 70px -24px rgb(10 36 14 / 0.55);
   }
 
-  /* mint edge glow when the invoice validates */
+  /* bright edge glow when the invoice validates */
   .hi-card::after {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: inherit;
     box-shadow:
-      0 0 0 1.5px rgb(63 167 122 / 0.9) inset,
-      0 0 40px rgb(63 167 122 / 0.25) inset;
+      0 0 0 1.5px rgb(255 255 255 / 0.85) inset,
+      0 0 44px rgb(220 240 205 / 0.35) inset;
     opacity: 0;
     animation: hi-edge 7s var(--ease) infinite;
     pointer-events: none;
@@ -1706,10 +1735,10 @@
       to bottom,
       transparent 0%,
       transparent 70%,
-      rgb(63 167 122 / 0.05) 85%,
-      rgb(63 167 122 / 0.12) 96%,
-      rgb(63 167 122 / 0.35) 99.4%,
-      #3fa77a 99.6%,
+      rgb(255 255 255 / 0.04) 85%,
+      rgb(255 255 255 / 0.12) 96%,
+      rgb(255 255 255 / 0.45) 99.4%,
+      #ffffff 99.6%,
       transparent 100%
     );
     transform: translateY(-100%);
@@ -1758,7 +1787,7 @@
   }
 
   .hi-sheen {
-    background: linear-gradient(115deg, transparent 35%, rgb(255 255 255 / 0.75) 48%, rgb(220 243 232 / 0.4) 52%, transparent 62%);
+    background: linear-gradient(115deg, transparent 35%, rgb(255 255 255 / 0.32) 48%, rgb(235 248 225 / 0.16) 52%, transparent 62%);
     transform: translateX(-120%);
     animation: hi-sheen 7s var(--ease) infinite;
   }
@@ -1769,7 +1798,7 @@
   }
 
   .hi-ground {
-    background: radial-gradient(closest-side, rgb(15 42 34 / 0.28), transparent);
+    background: radial-gradient(closest-side, rgb(10 36 14 / 0.38), transparent);
     animation: hi-ground 7s ease-in-out infinite alternate;
   }
 
@@ -1780,31 +1809,32 @@
   /* Hero invoice v2: cursor tilt, stack, engraved band, attachment, check rings */
   .hi-tilt {
     transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
-    transform-style: preserve-3d;
     transition: transform 700ms var(--ease);
   }
 
+  /* earlier invoices in the stack: thin panes of the same glass (no blur of their own) */
   .hi-stack {
-    border: 1px solid var(--hairline);
-    box-shadow: 0 20px 40px -26px rgb(15 42 34 / 0.35);
+    border: 1px solid rgb(255 255 255 / 0.42);
+    background: linear-gradient(165deg, rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.04)), rgb(22 56 28 / 0.18);
+    box-shadow: 0 20px 40px -26px rgb(10 36 14 / 0.45);
   }
 
   .hi-stack-1 {
-    transform: translate3d(14px, -12px, -30px) rotate(2.5deg);
-    opacity: 0.75;
+    transform: translate(14px, -12px) rotate(2.5deg);
+    opacity: 0.85;
   }
 
   .hi-stack-2 {
-    transform: translate3d(28px, -24px, -60px) rotate(5deg);
-    opacity: 0.45;
+    transform: translate(28px, -24px) rotate(5deg);
+    opacity: 0.55;
   }
 
+  /* header strip: a brighter pane with fine etched lines */
   .hi-band {
-    border-bottom: 1px solid var(--hairline);
+    border-bottom: 1px solid rgb(255 255 255 / 0.28);
     background:
-      repeating-linear-gradient(-28deg, rgb(63 167 122 / 0.12) 0 1px, transparent 1px 5px),
-      repeating-linear-gradient(28deg, rgb(15 42 34 / 0.05) 0 1px, transparent 1px 7px),
-      linear-gradient(180deg, #f6fbf8, #ffffff);
+      repeating-linear-gradient(-28deg, rgb(255 255 255 / 0.1) 0 1px, transparent 1px 6px),
+      linear-gradient(180deg, rgb(255 255 255 / 0.2), rgb(255 255 255 / 0.06));
   }
 
   .hi-attach {
@@ -1845,12 +1875,6 @@
     100% { background-position: 0% 0; }
   }
 
-  /* Hero light: top-left wash */
-  .hero-wash {
-    background:
-      radial-gradient(900px 500px at 8% -10%, rgb(255 255 255 / 0.95), transparent 70%),
-      radial-gradient(700px 520px at 85% 35%, rgb(159 217 188 / 0.28), transparent 70%);
-  }
 
   @media (prefers-reduced-motion: reduce) {
     .hi-float,

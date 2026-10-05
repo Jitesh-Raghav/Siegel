@@ -13,7 +13,7 @@ export function Features({ t }: { t: Messages['features'] }) {
   const [formats, validation, vat, delivery, archive, backfill] = t.items
 
   return (
-    <section data-section="features" className="section defer-render" aria-labelledby="features-title">
+    <section data-section="features" className="section defer-render pb-[clamp(72px,8vw,112px)]" aria-labelledby="features-title">
       <div className="container-ledger">
         <SectionHeader num={4} id="features-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} />
 
@@ -98,7 +98,7 @@ export function Features({ t }: { t: Messages['features'] }) {
                 {BARS.map((h, idx) => (
                   <span
                     key={idx}
-                    className="bar-fill flex-1 rounded-t-[3px] bg-[linear-gradient(180deg,#2c5a48,#17382d)]"
+                    className="bar-fill flex-1 rounded-t-[3px] bg-[linear-gradient(180deg,#2c5a48,#1d3a21)]"
                     style={{ height: `${h}%`, ...k(idx) }}
                   />
                 ))}
@@ -139,7 +139,7 @@ function Tile({
       <div className={wide ? 'lg:flex-1' : 'flex-1'}>{children}</div>
       <div className={wide ? 'lg:w-[34%]' : ''}>
         <p className="font-mono text-[11px] tracking-[0.12em] text-muted">{String(n).padStart(2, '0')}</p>
-        <h3 className="mt-2 font-serif text-[26px] leading-[1.1] tracking-[-0.01em]">{item.title}</h3>
+        <h3 className="mt-2 font-sans text-[22px] leading-[1.2] font-medium tracking-[-0.02em]">{item.title}</h3>
         <p className="lede mt-2 text-[15.5px]">{item.body}</p>
       </div>
     </li>
@@ -156,9 +156,9 @@ function FormatsVisual() {
     <div className="flex h-full min-h-[180px] flex-wrap items-center justify-center gap-4 sm:gap-6" aria-hidden="true">
       {formats.map((f, i) => (
         <div key={f.name} className="flex items-center gap-4 sm:gap-6">
-          {i > 0 && <span className="font-serif text-[28px] text-gold">·</span>}
+          {i > 0 && <span className="hidden font-sans text-[28px] text-gold sm:inline">·</span>}
           <div className="rounded-2xl border border-hairline bg-white px-6 py-5 text-center shadow-[0_18px_40px_-28px_rgb(15_42_34/0.45)]">
-            <p className="font-serif text-[clamp(30px,3.4vw,44px)] leading-none tracking-[-0.02em]">{f.name}</p>
+            <p className="font-sans text-[clamp(28px,3.1vw,40px)] leading-none tracking-[-0.04em]">{f.name}</p>
             <p className="mt-3 font-mono text-[10.5px] tracking-[0.08em] text-muted uppercase">{f.detail}</p>
           </div>
         </div>

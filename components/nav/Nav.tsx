@@ -162,7 +162,7 @@ export function Nav({ locale, t }: { locale: Locale; t: Messages['nav'] }) {
                 <a
                   href={l.href}
                   onClick={() => setMenuOpen(false)}
-                  className="group flex h-14 items-center justify-between border-b border-hairline font-serif text-[26px] tracking-[-0.01em]"
+                  className="group flex h-14 items-center justify-between border-b border-hairline font-sans text-[22px] tracking-[-0.02em]"
                 >
                   <span className="relative">
                     {l.label}

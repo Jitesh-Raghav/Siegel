@@ -16,7 +16,7 @@ export function HowItWorks({ t }: { t: Messages['how'] }) {
       <div className="container-ledger">
         <SectionHeader num={3} id="how-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} />
 
-        <div className="relative mt-16 md:mt-20">
+        <div className="relative mt-16 md:mt-24">
           {/* the rail that joins the three steps */}
           <div className="how-rail absolute top-[22px] right-[16.66%] left-[16.66%] hidden md:block" {...reveal(2, 'rule')} />
 
@@ -77,6 +77,10 @@ function StepProof({ index }: { index: number }) {
           <span className="text-on-dark-muted">USt-IdNr.</span>
           <span className="text-on-dark">DE123456789</span>
         </div>
+        <div className={row}>
+          <span className="text-on-dark-muted">webhook</span>
+          <span className="flex items-center gap-2 text-on-dark">invoice.finalized {ok}</span>
+        </div>
       </div>
     )
   }
@@ -101,6 +105,10 @@ function StepProof({ index }: { index: number }) {
       <div className={row}>
         <span className="text-on-dark-muted">archive</span>
         <span className="flex items-center gap-2 text-on-dark">eu-central · 10y {ok}</span>
+      </div>
+      <div className={row}>
+        <span className="text-on-dark-muted">receipt</span>
+        <span className="text-gold-soft">delivered · 09:41:05</span>
       </div>
     </div>
   )

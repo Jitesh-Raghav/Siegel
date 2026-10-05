@@ -32,21 +32,21 @@ export default async function OgImage({ params }: { params: Promise<{ locale: st
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-start',
-          background: '#FAFBFA',
+          background: '#FAFBF7',
           padding: '64px 72px 176px',
           position: 'relative',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <svg width="52" height="52" viewBox="0 0 32 32">
-            <path d={MARK.sheet} fill="#0F2A22" />
-            <path d={MARK.fold} fill="#3FA77A" />
-            <path d={MARK.lines} stroke="#FAFBFA" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+            <path d={MARK.sheet} fill="#13291A" />
+            <path d={MARK.fold} fill="#5F9A3E" />
+            <path d={MARK.lines} stroke="#FAFBF7" strokeWidth="1.6" strokeLinecap="round" fill="none" />
             {/* rim then fill: the same look as paint-order="stroke", which the OG renderer lacks */}
-            <path d={MARK.seal} fill="#0F2A22" stroke="#0F2A22" strokeWidth="1.3" strokeLinejoin="round" />
-            <path d={MARK.seal} fill="#3FA77A" />
-            <circle cx={MARK.ring.cx} cy={MARK.ring.cy} r={MARK.ring.r} fill="none" stroke="#FAFBFA" strokeOpacity="0.55" strokeWidth="0.6" />
-            <path d={MARK.check} fill="none" stroke="#FAFBFA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d={MARK.seal} fill="#13291A" stroke="#13291A" strokeWidth="1.3" strokeLinejoin="round" />
+            <path d={MARK.seal} fill="#5F9A3E" />
+            <circle cx={MARK.ring.cx} cy={MARK.ring.cy} r={MARK.ring.r} fill="none" stroke="#FAFBF7" strokeOpacity="0.55" strokeWidth="0.6" />
+            <path d={MARK.check} fill="none" stroke="#FAFBF7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           <span style={{ fontSize: 40, fontFamily: serif ? 'Instrument Serif' : 'serif', letterSpacing: '-0.02em' }}>Siegel</span>
         </div>
@@ -58,7 +58,7 @@ export default async function OgImage({ params }: { params: Promise<{ locale: st
             marginTop: 'auto',
             lineHeight: 1.05,
             letterSpacing: '-0.02em',
-            color: '#0F2A22',
+            color: '#13291A',
             fontFamily: serif ? 'Instrument Serif' : 'serif',
           }}
         >
@@ -72,11 +72,11 @@ export default async function OgImage({ params }: { params: Promise<{ locale: st
               key={i}
               style={{ height: 4, display: 'flex', alignItems: 'center' }}
             >
-              <div style={{ width: '100%', height: 0.6 + (i / 29) * 2.6, background: '#17382D', opacity: 0.25 + (i / 29) * 0.75 }} />
+              <div style={{ width: '100%', height: 0.6 + (i / 29) * 2.6, background: '#1D3A21', opacity: 0.25 + (i / 29) * 0.75 }} />
             </div>
           ))}
         </div>
-        <div style={{ display: 'flex', marginTop: 28, fontSize: 20, color: '#1F7A55', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+        <div style={{ display: 'flex', marginTop: 28, fontSize: 20, color: '#3A6B26', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
           ZUGFeRD · XRechnung · EN 16931
         </div>
       </div>

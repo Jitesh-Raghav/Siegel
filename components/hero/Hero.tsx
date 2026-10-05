@@ -6,7 +6,6 @@ import type { Locale } from '@/lib/i18n'
 import type { Messages } from '@/messages/en'
 import { Banner } from './Banner'
 import { Callouts } from './Callouts'
-import { HeroLines } from './HeroLines'
 import { InvoiceCard } from './InvoiceCard'
 import { HeroInvoice } from './HeroInvoice'
 
@@ -16,12 +15,11 @@ export function Hero({ locale, t }: { locale: Locale; t: Messages }) {
   const h = t.hero
   return (
     <section data-section="hero" className="relative isolate overflow-x-clip pt-10 sm:pt-16" aria-labelledby="hero-title">
-      {/* Ambient: soft mint glow behind the invoice, engraved line field across the hero */}
-      <div className="pointer-events-none absolute inset-x-0 top-[-90px] -z-10 h-[1000px] overflow-x-clip" aria-hidden="true">
-        <div className="hero-wash absolute inset-0" />
-      </div>
-      <HeroLines />
 
+      <div className="relative">
+      {/* Forest light through textured glass (public/hero-glass*.webp, scripts/make-hero-bg.mjs),
+          faded to white behind the headline by CSS masks; spans the nav and the headline + card */}
+      <div className="hero-glass pointer-events-none absolute inset-x-0 -top-[160px] -bottom-[70px] -z-10" aria-hidden="true" />
       <div className="container-ledger grid grid-cols-1 items-center gap-10 xl:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] xl:gap-14">
         <div className="flex flex-col items-start text-left xl:pr-4">
         <a
@@ -39,7 +37,7 @@ export function Hero({ locale, t }: { locale: Locale; t: Messages }) {
           </span>
         </a>
 
-        <h1 id="hero-title" className="display mt-8 text-[clamp(38px,11vw,48px)] sm:text-[clamp(44px,4.8vw,76px)]">
+        <h1 id="hero-title" className="display display-hero mt-8 text-[clamp(36px,10.6vw,46px)] sm:text-[clamp(44px,4.6vw,72px)]">
           <AccentTitle as="span" className="block" text={h.h1a} mode="hero" />
           <AccentTitle as="span" className="block" text={h.h1b} accent={h.h1bAccent} mode="hero" wordOffset={3} />
         </h1>
@@ -49,10 +47,10 @@ export function Hero({ locale, t }: { locale: Locale; t: Messages }) {
         </p>
 
         <div className="hero-rise mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row" style={i(6)}>
-          <CtaButton location="hero" attract pulse>
+          <CtaButton location="hero" attract className="btn-noir">
             {h.ctaPrimary}
           </CtaButton>
-          <a href="#how-it-works" className="btn btn-secondary">
+          <a href="#how-it-works" className="btn btn-paper">
             {h.ctaSecondary}
           </a>
         </div>
@@ -74,6 +72,7 @@ export function Hero({ locale, t }: { locale: Locale; t: Messages }) {
         <div className="hero-rise overflow-x-clip px-2 pt-6 pb-10 xl:overflow-visible xl:p-0" style={i(4)}>
           <HeroInvoice locale={locale} t={t.heroInvoice} />
         </div>
+      </div>
       </div>
 
       <Parallax className="container-ledger mt-12 sm:mt-16">

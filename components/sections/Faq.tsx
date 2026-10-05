@@ -35,7 +35,7 @@ export function Faq({ t }: { t: Messages['faq'] }) {
                 <span className="w-7 shrink-0 font-mono text-[11px] tracking-[0.1em] text-muted">
                   {String(idx + 1).padStart(2, '0')}
                 </span>
-                <span className="min-w-0 flex-1 font-serif text-[clamp(20px,5.6vw,24px)] leading-[1.15] break-words hyphens-auto tracking-[-0.01em] transition-colors group-hover:text-engrave-ink">
+                <span className="min-w-0 flex-1 font-sans text-[clamp(18px,5vw,21px)] leading-[1.3] break-words hyphens-auto tracking-[-0.01em] transition-colors group-hover:text-engrave-ink">
                   {item.q}
                 </span>
                 <span

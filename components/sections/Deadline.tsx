@@ -19,7 +19,7 @@ export function Deadline({ t }: { t: Messages['deadline'] }) {
   const today = timelinePosition()
 
   return (
-    <section id="deadline" data-section="deadline" className="section defer-render" aria-labelledby="deadline-title">
+    <section id="deadline" data-section="deadline" className="section defer-render pb-[clamp(72px,8vw,112px)]" aria-labelledby="deadline-title">
       <div className="container-ledger">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:items-end">
           <SectionHeader num={2} id="deadline-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} body={t.body} />
@@ -55,7 +55,7 @@ export function Deadline({ t }: { t: Messages['deadline'] }) {
               <span
                 key={i}
                 className={`absolute top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rotate-45 border ${
-                  i === 1 ? 'border-gold-deep bg-[linear-gradient(135deg,#1f7a55,#7fcba6,#2f9168)] shadow-[0_0_0_5px_rgb(63_167_122/0.15)]' : 'border-ink bg-paper'
+                  i === 1 ? 'border-gold-deep bg-[linear-gradient(135deg,#3a6b26,#98bb58,#4f8636)] shadow-[0_0_0_5px_rgb(63_167_122/0.15)]' : 'border-ink bg-paper'
                 }`}
                 style={{ left: `${p * 100}%` }}
               />
@@ -87,7 +87,7 @@ export function Deadline({ t }: { t: Messages['deadline'] }) {
                 <p className={`font-mono text-[12px] tracking-[0.08em] uppercase ${key ? 'text-gold-deep' : 'text-muted'}`}>
                   {e.date}
                 </p>
-                <p className="mt-3 font-serif text-[23px] leading-[1.15] text-pretty">{e.text}</p>
+                <p className="mt-3 font-sans text-[20px] leading-[1.25] tracking-[-0.015em] text-pretty">{e.text}</p>
               </li>
             )
           })}

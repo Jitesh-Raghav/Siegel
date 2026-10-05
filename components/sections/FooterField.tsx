@@ -33,8 +33,8 @@ void main(){
   float w=fwidth(lines);
   float c=1.-smoothstep(0.,w*1.4,abs(fract(lines)-0.5)-0.5+w*1.2);
   float idx=1.-smoothstep(0.,w*1.6,abs(fract(lines/5.)-0.5)*5.-2.5+w*1.4);
-  vec3 bg=vec3(0.043,0.122,0.098);
-  vec3 ink=mix(vec3(0.247,0.655,0.478),vec3(0.62,0.85,0.74),idx);
+  vec3 bg=vec3(0.055,0.133,0.078);
+  vec3 ink=mix(vec3(0.373,0.604,0.243),vec3(0.737,0.827,0.514),idx);
   float a=c*(0.16+0.3*idx)+bump*c*0.6;
   a*=smoothstep(0.,0.85,1.-gl_FragCoord.y/uRes.y)*0.85+0.15;
   gl_FragColor=vec4(mix(bg,ink,a),1.);

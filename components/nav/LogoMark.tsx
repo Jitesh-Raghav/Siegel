@@ -14,9 +14,9 @@ export const MARK = {
 
 const TONES = {
   // on light backgrounds: fir sheet, bone lines, fir rim around the seal
-  light: { sheet: '#0F2A22', line: '#FAFBFA', mint: '#3FA77A', rim: '#0F2A22', mark: '#FAFBFA' },
+  light: { sheet: '#13291A', line: '#FAFBF7', mint: '#5F9A3E', rim: '#13291A', mark: '#FAFBF7' },
   // on dark backgrounds: bone sheet, fir lines, midnight rim
-  dark: { sheet: '#F2F6F3', line: '#0F2A22', mint: '#3FA77A', rim: '#0B1F19', mark: '#0B1F19' },
+  dark: { sheet: '#F3F6EE', line: '#13291A', mint: '#5F9A3E', rim: '#0E2214', mark: '#0E2214' },
 } as const
 
 export type MarkTone = keyof typeof TONES

@@ -1,8 +1,8 @@
 // Builds the self-hosted, subset webfonts in app/fonts/. Run once (or after adding new characters):
 //   node scripts/subset-fonts.mjs
 //
-// - Instrument Serif (OFL, Google Fonts): regular and italic, the display face.
-// - Geist Sans (OFL): weight range limited to 400–500.
+// - Instrument Serif (OFL, Google Fonts): regular only, for the wordmark and invoice letterhead.
+// - Geist Sans (OFL): weight range limited to 300–500 (headings, body, light numerals).
 // - Geist Mono (OFL): weight pinned to 400.
 // All are reduced to the characters the site actually uses. This roughly halves the font
 // payload, which is the biggest lever on Lighthouse's simulated LCP.
@@ -52,8 +52,7 @@ const geist = 'node_modules/geist/dist/fonts'
 
 const jobs = [
   { out: 'instrument-serif.woff2', src: await googleFont('Instrument+Serif:ital@0;1', 'normal') },
-  { out: 'instrument-serif-italic.woff2', src: await googleFont('Instrument+Serif:ital@0;1', 'italic') },
-  { out: 'geist-sans.woff2', src: readFileSync(`${geist}/geist-sans/Geist-Variable.woff2`), axes: { wght: { min: 400, max: 500 } } },
+  { out: 'geist-sans.woff2', src: readFileSync(`${geist}/geist-sans/Geist-Variable.woff2`), axes: { wght: { min: 300, max: 500 } } },
   { out: 'geist-mono.woff2', src: readFileSync(`${geist}/geist-mono/GeistMono-Variable.woff2`), axes: { wght: 400 } },
 ]
 

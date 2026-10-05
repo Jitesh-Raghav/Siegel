@@ -24,7 +24,7 @@ export function Trust({ t }: { t: Messages['trust'] }) {
   ]
 
   return (
-    <section id="founder" data-section="trust" className="section defer-render" aria-labelledby="trust-title">
+    <section id="founder" data-section="trust" className="section defer-render pb-[clamp(72px,8vw,112px)]" aria-labelledby="trust-title">
       <div className="container-ledger">
         <SectionHeader num={7} id="trust-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} />
 
@@ -48,7 +48,7 @@ export function Trust({ t }: { t: Messages['trust'] }) {
                     className="relative size-full rounded-full object-cover"
                   />
                 ) : (
-                  <div className="relative grid size-full place-items-center rounded-full bg-ink font-serif text-[56px] text-on-dark" aria-hidden="true">
+                  <div className="relative grid size-full place-items-center rounded-full bg-ink font-sans text-[52px] tracking-[-0.04em] text-on-dark" aria-hidden="true">
                     {initials}
                   </div>
                 )}
@@ -60,7 +60,7 @@ export function Trust({ t }: { t: Messages['trust'] }) {
               </div>
 
               <div className="min-w-0">
-                <p className="font-serif text-[clamp(34px,4vw,48px)] leading-none tracking-[-0.02em]">{t.name}</p>
+                <p className="font-sans text-[clamp(32px,3.8vw,44px)] leading-none tracking-[-0.04em]">{t.name}</p>
                 <p className="mt-3 font-mono text-[11.5px] tracking-[0.1em] text-gold-deep uppercase">{t.role}</p>
                 <p className="mt-1 text-[13.5px] text-muted">{t.location}</p>
                 <p className="lede mt-5 max-w-[58ch] text-[16.5px]">{t.bio}</p>

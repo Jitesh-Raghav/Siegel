@@ -58,8 +58,8 @@ export function Footer({ locale, t }: { locale: Locale; t: Messages }) {
           <div>
             <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 font-mono text-[11px] tracking-[0.1em] text-on-dark-muted uppercase">
               <span className="relative flex size-2" aria-hidden="true">
-                <span className="absolute inset-0 animate-ping rounded-full bg-[#3FA77A] opacity-60 motion-reduce:hidden" />
-                <span className="relative size-2 rounded-full bg-[#3FA77A]" />
+                <span className="absolute inset-0 animate-ping rounded-full bg-[#5F9A3E] opacity-60 motion-reduce:hidden" />
+                <span className="relative size-2 rounded-full bg-[#5F9A3E]" />
               </span>
               {f.status}
             </p>
@@ -68,7 +68,7 @@ export function Footer({ locale, t }: { locale: Locale; t: Messages }) {
               text={f.statement}
               accent={f.statementAccent}
               mode="none"
-              className="mt-6 max-w-[16ch] font-serif text-[clamp(40px,5.4vw,76px)] leading-[0.98] tracking-[-0.02em]"
+              className="mt-6 max-w-[16ch] font-sans text-[clamp(36px,5vw,68px)] leading-[1.02] tracking-[-0.04em]"
             />
           </div>
           <div className="flex flex-col items-start gap-3 lg:items-end">
@@ -88,7 +88,7 @@ export function Footer({ locale, t }: { locale: Locale; t: Messages }) {
               <LogoMark size={32} tone="dark" />
               <span className="font-serif text-[30px] leading-none tracking-[-0.02em]">Siegel</span>
             </Link>
-            <p className="mt-5 font-serif text-[21px] italic">{f.tagline}</p>
+            <p className="mt-5 font-sans text-[19px] tracking-[-0.015em]">{f.tagline}</p>
             <p className="mt-2 text-[13px] leading-relaxed text-on-dark-muted">{f.disclaimer}</p>
             <p className="mt-5 font-mono text-[11px] tracking-[0.08em] text-on-dark-muted uppercase">{f.builtOn}</p>
           </div>

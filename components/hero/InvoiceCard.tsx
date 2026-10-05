@@ -148,7 +148,7 @@ export function InvoiceCard({ locale, t }: { locale: Locale; t: Messages['card']
       {/* Gold seal straddling the top edge, stamped once validation completes */}
       <SealStamp className="absolute -top-12 left-1/2 z-10 size-[76px] -translate-x-1/2 sm:-top-14 sm:size-[96px] lg:left-[68%]" />
 
-      <div className="grid grid-cols-[1fr_auto] gap-x-4 gap-y-6 p-5 sm:p-8 lg:grid-cols-[1fr_auto_1fr] lg:gap-x-8">
+      <div className="grid grid-cols-1 gap-x-4 gap-y-6 p-5 min-[440px]:grid-cols-[1fr_auto] sm:p-8 lg:grid-cols-[1fr_auto_1fr] lg:gap-x-8">
         {/* Left: invoice identity and amount */}
         <div className="min-w-0">
           <p
@@ -172,19 +172,19 @@ export function InvoiceCard({ locale, t }: { locale: Locale; t: Messages['card']
           </p>
           <p className="mt-5 font-mono text-[12.5px] tracking-[0.02em] text-ink">{t.number}</p>
           <p className="mt-0.5 text-[13px] text-muted">{t.seller}</p>
-          <p className="tabular mt-5 font-serif text-[40px] leading-none tracking-[-0.02em] whitespace-nowrap sm:text-[54px]">
+          <p className="tabular mt-5 font-serif text-[clamp(36px,11vw,40px)] leading-none tracking-[-0.02em] whitespace-nowrap sm:text-[54px]">
             <span ref={amountRef}>{formatEuro(locale, t.amount)}</span>
           </p>
           <p className="mt-2 text-[12px] text-muted">{t.vatNote}</p>
         </div>
 
         {/* Center: validation dial */}
-        <div className="flex items-start justify-end lg:items-center lg:justify-center">
+        <div className="flex items-start justify-center min-[440px]:justify-end lg:items-center lg:justify-center">
           <ValidationDial label={t.rulesChecked} percentRef={percentRef} />
         </div>
 
         {/* Right: profile and delivery */}
-        <div className="col-span-2 grid grid-cols-1 gap-x-4 gap-y-4 border-t border-hairline pt-5 sm:grid-cols-2 lg:col-span-1 lg:block lg:border-0 lg:pt-1 lg:text-right">
+        <div className="col-span-full grid grid-cols-1 gap-x-4 gap-y-4 border-t border-hairline pt-5 sm:grid-cols-2 lg:col-span-1 lg:block lg:border-0 lg:pt-1 lg:text-right">
           <div>
             <p className="mono-label text-[10px] text-muted">{t.profileLabel}</p>
             <p className="mt-2 font-serif text-[22px] leading-none">{t.profile}</p>
@@ -218,7 +218,7 @@ export function InvoiceCard({ locale, t }: { locale: Locale; t: Messages['card']
       </div>
 
       {/* Bottom: five checks */}
-      <dl className="grid grid-cols-3 gap-y-5 border-t border-hairline px-5 py-5 sm:grid-cols-5 sm:px-8">
+      <dl className="grid grid-cols-2 gap-y-5 border-t border-hairline px-5 py-5 min-[440px]:grid-cols-3 sm:grid-cols-5 sm:px-8">
         {stats.map((s, i) => (
           <div key={s.label} className={`min-w-0 ${i > 0 ? 'sm:border-l sm:border-hairline sm:pl-5' : ''}`}>
             <dt className="sr-only-ledger">{s.label}</dt>

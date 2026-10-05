@@ -19,7 +19,7 @@ export function Deadline({ t }: { t: Messages['deadline'] }) {
   const today = timelinePosition()
 
   return (
-    <section id="deadline" data-section="deadline" className="section defer-render" aria-labelledby="deadline-title">
+    <section id="deadline" data-section="deadline" className="section defer-render pb-[clamp(72px,8vw,112px)]" aria-labelledby="deadline-title">
       <div className="container-ledger">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:items-end">
           <SectionHeader num={2} id="deadline-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} body={t.body} />
@@ -87,7 +87,7 @@ export function Deadline({ t }: { t: Messages['deadline'] }) {
                 <p className={`font-mono text-[12px] tracking-[0.08em] uppercase ${key ? 'text-gold-deep' : 'text-muted'}`}>
                   {e.date}
                 </p>
-                <p className="mt-3 font-serif text-[23px] leading-[1.15] text-pretty">{e.text}</p>
+                <p className="mt-3 font-sans text-[20px] leading-[1.25] tracking-[-0.015em] text-pretty">{e.text}</p>
               </li>
             )
           })}

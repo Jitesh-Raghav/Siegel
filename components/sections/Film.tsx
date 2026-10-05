@@ -33,7 +33,7 @@ export function Film({ locale, t }: { locale: Locale; t: Messages['film'] }) {
 
         <div className="relative mx-auto mt-14 max-w-[1040px]">
           {/* Dithered backdrop: wider than the film, fading out at the edges */}
-          <div className="dither-wrap pointer-events-none absolute -inset-x-[14%] -inset-y-[22%] -z-10" aria-hidden="true">
+          <div className="dither-wrap pointer-events-none absolute -inset-x-[12%] -top-[4%] -bottom-[18%] -z-10" aria-hidden="true">
             <DitherField className="size-full" />
           </div>
         {/* Product-demo framing: a thin player chrome bar above the film */}

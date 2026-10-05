@@ -172,7 +172,7 @@ export function InvoiceCard({ locale, t }: { locale: Locale; t: Messages['card']
           </p>
           <p className="mt-5 font-mono text-[12.5px] tracking-[0.02em] text-ink">{t.number}</p>
           <p className="mt-0.5 text-[13px] text-muted">{t.seller}</p>
-          <p className="tabular mt-5 font-serif text-[clamp(36px,11vw,40px)] leading-none tracking-[-0.02em] whitespace-nowrap sm:text-[54px]">
+          <p className="tabular mt-5 font-sans text-[clamp(34px,10vw,38px)] leading-none tracking-[-0.04em] whitespace-nowrap sm:text-[54px]">
             <span ref={amountRef}>{formatEuro(locale, t.amount)}</span>
           </p>
           <p className="mt-2 text-[12px] text-muted">{t.vatNote}</p>
@@ -187,7 +187,7 @@ export function InvoiceCard({ locale, t }: { locale: Locale; t: Messages['card']
         <div className="col-span-full grid grid-cols-1 gap-x-4 gap-y-4 border-t border-hairline pt-5 sm:grid-cols-2 lg:col-span-1 lg:block lg:border-0 lg:pt-1 lg:text-right">
           <div>
             <p className="mono-label text-[10px] text-muted">{t.profileLabel}</p>
-            <p className="mt-2 font-serif text-[22px] leading-none">{t.profile}</p>
+            <p className="mt-2 font-sans text-[20px] leading-none tracking-[-0.02em]">{t.profile}</p>
             <p className="mt-2 inline-flex items-center gap-1.5 font-mono text-[11.5px] text-muted lg:justify-end">
               {t.files}
               <button
@@ -226,7 +226,7 @@ export function InvoiceCard({ locale, t }: { locale: Locale; t: Messages['card']
               ref={(node) => {
                 statRefs.current[i] = node
               }}
-              className="tabular font-serif text-[26px] leading-none sm:text-[30px]"
+              className="tabular font-sans text-[24px] leading-none tracking-[-0.03em] sm:text-[28px]"
             >
               {s.value}
             </dd>

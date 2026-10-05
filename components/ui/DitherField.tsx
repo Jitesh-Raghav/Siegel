@@ -10,8 +10,8 @@ const BAYER8 = [
   11, 43, 1, 33, 9, 41, 51, 19, 59, 27, 49, 17, 57, 25, 15, 47, 7, 39, 13, 45, 5, 37, 63, 31, 55, 23, 61, 29, 53, 21,
 ]
 
-const W = 240
-const H = 135
+const W = 400
+const H = 225
 
 export function DitherField({ className = '' }: { className?: string }) {
   const ref = useRef<HTMLCanvasElement>(null)

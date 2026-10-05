@@ -87,7 +87,7 @@ export const ValidationDial = memo(function ValidationDial({
         </g>
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="tabular font-serif text-[30px] leading-none tracking-[-0.02em] sm:text-[38px]">
+        <span className="tabular font-sans text-[28px] leading-none tracking-[-0.04em] sm:text-[34px]">
           <span ref={percentRef}>100</span>%
         </span>
         <span className="mt-1 max-w-[56%] text-center font-mono text-[8px] leading-tight tracking-[0.12em] text-muted uppercase sm:text-[9px]">

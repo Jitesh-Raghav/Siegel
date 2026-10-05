@@ -17,7 +17,7 @@ function Check({ dark = false }: { dark?: boolean }) {
 
 export function Pricing({ locale, t }: { locale: Locale; t: Messages['pricing'] }) {
   return (
-    <section id="pricing" data-section="pricing" className="section defer-render" aria-labelledby="pricing-title">
+    <section id="pricing" data-section="pricing" className="section defer-render pb-[clamp(72px,8vw,112px)]" aria-labelledby="pricing-title">
       <div className="container-ledger">
         <SectionHeader num={6} id="pricing-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} align="center" />
 
@@ -45,7 +45,7 @@ export function Pricing({ locale, t }: { locale: Locale; t: Messages['pricing'] 
                   )}
                 </div>
                 <p className="mt-8 flex items-baseline gap-1.5">
-                  <span className="tabular font-serif text-[72px] leading-[0.9] tracking-[-0.03em]">{formatEuro(locale, p.price, 0)}</span>
+                  <span className="tabular font-sans text-[64px] leading-[0.9] font-light tracking-[-0.05em]">{formatEuro(locale, p.price, 0)}</span>
                   <span className={`text-[15px] ${featured ? 'text-on-dark-muted' : 'text-muted'}`}>{t.perMonth}</span>
                 </p>
                 <div

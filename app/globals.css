@@ -16,8 +16,8 @@
   --ink: #13291a;
   --ink-2: #1f3c24;
   --muted: #525a4c;
-  --hairline: #e2e6da;
-  --hairline-strong: #cfd6c4;
+  --hairline: #e0e6d6;
+  --hairline-strong: #ccd5bf;
 
   --engrave-ink: #1d3a21;
   --engrave-cream: #e3eed2;
@@ -167,55 +167,45 @@
   /* -------------------------------------------------------------------------
      Typography
      ----------------------------------------------------------------------- */
-  .display {
-    font-family: var(--font-serif);
+  /* One type system: Geist Sans for every heading, tight tracking at display sizes. The accent
+     word stays upright in the same face and is set apart by the moss gradient (.foil-text). */
+  .display,
+  .h2,
+  .h3 {
+    font-family: var(--font-sans);
     font-weight: 400;
-    letter-spacing: -0.022em;
-    font-size: clamp(50px, 7.4vw, 100px);
-    line-height: 0.98;
     text-wrap: balance;
     overflow-wrap: break-word;
     hyphens: auto;
+  }
+
+  .display {
+    letter-spacing: -0.045em;
+    font-size: clamp(46px, 6.6vw, 92px);
+    line-height: 1;
   }
 
   .h2 {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    font-size: clamp(34px, 5.2vw, 68px);
-    line-height: 1.02;
-    text-wrap: balance;
-    overflow-wrap: break-word;
-    hyphens: auto;
+    letter-spacing: -0.04em;
+    font-size: clamp(32px, 4.6vw, 60px);
+    line-height: 1.04;
   }
 
   .h3 {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    font-size: 30px;
-    line-height: 1.08;
-    text-wrap: balance;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    font-size: 24px;
+    line-height: 1.2;
   }
 
   .accent {
-    font-family: var(--font-serif);
-    font-style: italic;
-    letter-spacing: -0.01em;
-  }
-
-  /* Hero headline: a clean, upright sans face. The accent keeps the same face. */
-  .display-hero {
-    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-    font-weight: 400;
-    letter-spacing: -0.028em;
-    line-height: 1.02;
-  }
-
-  .display-hero .accent {
-    font-family: inherit;
     font-style: normal;
-    letter-spacing: inherit;
+  }
+
+  /* Hero headline: same face, a touch tighter */
+  .display-hero {
+    letter-spacing: -0.045em;
+    line-height: 1.02;
   }
 
   /* Accent text: deep mint on white (AA), bright mint gradient on dark. */
@@ -641,7 +631,7 @@
     gap: 10px;
     height: 48px;
     padding-inline: 24px;
-    border-radius: 999px;
+    border-radius: 12px;
     font-family: var(--font-sans);
     font-size: 14px;
     font-weight: 500;
@@ -754,6 +744,7 @@
     height: 40px;
     padding-inline: 18px;
     font-size: 13px;
+    border-radius: 10px;
   }
 
   /* -------------------------------------------------------------------------
@@ -1452,7 +1443,7 @@
   .btn-pulse {
     position: relative;
     display: inline-flex;
-    border-radius: 999px;
+    border-radius: 12px;
   }
 
   .btn-pulse::before {
@@ -2002,9 +1993,9 @@
 
   /* Dithered backdrop behind the film */
   .dither-wrap {
-    -webkit-mask-image: radial-gradient(closest-side, #000 60%, transparent 100%);
-    mask-image: radial-gradient(closest-side, #000 60%, transparent 100%);
-    opacity: 0.7;
+    -webkit-mask-image: radial-gradient(closest-side, #000 45%, transparent 100%);
+    mask-image: radial-gradient(closest-side, #000 45%, transparent 100%);
+    opacity: 0.45;
   }
 
   .dither-dark {

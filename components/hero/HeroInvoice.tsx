@@ -116,7 +116,7 @@ export function HeroInvoice({ locale, t }: { locale: Locale; t: Messages['heroIn
               {/* total */}
               <div className="mt-6 flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
                 <p className="text-[13px] text-white/75">{t.total}</p>
-                <p className="tabular font-serif text-[clamp(32px,9.5vw,40px)] leading-none tracking-[-0.02em]">{eur(TOTAL)}</p>
+                <p className="tabular font-sans text-[clamp(30px,9vw,38px)] leading-none tracking-[-0.04em]">{eur(TOTAL)}</p>
               </div>
             </div>
 

@@ -15,11 +15,6 @@
         font-style: normal;
       }
       @font-face {
-        font-family: 'Instrument';
-        src: url('../app/fonts/instrument-serif-italic.woff2') format('woff2');
-        font-style: italic;
-      }
-      @font-face {
         font-family: 'Geist';
         src: url('../app/fonts/geist-sans.woff2') format('woff2');
         font-weight: 400 500;
@@ -30,21 +25,21 @@
       }
 
       :root {
-        --paper: #fafbfa;
-        --paper-2: #f1f4f2;
-        --ink: #0f2a22;
-        --muted: #4e5a54;
-        --hairline: #e1e6e3;
-        --hairline-strong: #cdd5d0;
-        --engrave: #17382d;
-        --midnight: #0b1f19;
-        --gold: #3fa77a;
-        --gold-soft: #9fd9bc;
-        --gold-deep: #1f7a55;
-        --verified: #2e7d4f;
+        --paper: #fafbf7;
+        --paper-2: #f2f4ec;
+        --ink: #13291a;
+        --muted: #525a4c;
+        --hairline: #e2e6da;
+        --hairline-strong: #cfd6c4;
+        --engrave: #1d3a21;
+        --midnight: #0e2214;
+        --gold: #5f9a3e;
+        --gold-soft: #bcd383;
+        --gold-deep: #3a6b26;
+        --verified: #3f7a2c;
         --danger: #a8392a;
-        --foil: linear-gradient(115deg, #1f7a55 0%, #7fcba6 32%, #2f9168 52%, #b9e6cf 70%, #1f7a55 100%);
-        --foil-deep: linear-gradient(115deg, #14523a 0%, #1f7a55 35%, #16603f 55%, #2a8a5e 75%, #14523a 100%);
+        --foil: linear-gradient(115deg, #3a6b26 0%, #98bb58 32%, #4f8636 52%, #dce9b8 70%, #3a6b26 100%);
+        --foil-deep: linear-gradient(115deg, #2b4f1d 0%, #3a6b26 35%, #2d5a20 55%, #4a7f32 75%, #2b4f1d 100%);
       }
 
       * {
@@ -66,7 +61,7 @@
         height: 720px;
         overflow: hidden;
         background:
-          radial-gradient(900px 520px at 50% 18%, rgb(159 217 188 / 0.35), transparent 70%),
+          radial-gradient(900px 520px at 50% 18%, rgb(188 211 131 / 0.35), transparent 70%),
           var(--paper);
         color: var(--ink);
         font-family: 'Geist', system-ui, sans-serif;
@@ -77,14 +72,34 @@
         will-change: transform, opacity;
       }
 
+      /* Headings: Geist, tight, like the site. Accent words stay upright, set apart by colour. */
       .serif {
+        font-family: 'Geist', system-ui, sans-serif;
+        font-weight: 400;
+        letter-spacing: -0.045em;
+      }
+
+      i,
+      .italic {
+        font-style: normal;
+      }
+
+      /* Serif survives only in the wordmark and the invoice letterhead */
+      .wm {
         font-family: 'Instrument', Georgia, serif;
         font-weight: 400;
         letter-spacing: -0.02em;
       }
 
-      .italic {
-        font-style: italic;
+      /* Cinematic finish: static vignette + fine grain over everything */
+      #finish {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(130% 120% at 50% 45%, transparent 58%, rgb(14 34 20 / 0.16) 100%),
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        mix-blend-mode: multiply;
       }
 
       .foil {
@@ -137,7 +152,7 @@
         border-radius: 18px;
         box-shadow:
           0 1px 0 #fff inset,
-          0 30px 60px -30px rgb(15 42 34 / 0.35);
+          0 30px 60px -30px rgb(19 41 26 / 0.35);
       }
 
       .chip {
@@ -183,7 +198,7 @@
         position: absolute;
         inset: 4px;
         border-radius: 18px;
-        border: 1px solid rgb(63 167 122 / 0.35);
+        border: 1px solid rgb(95 154 62 / 0.35);
       }
 
       #micro {
@@ -194,7 +209,7 @@
         font-family: 'GeistMono', monospace;
         font-size: 7px;
         letter-spacing: 0.32em;
-        color: rgb(23 56 45 / 0.45);
+        color: rgb(29 58 33 / 0.45);
         white-space: nowrap;
         overflow: hidden;
       }
@@ -232,8 +247,8 @@
         position: absolute;
         inset: 0;
         background:
-          radial-gradient(800px 420px at 80% -10%, rgb(63 167 122 / 0.18), transparent 60%),
-          radial-gradient(700px 500px at 0% 110%, rgb(23 56 45 / 0.6), transparent 60%),
+          radial-gradient(800px 420px at 80% -10%, rgb(95 154 62 / 0.18), transparent 60%),
+          radial-gradient(700px 500px at 0% 110%, rgb(29 58 33 / 0.6), transparent 60%),
           var(--midnight);
       }
 
@@ -268,12 +283,13 @@
       }
 
       #s1-year {
-        font-family: 'Instrument', Georgia, serif;
-        font-size: 300px;
+        font-family: 'Geist', system-ui, sans-serif;
+        font-weight: 300;
+        font-size: 280px;
         line-height: 1;
-        letter-spacing: -0.04em;
+        letter-spacing: -0.06em;
         color: transparent;
-        -webkit-text-stroke: 1.5px rgb(63 167 122 / 0.35);
+        -webkit-text-stroke: 1.5px rgb(95 154 62 / 0.35);
       }
 
       #s4-stream {
@@ -283,7 +299,7 @@
         font-family: 'GeistMono', monospace;
         font-size: 10px;
         line-height: 1.9;
-        color: rgb(127 203 166 / 0.16);
+        color: rgb(152 187 88 / 0.16);
         white-space: nowrap;
         -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
         mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
@@ -316,7 +332,7 @@
       <div id="s2" class="abs" style="inset: 0">
         <div id="s2-pdf" class="abs card" style="left: 150px; top: 150px; width: 340px; height: 430px; padding: 28px">
           <div style="display: flex; justify-content: space-between; align-items: baseline">
-            <span class="serif" style="font-size: 24px">Muster GmbH</span>
+            <span class="wm" style="font-size: 24px">Muster GmbH</span>
             <span class="mono" style="font-size: 11px; color: var(--muted)" id="s2-doc"></span>
           </div>
           <div style="margin-top: 26px; display: grid; gap: 10px">
@@ -353,13 +369,13 @@
           <p class="mono" style="font-size: 11px; margin-top: 12px; color: var(--engrave)">invoice.finalized</p>
         </div>
         <div id="s3-wire" class="abs" style="left: 470px; top: 404px; width: 340px; height: 2px; background: repeating-linear-gradient(to right, var(--gold) 0 8px, transparent 8px 14px); transform-origin: left"></div>
-        <div id="s3-dot0" class="abs" style="left: 470px; top: 397px; width: 16px; height: 16px; border-radius: 4px; background: var(--engrave); box-shadow: 0 0 0 4px rgb(23 56 45 / 0.12)"></div>
-        <div id="s3-dot1" class="abs" style="left: 470px; top: 397px; width: 16px; height: 16px; border-radius: 4px; background: var(--engrave); box-shadow: 0 0 0 4px rgb(23 56 45 / 0.12)"></div>
-        <div id="s3-dot2" class="abs" style="left: 470px; top: 397px; width: 16px; height: 16px; border-radius: 4px; background: var(--engrave); box-shadow: 0 0 0 4px rgb(23 56 45 / 0.12)"></div>
+        <div id="s3-dot0" class="abs" style="left: 470px; top: 397px; width: 16px; height: 16px; border-radius: 4px; background: var(--engrave); box-shadow: 0 0 0 4px rgb(29 58 33 / 0.12)"></div>
+        <div id="s3-dot1" class="abs" style="left: 470px; top: 397px; width: 16px; height: 16px; border-radius: 4px; background: var(--engrave); box-shadow: 0 0 0 4px rgb(29 58 33 / 0.12)"></div>
+        <div id="s3-dot2" class="abs" style="left: 470px; top: 397px; width: 16px; height: 16px; border-radius: 4px; background: var(--engrave); box-shadow: 0 0 0 4px rgb(29 58 33 / 0.12)"></div>
         <div id="s3-right" class="abs card" style="left: 810px; top: 300px; width: 320px; height: 210px; display: grid; place-items: center; text-align: center">
           <div>
             <svg id="s3-seal" width="96" height="96" viewBox="0 0 32 32"></svg>
-            <p class="serif" style="font-size: 34px; margin-top: 8px">Siegel</p>
+            <p class="wm" style="font-size: 34px; margin-top: 8px">Siegel</p>
           </div>
         </div>
       </div>
@@ -369,7 +385,7 @@
         <h2 id="s4-title" class="abs serif" style="left: 120px; top: 112px; font-size: 62px; line-height: 1"></h2>
         <div id="s4-pdf" class="abs card" style="left: 120px; top: 230px; width: 270px; height: 360px; padding: 24px">
           <div style="display: flex; justify-content: space-between">
-            <span class="serif" style="font-size: 21px">Muster GmbH</span>
+            <span class="wm" style="font-size: 21px">Muster GmbH</span>
             <span class="mono" style="font-size: 10px; color: var(--muted)">PDF/A-3</span>
           </div>
           <div style="margin-top: 22px; display: grid; gap: 9px">
@@ -381,15 +397,15 @@
           </div>
           <p class="mono" style="position: absolute; left: 24px; bottom: 22px; font-size: 11px; color: var(--muted)" id="s4-pdf-label"></p>
         </div>
-        <div id="s4-xml" class="abs" style="left: 120px; top: 230px; width: 300px; height: 360px; padding: 24px; border-radius: 18px; background: var(--midnight); box-shadow: 0 30px 60px -30px rgb(11 31 25 / 0.8)">
+        <div id="s4-xml" class="abs" style="left: 120px; top: 230px; width: 300px; height: 360px; padding: 24px; border-radius: 18px; background: var(--midnight); box-shadow: 0 30px 60px -30px rgb(14 34 20 / 0.8)">
           <div id="s4-stream"></div>
-          <p class="mono" style="font-size: 10px; color: #a9b5ad; margin-bottom: 10px">XML · EN 16931</p>
+          <p class="mono" style="font-size: 10px; color: #b0b9a6; margin-bottom: 10px">XML · EN 16931</p>
           <div class="xml">&lt;ram:ID&gt;<b>INV-2026-0142</b></div>
           <div class="xml">&lt;ram:TypeCode&gt;<b>380</b></div>
           <div class="xml">&lt;ram:ID schemeID="VA"&gt;<b>DE123456789</b></div>
           <div class="xml">&lt;ram:RateApplicablePercent&gt;<b>19</b></div>
           <div class="xml">&lt;ram:GrandTotalAmount&gt;<b>4760.00</b></div>
-          <p class="mono" style="position: absolute; left: 24px; bottom: 22px; font-size: 11px; color: #a9b5ad" id="s4-xml-label"></p>
+          <p class="mono" style="position: absolute; left: 24px; bottom: 22px; font-size: 11px; color: #b0b9a6" id="s4-xml-label"></p>
         </div>
         <div id="s4-checks" class="abs" style="left: 720px; top: 230px; width: 430px; display: grid; gap: 10px"></div>
         <div id="s4-dial" class="abs" style="left: 720px; top: 470px; width: 150px; height: 150px"></div>
@@ -402,7 +418,7 @@
         <h2 id="s5-title" class="abs serif" style="left: 0; right: 0; top: 120px; text-align: center; font-size: 66px"></h2>
         <div id="s5-mail" class="abs card" style="left: 170px; top: 270px; width: 440px; height: 220px; padding: 30px">
           <div style="display: flex; align-items: center; gap: 14px">
-            <svg width="40" height="40" viewBox="0 0 40 40"><rect x="4" y="9" width="32" height="23" rx="3" fill="none" stroke="#17382D" stroke-width="1.6" /><path d="M5 11l15 11 15-11" fill="none" stroke="#17382D" stroke-width="1.6" /></svg>
+            <svg width="40" height="40" viewBox="0 0 40 40"><rect x="4" y="9" width="32" height="23" rx="3" fill="none" stroke="#1D3A21" stroke-width="1.6" /><path d="M5 11l15 11 15-11" fill="none" stroke="#1D3A21" stroke-width="1.6" /></svg>
             <div>
               <p class="mono" style="font-size: 11px; color: var(--muted)" id="s5-to"></p>
               <p style="font-family: 'GeistMono'; font-size: 16px; margin-top: 4px">buchhaltung@muster.de</p>
@@ -412,7 +428,7 @@
         </div>
         <div id="s5-vault" class="abs card" style="left: 670px; top: 270px; width: 440px; height: 220px; padding: 30px">
           <div style="display: flex; align-items: center; gap: 14px">
-            <svg width="40" height="40" viewBox="0 0 22 22"><rect x="4" y="9.5" width="14" height="10" rx="2" fill="none" stroke="#1F7A55" stroke-width="1.1" /><path d="M7.5 9.5V7a3.5 3.5 0 0 1 7 0v2.5" fill="none" stroke="#1F7A55" stroke-width="1.1" /><circle cx="11" cy="14.5" r="1.2" fill="#1F7A55" /></svg>
+            <svg width="40" height="40" viewBox="0 0 22 22"><rect x="4" y="9.5" width="14" height="10" rx="2" fill="none" stroke="#3A6B26" stroke-width="1.1" /><path d="M7.5 9.5V7a3.5 3.5 0 0 1 7 0v2.5" fill="none" stroke="#3A6B26" stroke-width="1.1" /><circle cx="11" cy="14.5" r="1.2" fill="#3A6B26" /></svg>
             <div>
               <p class="mono" style="font-size: 11px; color: var(--muted)" id="s5-arch"></p>
               <p class="serif" style="font-size: 26px; margin-top: 2px" id="s5-eu"></p>
@@ -425,20 +441,21 @@
       </div>
 
       <!-- ============ Scene 6: outro ============ -->
-      <div id="s6" class="abs" style="inset: 0; color: #f2f6f3">
+      <div id="s6" class="abs" style="inset: 0; color: #f3f6ee">
         <svg id="s6-seal" class="abs" style="left: 600px; top: 96px" width="80" height="80" viewBox="0 0 32 32"></svg>
         <h2 id="s6-title" class="abs serif" style="left: 0; right: 0; top: 206px; text-align: center; font-size: 78px; line-height: 1.02"></h2>
         <div id="s6-cta" class="abs" style="left: 0; right: 0; top: 410px; display: flex; justify-content: center">
-          <span id="s6-cta-pill" style="display: inline-flex; align-items: center; gap: 12px; padding: 16px 30px; border-radius: 999px; background: var(--foil); color: var(--ink); font-size: 20px; font-weight: 500; box-shadow: 0 16px 40px -14px rgb(63 167 122 / 0.7)"></span>
+          <span id="s6-cta-pill" style="display: inline-flex; align-items: center; gap: 12px; padding: 16px 30px; border-radius: 999px; background: var(--foil); color: var(--ink); font-size: 20px; font-weight: 500; box-shadow: 0 16px 40px -14px rgb(95 154 62 / 0.7)"></span>
         </div>
-        <p id="s6-note" class="abs mono" style="left: 0; right: 0; top: 500px; text-align: center; font-size: 12px; color: #a9b5ad"></p>
+        <p id="s6-note" class="abs mono" style="left: 0; right: 0; top: 500px; text-align: center; font-size: 12px; color: #b0b9a6"></p>
       </div>
 
       <!-- Persistent chrome -->
-      <p id="s5-pin" class="abs mono" style="left: 1010px; top: 222px; font-size: 11px; color: var(--engrave); background: #fff; border: 1px solid var(--hairline); border-radius: 999px; padding: 5px 11px 5px 9px; box-shadow: 0 10px 24px -14px rgb(15 42 34 / 0.5)">● Frankfurt · EU</p>
+      <p id="s5-pin" class="abs mono" style="left: 1010px; top: 222px; font-size: 11px; color: var(--engrave); background: #fff; border: 1px solid var(--hairline); border-radius: 999px; padding: 5px 11px 5px 9px; box-shadow: 0 10px 24px -14px rgb(19 41 26 / 0.5)">● Frankfurt · EU</p>
       <canvas id="fx" class="dither" width="320" height="180"></canvas>
+      <div id="finish"></div>
       <div id="frame"></div>
-      <div id="brand"><svg id="brand-seal" width="30" height="30" viewBox="0 0 32 32"></svg><span class="serif" id="brand-word">Siegel</span></div>
+      <div id="brand"><svg id="brand-seal" width="30" height="30" viewBox="0 0 32 32"></svg><span class="wm" id="brand-word">Siegel</span></div>
       <p id="marker" class="mono"></p>
       <div id="progress"></div>
       <div id="micro">SIEGEL · EN 16931 · ZUGFeRD · XRECHNUNG · VALIDATED · SIEGEL · EN 16931 · ZUGFeRD · XRECHNUNG · VALIDATED · SIEGEL · EN 16931 · ZUGFeRD · XRECHNUNG · VALIDATED · SIEGEL · EN 16931 · ZUGFeRD · XRECHNUNG · VALIDATED · SIEGEL · EN 16931</div>
@@ -546,31 +563,31 @@
       const S_PATH =
         'M20.1 11.3c-.9-1.2-2.3-1.9-4-1.9-2.4 0-4 1.3-4 3.2 0 1.8 1.3 2.6 3.7 3.2 2.1.5 2.9 1 2.9 2.1 0 1.2-1.1 2-2.8 2-1.8 0-3.1-.8-3.9-2.2l-1.1.8c1 1.7 2.8 2.7 5 2.7 2.6 0 4.3-1.4 4.3-3.4 0-1.9-1.3-2.7-3.8-3.3-2-.5-2.8-.9-2.8-1.9 0-1.1 1-1.9 2.6-1.9 1.4 0 2.4.6 3 1.5z'
       const sealMark = (fill, inner) =>
-        `<defs><linearGradient id="fg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1F7A55"/><stop offset=".35" stop-color="#7FCBA6"/><stop offset=".55" stop-color="#2F9168"/><stop offset=".75" stop-color="#B9E6CF"/><stop offset="1" stop-color="#1F7A55"/></linearGradient></defs>` +
+        `<defs><linearGradient id="fg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3A6B26"/><stop offset=".35" stop-color="#98BB58"/><stop offset=".55" stop-color="#4F8636"/><stop offset=".75" stop-color="#DCE9B8"/><stop offset="1" stop-color="#3A6B26"/></linearGradient></defs>` +
         `<path d="${NOTCH}" fill="${fill}"/><circle cx="16" cy="16" r="11.6" fill="none" stroke="${inner}" stroke-width=".8"/><path d="${S_PATH}" fill="${inner}"/>`
       // Sealed document mark: same geometry as components/nav/LogoMark.tsx
       const logoMark = (sheet, line) => {
-        const rim = sheet === '#F2F6F3' ? '#0B1F19' : '#0F2A22'
+        const rim = sheet === '#F3F6EE' ? '#0E2214' : '#13291A'
         return (
-          `<path d="M7 3H18L25 10V26A2 2 0 0 1 23 28H7A2 2 0 0 1 5 26V5A2 2 0 0 1 7 3Z" fill="${sheet}"/><path d="M18 3V8A2 2 0 0 0 20 10H25Z" fill="#3FA77A"/>` +
+          `<path d="M7 3H18L25 10V26A2 2 0 0 1 23 28H7A2 2 0 0 1 5 26V5A2 2 0 0 1 7 3Z" fill="${sheet}"/><path d="M18 3V8A2 2 0 0 0 20 10H25Z" fill="#5F9A3E"/>` +
           `<path d="M9 13H19M9 17H16M9 21H12.5" stroke="${line}" stroke-width="1.6" stroke-linecap="round" fill="none"/>` +
           `<path d="M23.60 16.60L24.99 17.51L26.64 17.29L27.50 18.71L29.07 19.24L29.23 20.89L30.42 22.04L29.85 23.60L30.42 25.16L29.23 26.31L29.07 27.96L27.50 28.49L26.64 29.91L24.99 29.69L23.60 30.60L22.21 29.69L20.56 29.91L19.70 28.49L18.13 27.96L17.97 26.31L16.78 25.16L17.35 23.60L16.78 22.04L17.97 20.89L18.13 19.24L19.70 18.71L20.56 17.29L22.21 17.51Z" fill="${rim}" stroke="${rim}" stroke-width="1.3" stroke-linejoin="round"/>` +
-          `<path d="M23.60 16.60L24.99 17.51L26.64 17.29L27.50 18.71L29.07 19.24L29.23 20.89L30.42 22.04L29.85 23.60L30.42 25.16L29.23 26.31L29.07 27.96L27.50 28.49L26.64 29.91L24.99 29.69L23.60 30.60L22.21 29.69L20.56 29.91L19.70 28.49L18.13 27.96L17.97 26.31L16.78 25.16L17.35 23.60L16.78 22.04L17.97 20.89L18.13 19.24L19.70 18.71L20.56 17.29L22.21 17.51Z" fill="#3FA77A"/>` +
+          `<path d="M23.60 16.60L24.99 17.51L26.64 17.29L27.50 18.71L29.07 19.24L29.23 20.89L30.42 22.04L29.85 23.60L30.42 25.16L29.23 26.31L29.07 27.96L27.50 28.49L26.64 29.91L24.99 29.69L23.60 30.60L22.21 29.69L20.56 29.91L19.70 28.49L18.13 27.96L17.97 26.31L16.78 25.16L17.35 23.60L16.78 22.04L17.97 20.89L18.13 19.24L19.70 18.71L20.56 17.29L22.21 17.51Z" fill="#5F9A3E"/>` +
           `<circle cx="23.6" cy="23.6" r="4.6" fill="none" stroke="${line}" stroke-opacity=".55" stroke-width=".6"/>` +
           `<path d="M21.4 23.7L23 25.3L26 22.1" fill="none" stroke="${line}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`
         )
       }
-      $('brand-seal').innerHTML = logoMark('#0F2A22', '#FAFBFA')
-      $('s3-seal').innerHTML = logoMark('#0F2A22', '#FAFBFA')
-      $('s6-seal').innerHTML = logoMark('#F2F6F3', '#0F2A22')
+      $('brand-seal').innerHTML = logoMark('#13291A', '#FAFBF7')
+      $('s3-seal').innerHTML = logoMark('#13291A', '#FAFBF7')
+      $('s6-seal').innerHTML = logoMark('#F3F6EE', '#13291A')
       $('s4-seal').innerHTML =
-        `<defs><linearGradient id="fg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1F7A55"/><stop offset=".32" stop-color="#7FCBA6"/><stop offset=".52" stop-color="#2F9168"/><stop offset=".72" stop-color="#B9E6CF"/><stop offset="1" stop-color="#1F7A55"/></linearGradient>` +
+        `<defs><linearGradient id="fg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3A6B26"/><stop offset=".32" stop-color="#98BB58"/><stop offset=".52" stop-color="#4F8636"/><stop offset=".72" stop-color="#DCE9B8"/><stop offset="1" stop-color="#3A6B26"/></linearGradient>` +
         `<path id="tp" d="M60 60 m-38 0 a38 38 0 1 1 76 0 a38 38 0 1 1 -76 0"/></defs>` +
         `<path d="${NOTCH}" transform="translate(2.5 2.5) scale(3.6)" fill="url(#fg2)"/>` +
         `<circle cx="60" cy="60" r="45" fill="none" stroke="#E8F6EE" stroke-opacity=".7" stroke-width=".8"/>` +
-        `<circle cx="60" cy="60" r="31" fill="none" stroke="#14523A" stroke-opacity=".5" stroke-width=".8"/>` +
-        `<text font-family="GeistMono" font-size="7.4" letter-spacing="2.2" fill="#0F2A22"><textPath href="#tp">GEPRÜFT · VALIDATED · EN 16931 ·</textPath></text>` +
-        `<path d="${S_PATH}" transform="translate(24 24) scale(2.25)" fill="#0F2A22"/>`
+        `<circle cx="60" cy="60" r="31" fill="none" stroke="#2B4F1D" stroke-opacity=".5" stroke-width=".8"/>` +
+        `<text font-family="GeistMono" font-size="7.4" letter-spacing="2.2" fill="#13291A"><textPath href="#tp">GEPRÜFT · VALIDATED · EN 16931 ·</textPath></text>` +
+        `<path d="${S_PATH}" transform="translate(24 24) scale(2.25)" fill="#13291A"/>`
 
       $('s1-eyebrow').textContent = C.s1Eyebrow
       $('s1-title').innerHTML = `<span style="display:block">${C.s1Title[0]}</span><span style="display:block">${C.s1Title[1]}</span>`
@@ -578,10 +595,10 @@
         const align = i === 0 ? 'left' : i === 1 ? 'center' : 'right'
         const tx = i === 0 ? '0' : i === 1 ? '-50%' : '-100%'
         $(`s1-m${i}`).innerHTML =
-          `<span style="position:absolute;left:-9px;top:-9px;width:18px;height:18px;transform:rotate(45deg);border:1.5px solid ${i === 1 ? '#1F7A55' : '#0F2A22'};background:${i === 1 ? 'linear-gradient(135deg,#1f7a55,#7fcba6,#2f9168)' : '#FAFBFA'}"></span>` +
+          `<span style="position:absolute;left:-9px;top:-9px;width:18px;height:18px;transform:rotate(45deg);border:1.5px solid ${i === 1 ? '#3A6B26' : '#13291A'};background:${i === 1 ? 'linear-gradient(135deg,#3a6b26,#98bb58,#4f8636)' : '#FAFBF7'}"></span>` +
           `<div style="position:absolute;top:34px;transform:translateX(${tx});text-align:${align};white-space:nowrap">` +
-          `<p class="mono" style="font-size:13px;color:${i === 1 ? '#1F7A55' : '#4E5A54'}">${date}</p>` +
-          `<p class="serif" style="font-size:30px;margin-top:8px">${label}</p></div>`
+          `<p class="mono" style="font-size:13px;color:${i === 1 ? '#3A6B26' : '#525A4C'}">${date}</p>` +
+          `<p class="serif" style="font-size:26px;margin-top:8px;letter-spacing:-0.03em">${label}</p></div>`
       })
       $('s2-doc').textContent = C.s2Doc
       $('s2-total-label').textContent = C.s2Total
@@ -604,17 +621,17 @@
         .join('')
       $('s4-dial').innerHTML =
         `<svg width="150" height="150" viewBox="0 0 160 160"><g transform="translate(80 80)">` +
-        `<circle r="62" fill="#fff"/><circle r="55" fill="none" stroke="#E6ECE8" stroke-width="7"/>` +
-        `<circle id="s4-arc" r="55" fill="none" stroke="#17382D" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1" transform="rotate(-90)"/>` +
-        `<circle r="66" fill="none" stroke="#D3DBD6" stroke-width=".7" stroke-dasharray="1 3"/></g>` +
-        `<text id="s4-pct" x="80" y="92" text-anchor="middle" font-family="Instrument" font-size="38" fill="#0F2A22">0%</text></svg>`
+        `<circle r="62" fill="#fff"/><circle r="55" fill="none" stroke="#E6EBDD" stroke-width="7"/>` +
+        `<circle id="s4-arc" r="55" fill="none" stroke="#1D3A21" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1" transform="rotate(-90)"/>` +
+        `<circle r="66" fill="none" stroke="#D5DBCB" stroke-width=".7" stroke-dasharray="1 3"/></g>` +
+        `<text id="s4-pct" x="80" y="92" text-anchor="middle" font-family="Geist" font-size="34" letter-spacing="-1.4" fill="#13291A">0%</text></svg>`
       $('s4-dial-label').innerHTML = C.dial
       $('s5-title').innerHTML = C.s5Title
       $('s5-to').textContent = C.s5To
       $('s5-log').innerHTML = C.log
         .map(
           ([time, label], i) =>
-            `<div id="s5-l${i}" style="display:flex;align-items:center;gap:14px"><span style="color:#4E5A54">${time}</span><span style="width:8px;height:8px;border-radius:999px;background:${['#CDD5D0', '#17382D', '#2E7D4F'][i]}"></span><span>${label}</span></div>`,
+            `<div id="s5-l${i}" style="display:flex;align-items:center;gap:14px"><span style="color:#525A4C">${time}</span><span style="width:8px;height:8px;border-radius:999px;background:${['#CFD6C4', '#1D3A21', '#3F7A2C'][i]}"></span><span>${label}</span></div>`,
         )
         .join('')
       $('s5-arch').textContent = C.s5Arch
@@ -642,7 +659,7 @@
       // progress of an animation starting at a (s) lasting d (s)
       const p = (t, a, d = 0.9, ease = outQuart) => ease((t - a) / d)
       // visibility of a scene shown from a to b with soft fades
-      const vis = (t, a, b, f = 0.55) => Math.min(clamp((t - a) / f), clamp((b - t) / f))
+      const vis = (t, a, b, f = 0.7) => Math.min(clamp((t - a) / f), clamp((b - t) / f))
       const set = (id, { o, x = 0, y = 0, s = 1, r = 0, sx, blur } = {}) => {
         const el = typeof id === 'string' ? $(id) : id
         if (!el) return
@@ -732,7 +749,7 @@
       const FIELD = new Float32Array((DW + 64) * DH)
       for (let y = 0; y < DH; y++) for (let x = 0; x < DW + 64; x++) FIELD[y * (DW + 64) + x] = vnoise(x / 22, y / 22) * 0.6 + vnoise(x / 9, y / 9) * 0.4
       const put = (img, i, c, a = 255) => { img.data[i] = c[0]; img.data[i + 1] = c[1]; img.data[i + 2] = c[2]; img.data[i + 3] = a }
-      const MINT = [63, 167, 122], MINT_PALE = [190, 228, 209], FIR = [23, 56, 45], PAPER = [250, 251, 250]
+      const MINT = [95, 154, 62], MINT_PALE = [220, 233, 184], FIR = [29, 58, 33], PAPER = [250, 251, 247]
 
       function drawBackground(t, dark) {
         const d = bgImg.data
@@ -753,10 +770,10 @@
               v = Math.max(v, ring * radar * 0.9 + Math.max(0, 1 - r / 40) * radar * 0.35)
             }
             if (v > bayer(x, y)) {
-              const c = dark > 0.5 ? (v > 0.6 ? MINT : [40, 90, 70]) : v > 0.55 ? MINT : MINT_PALE
+              const c = dark > 0.5 ? (v > 0.6 ? MINT : [44, 82, 40]) : v > 0.55 ? MINT : MINT_PALE
               // during the cut to the dark outro the texture dips out, so the crossfade stays clean
               const dip = 1 - Math.min(1, Math.sin(Math.PI * dark) * 1.4)
-              put(bgImg, (y * DW + x) * 4, c, Math.round((dark > 0.5 ? 120 : 150) * dip))
+              put(bgImg, (y * DW + x) * 4, c, Math.round((dark > 0.5 ? 120 : 105) * dip))
             }
           }
         }
@@ -852,7 +869,7 @@
         $('frame').style.opacity = 1 - dark * 0.7
         $('brand').style.opacity = 1 - dark
         $('brand').style.transform = `translateY(${(1 - p(t, 0.1, 0.8)) * -10}px)`
-        $('micro').style.color = dark > 0.5 ? 'rgb(159 217 188 / 0.4)' : 'rgb(23 56 45 / 0.45)'
+        $('micro').style.color = dark > 0.5 ? 'rgb(188 211 131 / 0.4)' : 'rgb(29 58 33 / 0.45)'
         set('progress', { sx: clamp(t / DURATION), o: 1 - dark * 0.4 })
         const scene = S.findIndex(([a, b]) => t >= a && t < b)
         $('marker').textContent = C.markers[Math.max(0, scene)] || ''
@@ -919,7 +936,7 @@
           })
           // the seal glows when invoices arrive
           const glow = t > 16 ? 0.5 + 0.5 * Math.sin((t - 16) * 4.2) : 0
-          $('s3-right').style.boxShadow = `0 1px 0 #fff inset, 0 30px 60px -30px rgb(15 42 34 / .35), 0 0 0 ${(glow * 6).toFixed(1)}px rgb(63 167 122 / ${(0.25 * glow).toFixed(2)})`
+          $('s3-right').style.boxShadow = `0 1px 0 #fff inset, 0 30px 60px -30px rgb(19 41 26 / .35), 0 0 0 ${(glow * 6).toFixed(1)}px rgb(95 154 62 / ${(0.25 * glow).toFixed(2)})`
         }
 
         // ---- Scene 4: converted, validated, sealed
@@ -940,11 +957,11 @@
           set('s4-dial', { o: p(t, 20.8, 0.6) })
           set('s4-dial-label', { o: p(t, 21.0, 0.6) })
           $('s4-arc').style.strokeDashoffset = (1 - dialP).toFixed(4)
-          $('s4-arc').style.stroke = dialP >= 1 ? '#3FA77A' : '#17382D'
+          $('s4-arc').style.stroke = dialP >= 1 ? '#5F9A3E' : '#1D3A21'
           $('s4-pct').textContent = `${Math.round(dialP * 100)}%`
           const ks = p(t, 23.9, 0.7, outBack)
           set('s4-seal', { o: clamp((t - 23.9) / 0.25), s: 1.8 - 0.8 * ks, r: -30 + 18 * ks })
-          $('s4-seal').style.filter = `drop-shadow(0 ${(6 * ks).toFixed(1)}px ${(10 * ks).toFixed(1)}px rgb(20 82 58 / .4))`
+          $('s4-seal').style.filter = `drop-shadow(0 ${(6 * ks).toFixed(1)}px ${(10 * ks).toFixed(1)}px rgb(43 79 29 / .4))`
         }
 
         // ---- Scene 5: delivered & archived
@@ -976,7 +993,7 @@
           rise('s6-note', t, 33.8, 10)
           // a gold sheen crosses the CTA once
           const sh = clamp((t - 34.4) / 0.9)
-          $('s6-cta-pill').style.backgroundImage = `linear-gradient(110deg, transparent ${(sh * 160 - 40).toFixed(1)}%, rgb(230 248 238 / .55) ${(sh * 160 - 25).toFixed(1)}%, transparent ${(sh * 160 - 10).toFixed(1)}%), linear-gradient(115deg, #1f7a55 0%, #7fcba6 32%, #2f9168 52%, #b9e6cf 70%, #1f7a55 100%)`
+          $('s6-cta-pill').style.backgroundImage = `linear-gradient(110deg, transparent ${(sh * 160 - 40).toFixed(1)}%, rgb(238 245 224 / .55) ${(sh * 160 - 25).toFixed(1)}%, transparent ${(sh * 160 - 10).toFixed(1)}%), linear-gradient(115deg, #3a6b26 0%, #98bb58 32%, #4f8636 52%, #dce9b8 70%, #3a6b26 100%)`
         }
       }
 

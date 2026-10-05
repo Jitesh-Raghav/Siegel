@@ -11,34 +11,34 @@
    Fir-green ink on crisp white, with a fresh mint accent.
    ------------------------------------------------------------------------- */
 :root {
-  --paper: #fafbfa;
-  --paper-2: #f1f4f2;
-  --ink: #0f2a22;
-  --ink-2: #1a3a2f;
-  --muted: #4e5a54;
-  --hairline: #e1e6e3;
-  --hairline-strong: #cdd5d0;
+  --paper: #fafbf7;
+  --paper-2: #f2f4ec;
+  --ink: #13291a;
+  --ink-2: #1f3c24;
+  --muted: #525a4c;
+  --hairline: #e2e6da;
+  --hairline-strong: #cfd6c4;
 
-  --engrave-ink: #17382d;
-  --engrave-cream: #d9ede3;
-  --engrave-paper: #fbfcfb;
+  --engrave-ink: #1d3a21;
+  --engrave-cream: #e3eed2;
+  --engrave-paper: #fbfcf8;
 
-  --midnight: #0b1f19;
-  --midnight-2: #12291f;
-  --on-dark: #f2f6f3;
-  --on-dark-muted: #a9b5ad;
+  --midnight: #0e2214;
+  --midnight-2: #15301c;
+  --on-dark: #f3f6ee;
+  --on-dark-muted: #b0b9a6;
 
-  --gold: #3fa77a;
-  --gold-deep: #1f7a55;
-  --gold-soft: #9fd9bc;
-  --verified: #2e7d4f;
+  --gold: #5f9a3e;
+  --gold-deep: #3a6b26;
+  --gold-soft: #bcd383;
+  --verified: #3f7a2c;
   --danger: #b42318;
 
   /* Mint accent: bright gradient for ornament and dark bands; deep gradient for text on white (AA). */
-  --foil: linear-gradient(115deg, #1f7a55 0%, #7fcba6 32%, #2f9168 52%, #b9e6cf 70%, #1f7a55 100%);
+  --foil: linear-gradient(115deg, #3a6b26 0%, #98bb58 32%, #4f8636 52%, #dce9b8 70%, #3a6b26 100%);
   /* Light mint for surfaces that carry ink text (buttons, chips): every stop stays ≥ 4.5:1 with ink. */
-  --foil-light: linear-gradient(115deg, #5cbf92 0%, #9fd9bc 38%, #6dc89e 58%, #b9e6cf 78%, #5cbf92 100%);
-  --foil-deep: linear-gradient(115deg, #17604a 0%, #1f7a55 45%, #1b6c4c 100%);
+  --foil-light: linear-gradient(115deg, #86b04f 0%, #bcd383 38%, #93b95c 58%, #dce9b8 78%, #86b04f 100%);
+  --foil-deep: linear-gradient(115deg, #2f5a1f 0%, #3a6b26 45%, #35631f 100%);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-out-back: cubic-bezier(0.34, 1.36, 0.64, 1);
@@ -55,10 +55,10 @@
   --radius-lg: 22px;
 
   --shadow-soft:
-    0 1px 0 rgb(255 255 255 / 0.7) inset, 0 1px 2px rgb(15 42 34 / 0.04), 0 12px 28px -14px rgb(15 42 34 / 0.16);
+    0 1px 0 rgb(255 255 255 / 0.7) inset, 0 1px 2px rgb(19 41 26 / 0.04), 0 12px 28px -14px rgb(19 41 26 / 0.16);
   --shadow-lift:
-    0 1px 0 rgb(255 255 255 / 0.8) inset, 0 2px 4px rgb(15 42 34 / 0.04), 0 24px 48px -20px rgb(15 42 34 / 0.22),
-    0 48px 96px -48px rgb(23 56 45 / 0.3);
+    0 1px 0 rgb(255 255 255 / 0.8) inset, 0 2px 4px rgb(19 41 26 / 0.04), 0 24px 48px -20px rgb(19 41 26 / 0.22),
+    0 48px 96px -48px rgb(29 58 33 / 0.3);
 }
 
 @media (min-width: 768px) {
@@ -253,7 +253,7 @@
     height: 6px;
     transform: rotate(45deg);
     background: var(--foil);
-    box-shadow: 0 0 0 3px rgb(63 167 122 / 0.14);
+    box-shadow: 0 0 0 3px rgb(95 154 62 / 0.14);
   }
 
   .eyebrow-indexed::before {
@@ -378,8 +378,8 @@
   /* How it works: the page's one dark band */
   .how-band {
     background:
-      radial-gradient(1000px 420px at 50% 0%, rgb(63 167 122 / 0.16), transparent 65%),
-      radial-gradient(700px 400px at 100% 100%, rgb(23 56 45 / 0.6), transparent 60%),
+      radial-gradient(1000px 420px at 50% 0%, rgb(95 154 62 / 0.16), transparent 65%),
+      radial-gradient(700px 400px at 100% 100%, rgb(29 58 33 / 0.6), transparent 60%),
       var(--midnight);
   }
 
@@ -392,7 +392,7 @@
 
   .how-rail {
     height: 1px;
-    background: linear-gradient(90deg, rgb(159 217 188 / 0.15), rgb(63 167 122 / 0.9) 50%, rgb(159 217 188 / 0.15));
+    background: linear-gradient(90deg, rgb(188 211 131 / 0.15), rgb(95 154 62 / 0.9) 50%, rgb(188 211 131 / 0.15));
     transform-origin: left center;
   }
 
@@ -402,9 +402,9 @@
     color: var(--on-dark);
     background: var(--midnight-2);
     box-shadow:
-      0 0 0 1px rgb(159 217 188 / 0.35),
+      0 0 0 1px rgb(188 211 131 / 0.35),
       0 0 0 6px var(--midnight),
-      0 0 24px 2px rgb(63 167 122 / 0.25);
+      0 0 24px 2px rgb(95 154 62 / 0.25);
   }
 
   .how-band .h2 {
@@ -473,12 +473,12 @@
     padding: 1px;
     background: conic-gradient(
       from var(--plan-a, 0deg),
-      rgb(63 167 122 / 0.25),
-      rgb(159 217 188 / 0.95) 12%,
-      rgb(63 167 122 / 0.25) 28%,
-      rgb(63 167 122 / 0.25) 62%,
-      rgb(159 217 188 / 0.7) 74%,
-      rgb(63 167 122 / 0.25) 88%
+      rgb(95 154 62 / 0.25),
+      rgb(188 211 131 / 0.95) 12%,
+      rgb(95 154 62 / 0.25) 28%,
+      rgb(95 154 62 / 0.25) 62%,
+      rgb(188 211 131 / 0.7) 74%,
+      rgb(95 154 62 / 0.25) 88%
     );
     -webkit-mask:
       linear-gradient(#000 0 0) content-box,
@@ -587,7 +587,7 @@
     border-radius: inherit;
     background: radial-gradient(
       460px circle at var(--mx, 50%) var(--my, 0%),
-      rgb(159 217 188 / 0.28),
+      rgb(188 211 131 / 0.28),
       transparent 60%
     );
     opacity: 0;
@@ -601,7 +601,7 @@
     inset: -1px;
     border-radius: inherit;
     padding: 1px;
-    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), rgb(63 167 122 / 0.85), transparent 70%);
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), rgb(95 154 62 / 0.85), transparent 70%);
     -webkit-mask:
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
@@ -624,8 +624,8 @@
     --fg-error: #f4a99f;
     --fg-rule: rgb(255 255 255 / 0.12);
     background:
-      radial-gradient(900px 420px at 80% -10%, rgb(63 167 122 / 0.12), transparent 60%),
-      radial-gradient(800px 500px at 0% 110%, rgb(23 56 45 / 0.55), transparent 60%),
+      radial-gradient(900px 420px at 80% -10%, rgb(95 154 62 / 0.12), transparent 60%),
+      radial-gradient(800px 500px at 0% 110%, rgb(29 58 33 / 0.55), transparent 60%),
       var(--midnight);
     color: var(--on-dark);
   }
@@ -691,7 +691,7 @@
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: linear-gradient(110deg, transparent 30%, rgb(185 230 207 / 0.35) 48%, transparent 66%);
+    background: linear-gradient(110deg, transparent 30%, rgb(220 233 184 / 0.35) 48%, transparent 66%);
     transform: translateX(-120%);
     transition: transform 900ms var(--ease);
     pointer-events: none;
@@ -702,20 +702,20 @@
   }
 
   .btn-primary {
-    background: linear-gradient(180deg, #1d4033 0%, var(--ink) 100%);
+    background: linear-gradient(180deg, #22442a 0%, var(--ink) 100%);
     color: var(--on-dark);
     box-shadow:
       0 1px 0 rgb(255 255 255 / 0.14) inset,
-      0 0 0 1px rgb(15 42 34 / 0.9),
-      0 10px 24px -10px rgb(15 42 34 / 0.55);
+      0 0 0 1px rgb(19 41 26 / 0.9),
+      0 10px 24px -10px rgb(19 41 26 / 0.55);
   }
 
   .btn-primary:hover:not(:disabled) {
     box-shadow:
       0 1px 0 rgb(255 255 255 / 0.18) inset,
-      0 0 0 1px rgb(15 42 34 / 0.9),
-      0 0 0 4px rgb(63 167 122 / 0.18),
-      0 14px 30px -12px rgb(15 42 34 / 0.6);
+      0 0 0 1px rgb(19 41 26 / 0.9),
+      0 0 0 4px rgb(95 154 62 / 0.18),
+      0 14px 30px -12px rgb(19 41 26 / 0.6);
   }
 
   .btn-secondary {
@@ -739,7 +739,7 @@
     color: var(--ink);
     box-shadow:
       0 1px 0 rgb(255 255 255 / 0.4) inset,
-      0 10px 30px -12px rgb(63 167 122 / 0.65);
+      0 10px 30px -12px rgb(95 154 62 / 0.65);
     transition:
       background-position 800ms var(--ease),
       box-shadow 320ms var(--ease),
@@ -774,7 +774,7 @@
     position: absolute;
     inset: 3px;
     border-radius: 17px;
-    border: 1px solid rgb(63 167 122 / 0.35);
+    border: 1px solid rgb(95 154 62 / 0.35);
     pointer-events: none;
   }
 
@@ -798,12 +798,12 @@
     text-transform: uppercase;
     white-space: nowrap;
     overflow: hidden;
-    color: rgb(23 56 45 / 0.55);
+    color: rgb(29 58 33 / 0.55);
     user-select: none;
   }
 
   .on-dark .microprint {
-    color: rgb(159 217 188 / 0.45);
+    color: rgb(188 211 131 / 0.45);
   }
 
   .margin-hairlines {
@@ -820,8 +820,8 @@
     pointer-events: none;
     background-image: repeating-linear-gradient(
       to bottom,
-      rgb(23 56 45 / 0.09) 0,
-      rgb(23 56 45 / 0.09) 1px,
+      rgb(29 58 33 / 0.09) 0,
+      rgb(29 58 33 / 0.09) 1px,
       transparent 1px,
       transparent 6px
     );
@@ -842,8 +842,8 @@
   .hatch {
     background-image: repeating-linear-gradient(
       -45deg,
-      rgb(23 56 45 / 0.16) 0,
-      rgb(23 56 45 / 0.16) 1px,
+      rgb(29 58 33 / 0.16) 0,
+      rgb(29 58 33 / 0.16) 1px,
       transparent 1px,
       transparent 5px
     );
@@ -853,11 +853,11 @@
   .engrave-fallback {
     background-color: var(--engrave-paper);
     background-image:
-      linear-gradient(to bottom, transparent 45%, rgb(23 56 45 / 0.1) 100%),
+      linear-gradient(to bottom, transparent 45%, rgb(29 58 33 / 0.1) 100%),
       repeating-linear-gradient(
         to bottom,
-        rgb(23 56 45 / 0.22) 0,
-        rgb(23 56 45 / 0.22) 1px,
+        rgb(29 58 33 / 0.22) 0,
+        rgb(29 58 33 / 0.22) 1px,
         transparent 1px,
         transparent 3px
       );
@@ -866,11 +866,11 @@
   .on-dark .engrave-fallback {
     background-color: var(--midnight);
     background-image:
-      linear-gradient(to bottom, rgb(11 31 25 / 0.4), transparent 60%),
+      linear-gradient(to bottom, rgb(14 34 20 / 0.4), transparent 60%),
       repeating-linear-gradient(
         to bottom,
-        rgb(159 217 188 / 0.22) 0,
-        rgb(159 217 188 / 0.22) 1px,
+        rgb(188 211 131 / 0.22) 0,
+        rgb(188 211 131 / 0.22) 1px,
         transparent 1px,
         transparent 3px
       );
@@ -1013,7 +1013,7 @@
   .input:focus-visible {
     outline: none;
     border-color: var(--engrave-ink);
-    box-shadow: 0 0 0 4px rgb(23 56 45 / 0.12);
+    box-shadow: 0 0 0 4px rgb(29 58 33 / 0.12);
   }
 
   .input[aria-invalid='true'] {
@@ -1071,13 +1071,13 @@
 
   .segmented input:hover + span {
     color: var(--ink);
-    background: rgb(15 42 34 / 0.04);
+    background: rgb(19 41 26 / 0.04);
   }
 
   .segmented input:checked + span {
     background: var(--ink);
     color: var(--on-dark);
-    box-shadow: 0 6px 14px -8px rgb(15 42 34 / 0.6);
+    box-shadow: 0 6px 14px -8px rgb(19 41 26 / 0.6);
   }
 
   .segmented input:focus-visible + span {
@@ -1101,7 +1101,7 @@
 
   .on-dark .input:focus-visible {
     border-color: var(--gold-soft);
-    box-shadow: 0 0 0 4px rgb(159 217 188 / 0.16);
+    box-shadow: 0 0 0 4px rgb(188 211 131 / 0.16);
   }
 
   .on-dark .segmented {
@@ -1142,12 +1142,12 @@
     color: var(--ink);
     box-shadow:
       0 0 0 1px var(--hairline-strong),
-      0 40px 100px -30px rgb(15 42 34 / 0.45);
+      0 40px 100px -30px rgb(19 41 26 / 0.45);
     overflow: auto;
   }
 
   .waitlist-dialog::backdrop {
-    background: rgb(11 31 25 / 0.5);
+    background: rgb(14 34 20 / 0.5);
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
   }
@@ -1336,8 +1336,8 @@
   /* Hero ambient glow */
   .hero-glow {
     background:
-      radial-gradient(closest-side, rgb(159 217 188 / 0.38), transparent),
-      radial-gradient(closest-side at 70% 60%, rgb(23 56 45 / 0.08), transparent);
+      radial-gradient(closest-side, rgb(188 211 131 / 0.38), transparent),
+      radial-gradient(closest-side at 70% 60%, rgb(29 58 33 / 0.08), transparent);
   }
 
   /* Hero annotation callouts: line draws, ring pops, chip rises — in sequence per callout. */
@@ -1460,7 +1460,7 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    box-shadow: 0 0 0 2px rgb(63 167 122 / 0.55);
+    box-shadow: 0 0 0 2px rgb(95 154 62 / 0.55);
     animation: btn-ring 3.2s var(--ease) 1.6s infinite;
     pointer-events: none;
   }
@@ -1529,14 +1529,14 @@
 
   /* Film play button ring */
   .film-ring {
-    box-shadow: 0 0 0 0 rgb(127 203 166 / 0.55);
+    box-shadow: 0 0 0 0 rgb(152 187 88 / 0.55);
     animation: film-ring 2.6s var(--ease) infinite;
   }
 
   @keyframes film-ring {
     70%,
     100% {
-      box-shadow: 0 0 0 22px rgb(127 203 166 / 0);
+      box-shadow: 0 0 0 22px rgb(152 187 88 / 0);
     }
   }
 
@@ -1557,7 +1557,7 @@
     position: absolute;
     inset: 0;
     border-radius: 999px;
-    background: linear-gradient(160deg, #9fd9bc 0%, #3fa77a 45%, #0f2a22 100%);
+    background: linear-gradient(160deg, #bcd383 0%, #5f9a3e 45%, #13291a 100%);
     mix-blend-mode: color;
     pointer-events: none;
     transition: opacity 700ms var(--ease);
@@ -1572,7 +1572,7 @@
   }
 
   .founder-lines {
-    background-image: repeating-linear-gradient(-32deg, rgb(15 42 34 / 0.13) 0 1px, transparent 1px 7px);
+    background-image: repeating-linear-gradient(-32deg, rgb(19 41 26 / 0.13) 0 1px, transparent 1px 7px);
     -webkit-mask-image: radial-gradient(closest-side, #000, transparent);
     mask-image: radial-gradient(closest-side, #000, transparent);
   }
@@ -1608,11 +1608,11 @@
   }
 
   .btn-noir {
-    background: linear-gradient(180deg, #23302a 0%, #0c1411 100%);
+    background: linear-gradient(180deg, #252f25 0%, #0e140f 100%);
     color: #f6f8f6;
     box-shadow:
       0 1px 0 rgb(255 255 255 / 0.14) inset,
-      0 0 0 1px #0c1411,
+      0 0 0 1px #0e140f,
       0 4px 8px -2px rgb(0 0 0 / 0.22),
       0 18px 30px -12px rgb(0 0 0 / 0.5);
   }
@@ -1620,7 +1620,7 @@
   .btn-noir:hover:not(:disabled) {
     box-shadow:
       0 1px 0 rgb(255 255 255 / 0.18) inset,
-      0 0 0 1px #0c1411,
+      0 0 0 1px #0e140f,
       0 6px 12px -2px rgb(0 0 0 / 0.25),
       0 24px 40px -14px rgb(0 0 0 / 0.55);
   }
@@ -1629,16 +1629,16 @@
     background: #fff;
     color: var(--ink);
     box-shadow:
-      0 0 0 1px rgb(15 42 34 / 0.12),
-      0 1px 2px rgb(15 42 34 / 0.06),
-      0 10px 22px -14px rgb(15 42 34 / 0.3);
+      0 0 0 1px rgb(19 41 26 / 0.12),
+      0 1px 2px rgb(19 41 26 / 0.06),
+      0 10px 22px -14px rgb(19 41 26 / 0.3);
   }
 
   .btn-paper:hover:not(:disabled) {
     box-shadow:
-      0 0 0 1px rgb(15 42 34 / 0.22),
-      0 1px 2px rgb(15 42 34 / 0.06),
-      0 14px 28px -14px rgb(15 42 34 / 0.35);
+      0 0 0 1px rgb(19 41 26 / 0.22),
+      0 1px 2px rgb(19 41 26 / 0.06),
+      0 14px 28px -14px rgb(19 41 26 / 0.35);
   }
 
   /* Footer: CSS line texture under the WebGL field (visible if WebGL is unavailable) */
@@ -1652,14 +1652,14 @@
 
   .footer-fallback {
     background:
-      repeating-linear-gradient(-8deg, rgb(63 167 122 / 0.1) 0 1px, transparent 1px 9px),
+      repeating-linear-gradient(-8deg, rgb(95 154 62 / 0.1) 0 1px, transparent 1px 9px),
       var(--midnight);
   }
 
   .footer-wordmark {
     color: transparent;
-    -webkit-text-stroke: 1px rgb(159 217 188 / 0.4);
-    background-image: repeating-linear-gradient(to bottom, rgb(159 217 188 / 0.28) 0 1px, transparent 1px 5px);
+    -webkit-text-stroke: 1px rgb(188 211 131 / 0.4);
+    background-image: repeating-linear-gradient(to bottom, rgb(188 211 131 / 0.28) 0 1px, transparent 1px 5px);
     -webkit-background-clip: text;
     background-clip: text;
   }
@@ -1690,21 +1690,49 @@
     }
   }
 
-  /* Frosted glass over the forest: a light white veil, strong blur and saturation, a bright
-     rim on the top edge and a deep green drop shadow. */
+  /* Liquid glass over the forest: a clear slab (light blur, rich saturation) whose edges catch
+     the light: a specular rim brightest at the top-left and bottom-right corners (::before),
+     an inner glow along the edges, and a soft lens highlight in the upper corner. */
   .hi-card {
     background:
-      linear-gradient(165deg, rgb(255 255 255 / 0.22) 0%, rgb(255 255 255 / 0.07) 45%, rgb(255 255 255 / 0.03) 100%),
-      rgb(22 56 28 / 0.34);
-    -webkit-backdrop-filter: blur(22px) saturate(1.5);
-    backdrop-filter: blur(22px) saturate(1.5);
-    border: 1px solid rgb(255 255 255 / 0.5);
-    text-shadow: 0 1px 2px rgb(10 30 12 / 0.18);
+      radial-gradient(120% 70% at 12% 0%, rgb(255 255 255 / 0.26), transparent 55%),
+      radial-gradient(90% 60% at 100% 100%, rgb(255 255 255 / 0.1), transparent 60%),
+      linear-gradient(170deg, rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.02) 60%),
+      rgb(18 46 22 / 0.3);
+    -webkit-backdrop-filter: blur(12px) saturate(1.9) brightness(1.06);
+    backdrop-filter: blur(12px) saturate(1.9) brightness(1.06);
+    text-shadow: 0 1px 2px rgb(8 24 10 / 0.35);
     box-shadow:
-      0 1px 0 rgb(255 255 255 / 0.65) inset,
-      0 -1px 0 rgb(255 255 255 / 0.12) inset,
-      0 2px 6px rgb(10 30 12 / 0.08),
-      0 34px 70px -24px rgb(10 36 14 / 0.55);
+      inset 0 1px 1px rgb(255 255 255 / 0.75),
+      inset 0 -1px 1px rgb(255 255 255 / 0.22),
+      inset 0 0 22px rgb(255 255 255 / 0.1),
+      inset 14px 14px 34px -26px rgb(255 255 255 / 0.6),
+      0 2px 6px rgb(8 24 10 / 0.12),
+      0 34px 70px -24px rgb(8 30 12 / 0.6);
+  }
+
+  .hi-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    padding: 1.25px;
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 0.95) 0%,
+      rgb(255 255 255 / 0.35) 18%,
+      rgb(255 255 255 / 0.08) 42%,
+      rgb(255 255 255 / 0.08) 60%,
+      rgb(255 255 255 / 0.4) 84%,
+      rgb(255 255 255 / 0.85) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 
   /* bright edge glow when the invoice validates */
@@ -1776,7 +1804,7 @@
 
   .hi-pill {
     transform: translate(-50%, 0);
-    box-shadow: 0 1px 0 rgb(255 255 255 / 0.12) inset, 0 16px 34px -14px rgb(15 42 34 / 0.6);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.12) inset, 0 16px 34px -14px rgb(19 41 26 / 0.6);
     animation: hi-pill 7s var(--ease) infinite;
   }
 
@@ -1814,8 +1842,8 @@
 
   /* earlier invoices in the stack: thin panes of the same glass (no blur of their own) */
   .hi-stack {
-    border: 1px solid rgb(255 255 255 / 0.42);
-    background: linear-gradient(165deg, rgb(255 255 255 / 0.18), rgb(255 255 255 / 0.04)), rgb(22 56 28 / 0.18);
+    border: 1px solid rgb(255 255 255 / 0.5);
+    background: radial-gradient(110% 70% at 15% 0%, rgb(255 255 255 / 0.22), transparent 60%), rgb(18 46 22 / 0.16);
     box-shadow: 0 20px 40px -26px rgb(10 36 14 / 0.45);
   }
 
@@ -1833,14 +1861,17 @@
   .hi-band {
     border-bottom: 1px solid rgb(255 255 255 / 0.28);
     background:
-      repeating-linear-gradient(-28deg, rgb(255 255 255 / 0.1) 0 1px, transparent 1px 6px),
-      linear-gradient(180deg, rgb(255 255 255 / 0.2), rgb(255 255 255 / 0.06));
+      repeating-linear-gradient(-28deg, rgb(255 255 255 / 0.08) 0 1px, transparent 1px 6px),
+      linear-gradient(180deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0.03));
   }
 
   .hi-attach {
+    -webkit-backdrop-filter: blur(10px) saturate(1.8);
+    backdrop-filter: blur(10px) saturate(1.8);
     box-shadow:
-      0 1px 0 #fff inset,
-      0 14px 30px -14px rgb(15 42 34 / 0.45);
+      inset 0 1px 1px #fff,
+      inset 0 -1px 1px rgb(255 255 255 / 0.4),
+      0 14px 30px -14px rgb(19 41 26 / 0.5);
     animation: hi-attach 7s var(--ease) infinite;
   }
 
@@ -1864,7 +1895,7 @@
 
   /* Accent word in the headline: a slow light sweep through the mint */
   .display .foil-text {
-    background-image: linear-gradient(100deg, #1f7a55 0%, #1f7a55 38%, #5fbf93 47%, #a7dfc4 50%, #5fbf93 53%, #1f7a55 62%, #1f7a55 100%);
+    background-image: linear-gradient(100deg, #3a6b26 0%, #3a6b26 38%, #86b04f 47%, #cfe2a6 50%, #86b04f 53%, #3a6b26 62%, #3a6b26 100%);
     background-size: 260% 100%;
     background-position: 100% 0;
     animation: text-shine 7s var(--ease) 1.2s infinite;

@@ -11,8 +11,8 @@ const M = { sheet: pick('sheet'), fold: pick('fold'), lines: pick('lines'), seal
 const ring = src.match(/ring: \{ cx: ([\d.]+), cy: ([\d.]+), r: ([\d.]+) \}/).slice(1).map(Number)
 
 const TONES = {
-  light: { sheet: '#0F2A22', line: '#FAFBFA', mint: '#3FA77A', rim: '#0F2A22', mark: '#FAFBFA' },
-  dark: { sheet: '#F2F6F3', line: '#0F2A22', mint: '#3FA77A', rim: '#0B1F19', mark: '#0B1F19' },
+  light: { sheet: '#13291A', line: '#FAFBF7', mint: '#5F9A3E', rim: '#13291A', mark: '#FAFBF7' },
+  dark: { sheet: '#F3F6EE', line: '#13291A', mint: '#5F9A3E', rim: '#0E2214', mark: '#0E2214' },
 }
 
 // Shapes with class hooks, so icon.svg can switch tone with prefers-color-scheme.
@@ -37,11 +37,11 @@ const render = async (size, { tone = 'light', tile = false, pad = 0 } = {}) => {
   const page = await browser.newPage({ viewport: { width: size, height: size } })
   const img = `data:image/svg+xml;base64,${Buffer.from(SVG(tone)).toString('base64')}`
   const bg = tile
-    ? 'radial-gradient(120% 90% at 30% 15%, #1d4a3b 0%, #0f2a22 55%, #0b1f19 100%)'
+    ? 'radial-gradient(120% 90% at 30% 15%, #1d4a3b 0%, #13291a 55%, #0e2214 100%)'
     : 'transparent'
   await page.setContent(
     `<html><body style="margin:0"><div style="width:${size}px;height:${size}px;display:grid;place-items:center;background:${bg}">` +
-      `<img style="width:${size - pad * 2}px;height:${size - pad * 2}px;${tile ? 'filter:drop-shadow(0 6px 14px rgb(0 0 0 / .35)) drop-shadow(0 0 18px rgb(63 167 122 / .25))' : ''}" src="${img}"/></div></body></html>`,
+      `<img style="width:${size - pad * 2}px;height:${size - pad * 2}px;${tile ? 'filter:drop-shadow(0 6px 14px rgb(0 0 0 / .35)) drop-shadow(0 0 18px rgb(95 154 62 / .25))' : ''}" src="${img}"/></div></body></html>`,
   )
   const png = await page.screenshot({ omitBackground: !tile })
   await page.close()
@@ -80,7 +80,7 @@ const cell = (tone, s, bg) =>
   `<div style="background:${bg};padding:14px;border-radius:10px;display:grid;place-items:center"><img width="${s}" height="${s}" src="data:image/svg+xml;base64,${Buffer.from(SVG(tone)).toString('base64')}"/></div>`
 await sheetPage.setContent(
   `<body style="margin:0;padding:16px;font-family:sans-serif;display:flex;flex-direction:column;gap:12px;background:#fff">` +
-    `<div style="display:flex;gap:12px;align-items:center">${[16, 32, 48, 96].map((s) => cell('light', s, '#FAFBFA')).join('')}${[16, 32, 48, 96].map((s) => cell('dark', s, '#0B1F19')).join('')}</div>` +
+    `<div style="display:flex;gap:12px;align-items:center">${[16, 32, 48, 96].map((s) => cell('light', s, '#FAFBF7')).join('')}${[16, 32, 48, 96].map((s) => cell('dark', s, '#0E2214')).join('')}</div>` +
     `<div style="display:flex;gap:12px;align-items:center"><img width="90" src="data:image/png;base64,${readFileSync('app/apple-icon.png').toString('base64')}" style="border-radius:20px"/></div></body>`,
 )
 await sheetPage.screenshot({ path: process.env.ICON_PREVIEW || 'icon-preview.png' })

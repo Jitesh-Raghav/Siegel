@@ -138,8 +138,8 @@ export function Banner({ alt, variant }: { alt: string; variant: keyof typeof VA
             style={{
               boxShadow:
                 v.palette === 'dark'
-                  ? 'inset 0 0 0 1px rgb(255 255 255 / 0.06), inset 0 0 80px rgb(11 31 25 / 0.7)'
-                  : 'inset 0 0 0 1px rgb(23 56 45 / 0.08), inset 0 0 90px rgb(248 243 230 / 0.55)',
+                  ? 'inset 0 0 0 1px rgb(255 255 255 / 0.06), inset 0 0 80px rgb(14 34 20 / 0.7)'
+                  : 'inset 0 0 0 1px rgb(29 58 33 / 0.08), inset 0 0 90px rgb(248 243 230 / 0.55)',
             }}
             aria-hidden="true"
           />
@@ -163,8 +163,8 @@ function CornerMarks() {
     <>
       {corners.map((c) => (
         <svg key={c} className={`pointer-events-none absolute size-5 ${c}`} viewBox="0 0 20 20" aria-hidden="true">
-          <path d="M1 12V1h11" fill="none" stroke="#3FA77A" strokeWidth="1.2" />
-          <path d="M4.5 8V4.5H8" fill="none" stroke="#3FA77A" strokeWidth="0.8" strokeOpacity="0.7" />
+          <path d="M1 12V1h11" fill="none" stroke="#5F9A3E" strokeWidth="1.2" />
+          <path d="M4.5 8V4.5H8" fill="none" stroke="#5F9A3E" strokeWidth="0.8" strokeOpacity="0.7" />
         </svg>
       ))}
     </>

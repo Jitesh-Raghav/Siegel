@@ -23,8 +23,8 @@ export function DitherField({ className = '' }: { className?: string }) {
       const ctx = canvas.getContext('2d')
       if (!ctx) return
       const img = ctx.createImageData(W, H)
-      const mint = [63, 167, 122]
-      const fir = [23, 56, 45]
+      const mint = [95, 154, 62]
+      const fir = [29, 58, 33]
       for (let y = 0; y < H; y++) {
         for (let x = 0; x < W; x++) {
           // elliptical falloff from the centre, with a gentle diagonal wave for texture

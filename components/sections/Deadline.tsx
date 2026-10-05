@@ -55,7 +55,7 @@ export function Deadline({ t }: { t: Messages['deadline'] }) {
               <span
                 key={i}
                 className={`absolute top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rotate-45 border ${
-                  i === 1 ? 'border-gold-deep bg-[linear-gradient(135deg,#1f7a55,#7fcba6,#2f9168)] shadow-[0_0_0_5px_rgb(63_167_122/0.15)]' : 'border-ink bg-paper'
+                  i === 1 ? 'border-gold-deep bg-[linear-gradient(135deg,#3a6b26,#98bb58,#4f8636)] shadow-[0_0_0_5px_rgb(63_167_122/0.15)]' : 'border-ink bg-paper'
                 }`}
                 style={{ left: `${p * 100}%` }}
               />

@@ -59,7 +59,7 @@ export function Callouts({ items }: { items: string[] }) {
             x2={`${l.line[2]}%`}
             y2={`${l.line[3]}%`}
             pathLength={1}
-            stroke="#9FD9BC"
+            stroke="#BCD383"
             strokeWidth="1.2"
             strokeLinecap="round"
             style={{ '--k': i } as CSSProperties}

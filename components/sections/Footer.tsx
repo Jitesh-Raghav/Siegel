@@ -58,8 +58,8 @@ export function Footer({ locale, t }: { locale: Locale; t: Messages }) {
           <div>
             <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 font-mono text-[11px] tracking-[0.1em] text-on-dark-muted uppercase">
               <span className="relative flex size-2" aria-hidden="true">
-                <span className="absolute inset-0 animate-ping rounded-full bg-[#3FA77A] opacity-60 motion-reduce:hidden" />
-                <span className="relative size-2 rounded-full bg-[#3FA77A]" />
+                <span className="absolute inset-0 animate-ping rounded-full bg-[#5F9A3E] opacity-60 motion-reduce:hidden" />
+                <span className="relative size-2 rounded-full bg-[#5F9A3E]" />
               </span>
               {f.status}
             </p>

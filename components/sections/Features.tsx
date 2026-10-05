@@ -98,7 +98,7 @@ export function Features({ t }: { t: Messages['features'] }) {
                 {BARS.map((h, idx) => (
                   <span
                     key={idx}
-                    className="bar-fill flex-1 rounded-t-[3px] bg-[linear-gradient(180deg,#2c5a48,#17382d)]"
+                    className="bar-fill flex-1 rounded-t-[3px] bg-[linear-gradient(180deg,#2c5a48,#1d3a21)]"
                     style={{ height: `${h}%`, ...k(idx) }}
                   />
                 ))}

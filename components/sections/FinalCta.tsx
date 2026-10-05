@@ -19,7 +19,7 @@ export function FinalCta({ locale, t }: { locale: Locale; t: Messages }) {
         className="pointer-events-none absolute -top-[30%] -right-[25%] -z-10 size-[min(1100px,140vw)] opacity-[0.06]"
         aria-hidden="true"
       >
-        <Guilloche className="size-full" color="#9FD9BC" rings={11} />
+        <Guilloche className="size-full" color="#BCD383" rings={11} />
       </div>
 
       <div className="container-ledger">

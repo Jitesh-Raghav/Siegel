@@ -11,8 +11,8 @@ function hexToVec3(hex: string): [number, number, number] {
 
 // light: navy lines on ivory. dark: white-line engraving in gold and cream on midnight.
 const PALETTES = {
-  light: { ink: hexToVec3('#17382D'), cream: hexToVec3('#D9EDE3'), paper: hexToVec3('#FBFCFB'), invert: 0 },
-  dark: { ink: hexToVec3('#A8DCC0'), cream: hexToVec3('#25433A'), paper: hexToVec3('#0B1F19'), invert: 1 },
+  light: { ink: hexToVec3('#1D3A21'), cream: hexToVec3('#E3EED2'), paper: hexToVec3('#FBFCF8'), invert: 0 },
+  dark: { ink: hexToVec3('#C8DC9C'), cream: hexToVec3('#2B4A2A'), paper: hexToVec3('#0E2214'), invert: 1 },
 } as const
 
 const INTRO_MS = 1800

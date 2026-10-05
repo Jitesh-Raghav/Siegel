@@ -43,15 +43,15 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W + PAD * 2}" heig
     </linearGradient>
     <!-- 1) soften the strokes into painterly light -->
     <filter id="paint" x="-10%" y="-10%" width="120%" height="120%">
-      <feGaussianBlur stdDeviation="24"/>
+      <feGaussianBlur stdDeviation="9"/>
     </filter>
     <!-- 2) refract through rippled glass: anisotropic turbulence displaces the image -->
     <filter id="glass" x="-10%" y="-10%" width="120%" height="120%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.006 0.018" numOctaves="2" seed="4" result="ripple"/>
-      <feDisplacementMap in="SourceGraphic" in2="ripple" scale="90" xChannelSelector="R" yChannelSelector="G" result="refracted"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.03" numOctaves="2" seed="4" result="ripple"/>
+      <feDisplacementMap in="SourceGraphic" in2="ripple" scale="46" xChannelSelector="R" yChannelSelector="G" result="refracted"/>
       <!-- 3) the glass surface itself: fine bumps catching light -->
       <feTurbulence type="fractalNoise" baseFrequency="0.034" numOctaves="2" seed="11" result="bumps"/>
-      <feSpecularLighting in="bumps" surfaceScale="1.4" specularConstant="0.8" specularExponent="30" lighting-color="#f4f8ec" result="spec">
+      <feSpecularLighting in="bumps" surfaceScale="1.8" specularConstant="0.95" specularExponent="38" lighting-color="#f4f8ec" result="spec">
         <feDistantLight azimuth="225" elevation="48"/>
       </feSpecularLighting>
       <feComposite in="spec" in2="SourceGraphic" operator="in" result="specIn"/>
@@ -73,8 +73,8 @@ const png = await sharp(await page.screenshot({ type: 'png' })).extract({ left: 
 await browser.close()
 
 // Desktop and a lighter mobile version; the texture is soft, so quality 72 is plenty.
-const desktop = await sharp(png).resize(1920).webp({ quality: 72, effort: 6 }).toBuffer()
-const mobile = await sharp(png).resize(960).webp({ quality: 70, effort: 6 }).toBuffer()
+const desktop = await sharp(png).resize(2400).webp({ quality: 82, effort: 6 }).toBuffer()
+const mobile = await sharp(png).resize(1200).webp({ quality: 80, effort: 6 }).toBuffer()
 writeFileSync('public/hero-glass.webp', desktop)
 writeFileSync('public/hero-glass-sm.webp', mobile)
 if (process.env.PREVIEW) writeFileSync(process.env.PREVIEW, await sharp(png).resize(1200).jpeg({ quality: 85 }).toBuffer())

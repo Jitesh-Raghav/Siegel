@@ -87,7 +87,7 @@ export function Film({ locale, t }: { locale: Locale; t: Messages['film'] }) {
                   {/* soft pulsing ring */}
                   <span className="film-ring absolute inset-0 rounded-full" aria-hidden="true" />
                   <span className="relative grid size-full place-items-center rounded-full bg-[image:var(--foil-light)] shadow-[0_18px_40px_-14px_rgb(31_122_85/0.8)] transition-transform duration-500 ease-ledger group-hover:scale-105">
-                    <span className="grid size-[82%] place-items-center rounded-full border border-[#14523a]/40">
+                    <span className="grid size-[82%] place-items-center rounded-full border border-[#2b4f1d]/40">
                       <svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true" className="translate-x-[2px] text-ink">
                         <path d="M7 4.5v15l12-7.5z" fill="currentColor" />
                       </svg>

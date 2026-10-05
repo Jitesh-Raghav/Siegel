@@ -39,7 +39,7 @@ const cancelIdle = (id: number) =>
 
 export function Guilloche({
   rings = 9,
-  color = '#17382D',
+  color = '#1D3A21',
   strokeWidth = 0.7,
   className = '',
 }: {

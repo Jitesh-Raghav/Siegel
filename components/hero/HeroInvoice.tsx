@@ -126,7 +126,7 @@ export function HeroInvoice({ locale, t }: { locale: Locale; t: Messages['heroIn
           </div>
 
           {/* embedded XML attachment, slides out once validated */}
-          <div className="hi-attach absolute top-[70%] right-3 inline-flex items-center gap-2 rounded-xl border border-white/70 bg-white/90 py-2 pr-3 pl-2.5 font-mono text-[11px] text-ink sm:-right-12">
+          <div className="hi-attach absolute top-[70%] right-3 inline-flex items-center gap-2 rounded-xl border border-white/60 bg-white/75 py-2 pr-3 pl-2.5 font-mono text-[11px] text-ink sm:-right-12">
             <svg width="14" height="14" viewBox="0 0 24 24" className="text-gold-deep">
               <path
                 d="M21 11.5l-8.6 8.6a5.5 5.5 0 0 1-7.8-7.8l8.6-8.6a3.7 3.7 0 0 1 5.2 5.2l-8.6 8.6a1.8 1.8 0 0 1-2.6-2.6l7.9-7.9"
@@ -141,7 +141,7 @@ export function HeroInvoice({ locale, t }: { locale: Locale; t: Messages['heroIn
 
           {/* validated pill */}
           <div className="hi-pill absolute -bottom-5 left-1/2 inline-flex items-center gap-2 rounded-full bg-ink py-2 pr-4 pl-2 font-mono text-[11.5px] tracking-[0.04em] whitespace-nowrap text-on-dark">
-            <span className="grid size-6 place-items-center rounded-full bg-[#3FA77A] text-ink">
+            <span className="grid size-6 place-items-center rounded-full bg-[#5F9A3E] text-ink">
               <svg width="11" height="11" viewBox="0 0 10 10">
                 <path d="M1.8 5.2l2 2 4.4-4.6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
               </svg>

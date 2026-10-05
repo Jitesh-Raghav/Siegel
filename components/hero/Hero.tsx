@@ -39,7 +39,7 @@ export function Hero({ locale, t }: { locale: Locale; t: Messages }) {
           </span>
         </a>
 
-        <h1 id="hero-title" className="display mt-8 text-[clamp(38px,11vw,48px)] sm:text-[clamp(44px,4.8vw,76px)]">
+        <h1 id="hero-title" className="display display-hero mt-8 text-[clamp(36px,10.6vw,46px)] sm:text-[clamp(44px,4.6vw,72px)]">
           <AccentTitle as="span" className="block" text={h.h1a} mode="hero" />
           <AccentTitle as="span" className="block" text={h.h1b} accent={h.h1bAccent} mode="hero" wordOffset={3} />
         </h1>

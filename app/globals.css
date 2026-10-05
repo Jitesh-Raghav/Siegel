@@ -204,6 +204,21 @@
     letter-spacing: -0.01em;
   }
 
+  /* Hero headline: Boska Medium, a single upright style. The accent word keeps the
+     same face and is set apart by the mint shine alone (no italic). */
+  .display-hero {
+    font-family: var(--font-hero), var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.028em;
+    line-height: 1.02;
+  }
+
+  .display-hero .accent {
+    font-family: inherit;
+    font-style: normal;
+    letter-spacing: inherit;
+  }
+
   /* Accent text: deep mint on white (AA), bright mint gradient on dark. */
   .foil-text {
     background: var(--foil-deep);

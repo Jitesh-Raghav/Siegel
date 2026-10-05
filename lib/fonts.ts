@@ -14,6 +14,16 @@ export const instrumentSerif = localFont({
   fallback: ['Georgia', 'serif'],
 })
 
+// Hero headline only: Boska Medium (ITF, Fontshare), one upright style.
+export const boska = localFont({
+  src: '../app/fonts/boska-medium.woff2',
+  variable: '--font-hero',
+  weight: '500',
+  display: 'swap',
+  adjustFontFallback: 'Times New Roman',
+  fallback: ['Georgia', 'serif'],
+})
+
 export const geistSans = localFont({
   src: '../app/fonts/geist-sans.woff2',
   variable: '--font-geist-sans',
@@ -33,4 +43,4 @@ export const geistMono = localFont({
   fallback: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
 })
 
-export const fontVariables = `${instrumentSerif.variable} ${geistSans.variable} ${geistMono.variable}`
+export const fontVariables = `${instrumentSerif.variable} ${boska.variable} ${geistSans.variable} ${geistMono.variable}`

@@ -22,15 +22,15 @@ export function Hero({ locale, t }: { locale: Locale; t: Messages }) {
       </div>
       <HeroLines />
 
-      <div className="container-ledger grid items-center gap-10 xl:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] xl:gap-14">
+      <div className="container-ledger grid grid-cols-1 items-center gap-10 xl:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] xl:gap-14">
         <div className="flex flex-col items-start text-left xl:pr-4">
         <a
           href="#deadline"
-          className="hero-rise group inline-flex items-center gap-2.5 rounded-full border border-gold/35 bg-white/70 py-1.5 pr-3.5 pl-1.5 text-[12px] font-medium tracking-[0.04em] text-ink uppercase shadow-[0_1px_0_rgb(255_255_255/0.8)_inset,0_6px_18px_-10px_rgb(15_42_34/0.25)] transition-colors hover:border-gold/70 hover:bg-white"
+          className="hero-rise group inline-flex max-w-full items-center gap-2.5 rounded-full border border-gold/35 bg-white/70 py-1.5 pr-3.5 pl-1.5 text-[clamp(10.5px,3.3vw,12px)] font-medium tracking-[0.04em] whitespace-nowrap text-ink uppercase shadow-[0_1px_0_rgb(255_255_255/0.8)_inset,0_6px_18px_-10px_rgb(15_42_34/0.25)] transition-colors hover:border-gold/70 hover:bg-white"
         >
           <span className="rounded-full bg-ink px-2 py-0.5 font-mono text-[10px] tracking-[0.12em] text-on-dark">2027</span>
           {/* One text node: the long label, with the tail hidden on small screens. */}
-          <span>
+          <span className="min-w-0 truncate">
             {h.badgeShort}
             <span className="hidden sm:inline">{h.badge.slice(h.badgeShort.length)}</span>
           </span>
@@ -39,7 +39,7 @@ export function Hero({ locale, t }: { locale: Locale; t: Messages }) {
           </span>
         </a>
 
-        <h1 id="hero-title" className="display mt-8 text-[clamp(44px,4.8vw,76px)]">
+        <h1 id="hero-title" className="display mt-8 text-[clamp(38px,11vw,48px)] sm:text-[clamp(44px,4.8vw,76px)]">
           <AccentTitle as="span" className="block" text={h.h1a} mode="hero" />
           <AccentTitle as="span" className="block" text={h.h1b} accent={h.h1bAccent} mode="hero" wordOffset={3} />
         </h1>

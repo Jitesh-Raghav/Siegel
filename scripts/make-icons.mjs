@@ -1,39 +1,55 @@
 // Generates app/icon.svg, app/apple-icon.png (180px) and app/favicon.ico (16/32/48) from the
-// LogoMark geometry in components/nav/LogoMark.tsx. Run after changing the mark:
+// MARK geometry in components/nav/LogoMark.tsx. Run after changing the mark:
 //   node scripts/make-icons.mjs
 import { readFileSync, writeFileSync } from 'node:fs'
 import { chromium } from '@playwright/test'
 
 // Pull the geometry straight from the component so there is one source of truth.
 const src = readFileSync('components/nav/LogoMark.tsx', 'utf8')
-const pick = (key) => src.match(new RegExp(`${key}: '([^']+)'`))[1]
-const sheet = pick('sheet')
-const fold = pick('fold')
-const lastLine = pick('lastLine')
-const lines = [...src.matchAll(/'(M10 1[59]H2[02])'/g)].map((m) => m[1])
-const SVG = (bg) =>
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">` +
-  (bg ? `<rect width="32" height="32" rx="7" fill="${bg}"/>` : '') +
-  `<path d="${sheet}" fill="#0F2A22"/><path d="${fold}" fill="#3FA77A"/>` +
-  `<circle cx="20.9" cy="6.3" r="0.7" fill="#0F2A22"/><circle cx="20.9" cy="8.3" r="0.7" fill="#0F2A22"/><circle cx="22.9" cy="8.3" r="0.7" fill="#0F2A22"/>` +
-  `<g stroke="#FAFBFA" stroke-width="1.6" stroke-linecap="round" fill="none">${[...lines, lastLine].map((d) => `<path d="${d}"/>`).join('')}</g>` +
-  `<rect x="17" y="21.6" width="5" height="2.8" rx="0.8" fill="#3FA77A"/></svg>`
+const pick = (key) => src.match(new RegExp(`\\b${key}: '([^']+)'`))[1]
+const M = { sheet: pick('sheet'), fold: pick('fold'), lines: pick('lines'), seal: pick('seal'), check: pick('check') }
+const ring = src.match(/ring: \{ cx: ([\d.]+), cy: ([\d.]+), r: ([\d.]+) \}/).slice(1).map(Number)
 
-writeFileSync('app/icon.svg', SVG() + '\n')
+const TONES = {
+  light: { sheet: '#0F2A22', line: '#FAFBFA', mint: '#3FA77A', rim: '#0F2A22', mark: '#FAFBFA' },
+  dark: { sheet: '#F2F6F3', line: '#0F2A22', mint: '#3FA77A', rim: '#0B1F19', mark: '#0B1F19' },
+}
+
+// Shapes with class hooks, so icon.svg can switch tone with prefers-color-scheme.
+const shapes =
+  `<path class="sheet" d="${M.sheet}"/><path class="mint" d="${M.fold}"/>` +
+  `<path class="line" d="${M.lines}" stroke-width="1.6" stroke-linecap="round" fill="none"/>` +
+  `<path class="seal" d="${M.seal}" stroke-width="1.3" stroke-linejoin="round" paint-order="stroke"/>` +
+  `<circle class="ring" cx="${ring[0]}" cy="${ring[1]}" r="${ring[2]}" fill="none" stroke-opacity=".55" stroke-width=".6"/>` +
+  `<path class="check" d="${M.check}" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`
+const css = (c) =>
+  `.sheet{fill:${c.sheet}}.mint{fill:${c.mint}}.line{stroke:${c.line}}.seal{fill:${c.mint};stroke:${c.rim}}.ring,.check{stroke:${c.mark}}`
+const SVG = (tone, { adaptive = false } = {}) =>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><style>${css(TONES[tone])}` +
+  (adaptive ? `@media (prefers-color-scheme:dark){${css(TONES.dark)}}` : '') +
+  `</style>${shapes}</svg>`
+
+// Browser tab icon: fir in light tabs, bone in dark tabs.
+writeFileSync('app/icon.svg', SVG('light', { adaptive: true }) + '\n')
 
 const browser = await chromium.launch()
-const render = async (size, bg, pad = 0) => {
+const render = async (size, { tone = 'light', tile = false, pad = 0 } = {}) => {
   const page = await browser.newPage({ viewport: { width: size, height: size } })
+  const img = `data:image/svg+xml;base64,${Buffer.from(SVG(tone)).toString('base64')}`
+  const bg = tile
+    ? 'radial-gradient(120% 90% at 30% 15%, #1d4a3b 0%, #0f2a22 55%, #0b1f19 100%)'
+    : 'transparent'
   await page.setContent(
-    `<html><body style="margin:0;background:${bg ?? 'transparent'}"><div style="width:${size}px;height:${size}px;display:grid;place-items:center"><img style="width:${size - pad * 2}px;height:${size - pad * 2}px" src="data:image/svg+xml;base64,${Buffer.from(SVG()).toString('base64')}"/></div></body></html>`,
+    `<html><body style="margin:0"><div style="width:${size}px;height:${size}px;display:grid;place-items:center;background:${bg}">` +
+      `<img style="width:${size - pad * 2}px;height:${size - pad * 2}px;${tile ? 'filter:drop-shadow(0 6px 14px rgb(0 0 0 / .35)) drop-shadow(0 0 18px rgb(63 167 122 / .25))' : ''}" src="${img}"/></div></body></html>`,
   )
-  const png = await page.screenshot({ omitBackground: !bg })
+  const png = await page.screenshot({ omitBackground: !tile })
   await page.close()
   return png
 }
 
-// Apple touch icon: bone tile with padding (iOS adds its own rounded mask).
-writeFileSync('app/apple-icon.png', await render(180, '#FAFBFA', 22))
+// Apple touch icon: bone mark on a deep fir tile (iOS applies its own rounded mask).
+writeFileSync('app/apple-icon.png', await render(180, { tone: 'dark', tile: true, pad: 30 }))
 
 // favicon.ico: ICO container holding PNG images (supported by all modern browsers).
 const sizes = [16, 32, 48]
@@ -57,5 +73,16 @@ sizes.forEach((s, i) => {
   offset += pngs[i].length
 })
 writeFileSync('app/favicon.ico', Buffer.concat([header, ...pngs]))
+
+// Preview sheet for review (not shipped): every size on light and dark.
+const sheetPage = await browser.newPage({ viewport: { width: 760, height: 260 } })
+const cell = (tone, s, bg) =>
+  `<div style="background:${bg};padding:14px;border-radius:10px;display:grid;place-items:center"><img width="${s}" height="${s}" src="data:image/svg+xml;base64,${Buffer.from(SVG(tone)).toString('base64')}"/></div>`
+await sheetPage.setContent(
+  `<body style="margin:0;padding:16px;font-family:sans-serif;display:flex;flex-direction:column;gap:12px;background:#fff">` +
+    `<div style="display:flex;gap:12px;align-items:center">${[16, 32, 48, 96].map((s) => cell('light', s, '#FAFBFA')).join('')}${[16, 32, 48, 96].map((s) => cell('dark', s, '#0B1F19')).join('')}</div>` +
+    `<div style="display:flex;gap:12px;align-items:center"><img width="90" src="data:image/png;base64,${readFileSync('app/apple-icon.png').toString('base64')}" style="border-radius:20px"/></div></body>`,
+)
+await sheetPage.screenshot({ path: process.env.ICON_PREVIEW || 'icon-preview.png' })
 await browser.close()
-console.log('Wrote app/icon.svg, app/apple-icon.png, app/favicon.ico')
+console.log('Icons written: app/icon.svg, app/apple-icon.png, app/favicon.ico')

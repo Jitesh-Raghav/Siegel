@@ -17,13 +17,13 @@ export function Features({ t }: { t: Messages['features'] }) {
       <div className="container-ledger">
         <SectionHeader num={4} id="features-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} />
 
-        <ul className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+        <ul className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
           <Tile item={formats} n={1} className="sm:col-span-2 lg:col-span-4 lg:row-span-2" i={2}>
             <FormatsVisual />
           </Tile>
 
           <Tile item={validation} n={2} className="sm:col-span-2 lg:col-span-2 lg:row-span-2" i={3}>
-            <ul className="grid gap-2.5">
+            <ul className="grid grid-cols-1 gap-2.5">
               {v.checks.map((c, idx) => (
                 <li
                   key={c}
@@ -63,7 +63,7 @@ export function Features({ t }: { t: Messages['features'] }) {
           </Tile>
 
           <Tile item={delivery} n={4} className="lg:col-span-2" i={3}>
-            <ol className="grid gap-1.5 font-mono text-[11.5px]">
+            <ol className="grid grid-cols-1 gap-1.5 font-mono text-[11.5px]">
               {[
                 ['09:41:02', v.queued, 'bg-hairline-strong'],
                 ['09:41:03', v.sent, 'bg-engrave-ink'],

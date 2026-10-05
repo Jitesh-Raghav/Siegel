@@ -21,7 +21,7 @@ export function Pricing({ locale, t }: { locale: Locale; t: Messages['pricing'] 
       <div className="container-ledger">
         <SectionHeader num={6} id="pricing-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} align="center" />
 
-        <ul className="mt-16 grid gap-5 lg:grid-cols-3 lg:items-stretch">
+        <ul className="mt-16 grid grid-cols-1 gap-5 lg:grid-cols-3 lg:items-stretch">
           {t.plans.map((p, i) => {
             const featured = p.id === 'growth'
             const features = [p.limit, ...t.includes, ...p.extras]
@@ -51,7 +51,7 @@ export function Pricing({ locale, t }: { locale: Locale; t: Messages['pricing'] 
                 <div
                   className={`mt-8 h-px ${featured ? 'bg-[linear-gradient(90deg,transparent,rgb(159_217_188/0.5),transparent)]' : 'bg-hairline'}`}
                 />
-                <ul className="mt-8 grid gap-3 text-[15px]">
+                <ul className="mt-8 grid grid-cols-1 gap-3 text-[15px]">
                   {features.map((x, idx) => (
                     <li
                       key={x}

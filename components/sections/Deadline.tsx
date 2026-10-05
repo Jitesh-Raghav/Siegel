@@ -21,7 +21,7 @@ export function Deadline({ t }: { t: Messages['deadline'] }) {
   return (
     <section id="deadline" data-section="deadline" className="section defer-render" aria-labelledby="deadline-title">
       <div className="container-ledger">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:items-end">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:items-end">
           <SectionHeader num={2} id="deadline-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} body={t.body} />
           <div className="surface relative overflow-hidden p-8 sm:p-10" {...reveal(3)}>
             <div className="hatch absolute -top-10 -right-10 size-40 rotate-45 opacity-60" aria-hidden="true" />
@@ -71,7 +71,7 @@ export function Deadline({ t }: { t: Messages['deadline'] }) {
           </div>
         </div>
 
-        <ol className="mt-10 grid gap-4 md:mt-8 md:grid-cols-3 md:gap-6">
+        <ol className="mt-10 grid grid-cols-1 gap-4 md:mt-8 md:grid-cols-3 md:gap-6">
           {t.events.map((e, i) => {
             const key = i === 1
             return (

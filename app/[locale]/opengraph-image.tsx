@@ -41,13 +41,12 @@ export default async function OgImage({ params }: { params: Promise<{ locale: st
           <svg width="52" height="52" viewBox="0 0 32 32">
             <path d={MARK.sheet} fill="#0F2A22" />
             <path d={MARK.fold} fill="#3FA77A" />
-            {MARK.dots.map(([x, y]) => (
-              <circle key={`${x}-${y}`} cx={x} cy={y} r="0.7" fill="#0F2A22" />
-            ))}
-            {[...MARK.lines, MARK.lastLine].map((d) => (
-              <path key={d} d={d} stroke="#FAFBFA" strokeWidth="1.6" strokeLinecap="round" fill="none" />
-            ))}
-            <rect x={MARK.cell.x} y={MARK.cell.y} width={MARK.cell.w} height={MARK.cell.h} rx={MARK.cell.r} fill="#3FA77A" />
+            <path d={MARK.lines} stroke="#FAFBFA" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+            {/* rim then fill: the same look as paint-order="stroke", which the OG renderer lacks */}
+            <path d={MARK.seal} fill="#0F2A22" stroke="#0F2A22" strokeWidth="1.3" strokeLinejoin="round" />
+            <path d={MARK.seal} fill="#3FA77A" />
+            <circle cx={MARK.ring.cx} cy={MARK.ring.cy} r={MARK.ring.r} fill="none" stroke="#FAFBFA" strokeOpacity="0.55" strokeWidth="0.6" />
+            <path d={MARK.check} fill="none" stroke="#FAFBFA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           <span style={{ fontSize: 40, fontFamily: serif ? 'Instrument Serif' : 'serif', letterSpacing: '-0.02em' }}>Siegel</span>
         </div>

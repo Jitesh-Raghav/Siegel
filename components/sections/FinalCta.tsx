@@ -27,7 +27,7 @@ export function FinalCta({ locale, t }: { locale: Locale; t: Messages }) {
           <Banner alt={t.hero.bannerAlt} variant="strip" />
         </div>
 
-        <div className="mt-16 grid gap-12 lg:mt-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16">
+        <div className="mt-16 grid grid-cols-1 gap-12 lg:mt-20 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:gap-16">
           <div>
             <p className="eyebrow" {...reveal(1)}>
               {t.nav.cta}
@@ -36,7 +36,7 @@ export function FinalCta({ locale, t }: { locale: Locale; t: Messages }) {
             <p className="lede mt-6 max-w-[40ch] text-[18px]" {...reveal(4)}>
               {t.finalCta.sub}
             </p>
-            <ul className="mt-10 grid gap-3 text-[15px] text-on-dark-muted" {...reveal(5)}>
+            <ul className="mt-10 grid grid-cols-1 gap-3 text-[15px] text-on-dark-muted" {...reveal(5)}>
               {t.hero.trust.map((x) => (
                 <li key={x} className="flex items-center gap-3">
                   <span className="size-[5px] rotate-45 bg-gold-soft" aria-hidden="true" />

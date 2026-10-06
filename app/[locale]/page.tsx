@@ -9,7 +9,6 @@ import { FinalCta } from '@/components/sections/FinalCta'
 import { HowItWorks } from '@/components/sections/HowItWorks'
 import { Pricing } from '@/components/sections/Pricing'
 import { Standards } from '@/components/sections/Standards'
-import { Trust } from '@/components/sections/Trust'
 import { BlueprintRails, SectionDivider } from '@/components/ui/Blueprint'
 import { getMessages, isLocale } from '@/lib/i18n'
 
@@ -22,9 +21,11 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
   const t = getMessages(locale)
 
   return (
-    <main className="bp-main">
-      <BlueprintRails />
+    <main>
       <Hero locale={locale} t={t} />
+      {/* Everything below the hero sits on the drafting rails */}
+      <div className="bp-zone">
+      <BlueprintRails />
       <Standards t={t.standards} />
       <Film locale={locale} t={t.film} />
       <SectionDivider />
@@ -36,10 +37,9 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
       <SectionDivider />
       <Pricing locale={locale} t={t.pricing} />
       <SectionDivider />
-      <Trust t={t.trust} />
-      <SectionDivider />
       <Faq t={t.faq} />
       <FinalCta locale={locale} t={t} />
+      </div>
     </main>
   )
 }

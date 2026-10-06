@@ -25,7 +25,6 @@ export function Footer({ locale, t }: { locale: Locale; t: Messages }) {
     {
       title: f.company,
       links: [
-        { href: `${base}/#founder`, label: f.founder },
         { href: t.trust.portfolio, label: t.trust.portfolioLabel, external: true },
         { href: t.trust.linkedin, label: t.trust.linkedinLabel, external: true },
         { href: `mailto:${CONTACT_EMAIL}`, label: f.contact },

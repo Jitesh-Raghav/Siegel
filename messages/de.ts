@@ -281,7 +281,7 @@ export const de: Messages = {
       {
         id: 'who',
         q: 'Wer steckt hinter Siegel?',
-        a: 'Jitesh Raghav, ein unabhängiger Softwareentwickler. Siehe „Wer hinter Siegel steht“ oben, oder schreiben Sie mir direkt.',
+        a: 'Jitesh Raghav, ein unabhängiger Softwareentwickler, der Siegel selbst entwickelt und betreut. Schreiben Sie mir direkt:',
       },
     ],
   },
@@ -295,7 +295,6 @@ export const de: Messages = {
     company: 'Über uns',
     legal: 'Rechtliches',
     film: 'Der Film',
-    founder: 'Wer dahinter steht',
     status: 'Frühzugang offen',
     statement: 'Bereit für die E-⁠Rechnungspflicht 2027.',
     statementAccent: '2027.',

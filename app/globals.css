@@ -308,8 +308,10 @@
     padding-block: var(--section-y);
   }
 
-  /* Blueprint grid: rails at the container edges and crosshair dividers (components/ui/Blueprint.tsx) */
-  .bp-main {
+  /* Blueprint grid (components/ui/Blueprint.tsx): drafting rails at the container edges for every
+     section below the hero, with ruler ticks, a dashed inner guide, and a moss light that rides
+     the rails at the reader's position (sticky, no JS). Section dividers meet them in ring nodes. */
+  .bp-zone {
     position: relative;
     isolation: isolate;
     --bp-x: max(12px, calc(50% - var(--content) / 2 - var(--gutter)));
@@ -325,17 +327,62 @@
       position: absolute;
       inset: 0;
       z-index: -1;
+      overflow: clip;
       pointer-events: none;
+      /* fade in under the hero, out above the footer */
+      -webkit-mask-image: linear-gradient(to bottom, transparent, #000 220px, #000 calc(100% - 160px), transparent);
+      mask-image: linear-gradient(to bottom, transparent, #000 220px, #000 calc(100% - 160px), transparent);
+    }
+
+    /* One rail = 32px strip: ruler ticks (x 12-24), the main line (x 24), a dashed guide (x 30).
+       The right rail is the same strip mirrored. */
+    .bp-rail {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 32px;
+      left: calc(var(--bp-x) - 24px);
       background:
-        linear-gradient(var(--hairline), var(--hairline)) left var(--bp-x) top 0 / 1px 100% no-repeat,
-        linear-gradient(var(--hairline), var(--hairline)) right var(--bp-x) top 0 / 1px 100% no-repeat;
+        linear-gradient(var(--hairline-strong), var(--hairline-strong)) 24px 0 / 1px 100% no-repeat,
+        repeating-linear-gradient(to bottom, rgb(58 107 38 / 0.38) 0 1px, transparent 1px 96px) 12px 0 / 12px 100% no-repeat,
+        repeating-linear-gradient(to bottom, var(--hairline-strong) 0 1px, transparent 1px 12px) 19px 0 / 5px 100% no-repeat,
+        repeating-linear-gradient(to bottom, var(--hairline) 0 3px, transparent 3px 9px) 30px 0 / 1px 100% no-repeat;
+    }
+
+    .bp-rail-r {
+      left: auto;
+      right: calc(var(--bp-x) - 24px);
+      transform: scaleX(-1);
+    }
+
+    .bp-glow {
+      position: sticky;
+      top: calc(50vh - 110px);
+      display: block;
+      width: 3px;
+      height: 220px;
+      margin-left: 23px;
+      border-radius: 2px;
+      background: linear-gradient(to bottom, transparent, rgb(95 154 62 / 0.9) 45%, rgb(188 211 131 / 0.9) 55%, transparent);
+      box-shadow: 0 0 14px 1px rgb(95 154 62 / 0.35);
+      opacity: 0.75;
     }
   }
 
   .bp-divider {
     position: relative;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--hairline) 8%, var(--hairline) 92%, transparent);
+    background: linear-gradient(90deg, transparent, var(--hairline-strong) 8%, var(--hairline-strong) 92%, transparent);
+  }
+
+  /* dashed echo just under the divider line */
+  .bp-divider::after {
+    content: '';
+    position: absolute;
+    inset-inline: 10%;
+    top: 4px;
+    height: 1px;
+    background: repeating-linear-gradient(90deg, var(--hairline) 0 3px, transparent 3px 9px);
   }
 
   .bp-cross {
@@ -343,17 +390,30 @@
   }
 
   @media (min-width: 1024px) {
+    /* ring node with a cross, where a divider meets a rail */
     .bp-cross {
       display: block;
       position: absolute;
-      top: -6px;
-      width: 13px;
-      height: 13px;
-      margin-left: -6px;
+      top: -9px;
+      width: 19px;
+      height: 19px;
+      margin-left: -9px;
+      border-radius: 999px;
       background:
         linear-gradient(var(--gold-deep), var(--gold-deep)) center / 1px 100% no-repeat,
-        linear-gradient(var(--gold-deep), var(--gold-deep)) center / 100% 1px no-repeat;
-      opacity: 0.55;
+        linear-gradient(var(--gold-deep), var(--gold-deep)) center / 100% 1px no-repeat,
+        radial-gradient(circle, var(--paper) 0 5px, transparent 5.5px);
+      box-shadow:
+        inset 0 0 0 1px rgb(58 107 38 / 0.45),
+        0 0 0 4px var(--paper);
+    }
+
+    .bp-cross::after {
+      content: '';
+      position: absolute;
+      inset: 7px;
+      border-radius: 999px;
+      background: var(--gold);
     }
 
     .bp-cross-l {
@@ -1535,37 +1595,6 @@
     .film-ring {
       animation: none;
     }
-  }
-
-  /* Founder portrait: fir/mint duotone, full colour on hover */
-  .founder-photo img {
-    filter: grayscale(1) contrast(1.1) brightness(1.04);
-    transition: filter 700ms var(--ease);
-  }
-
-  .founder-photo::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 999px;
-    background: linear-gradient(160deg, #bcd383 0%, #5f9a3e 45%, #13291a 100%);
-    mix-blend-mode: color;
-    pointer-events: none;
-    transition: opacity 700ms var(--ease);
-  }
-
-  .founder-photo:hover img {
-    filter: none;
-  }
-
-  .founder-photo:hover::after {
-    opacity: 0;
-  }
-
-  .founder-lines {
-    background-image: repeating-linear-gradient(-32deg, rgb(19 41 26 / 0.13) 0 1px, transparent 1px 7px);
-    -webkit-mask-image: radial-gradient(closest-side, #000, transparent);
-    mask-image: radial-gradient(closest-side, #000, transparent);
   }
 
   /* Hero background: forest light through textured glass. Two masks intersect: a vertical

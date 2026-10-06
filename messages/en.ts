@@ -278,7 +278,7 @@ export const en = {
       {
         id: 'who',
         q: 'Who is behind Siegel?',
-        a: 'Jitesh Raghav, an independent software engineer. See “Who’s building Siegel” above, or email me directly.',
+        a: 'Jitesh Raghav, an independent software engineer who builds and supports Siegel personally. Email me directly:',
       },
     ],
   },
@@ -292,7 +292,6 @@ export const en = {
     company: 'Company',
     legal: 'Legal',
     film: 'The film',
-    founder: 'Who’s behind it',
     status: 'Early access open',
     statement: 'Ready for the 2027 e-invoicing mandate.',
     statementAccent: '2027',

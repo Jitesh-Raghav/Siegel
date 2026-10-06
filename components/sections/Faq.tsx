@@ -10,7 +10,7 @@ export function Faq({ t }: { t: Messages['faq'] }) {
     <section id="faq" data-section="faq" className="section defer-render" aria-labelledby="faq-title">
       <div className="container-ledger grid grid-cols-1 gap-12 md:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] md:gap-16">
         <header className="md:sticky md:top-28 md:self-start">
-          <Eyebrow num={8} {...reveal(0)}>
+          <Eyebrow num={7} {...reveal(0)}>
             {t.eyebrow}
           </Eyebrow>
           <AccentTitle id="faq-title" text={t.h2} accent={t.h2Accent} className="h2 mt-6" index={1} />
@@ -52,10 +52,6 @@ export function Faq({ t }: { t: Messages['faq'] }) {
                   {item.id === 'who' && (
                     <>
                       {' '}
-                      <a href="#founder" className="text-ink underline decoration-gold underline-offset-4" aria-label="Siegel founder">
-                        ↑
-                      </a>
-                      {' · '}
                       <a href={`mailto:${CONTACT_EMAIL}`} className="text-ink underline decoration-gold underline-offset-4">
                         {CONTACT_EMAIL}
                       </a>

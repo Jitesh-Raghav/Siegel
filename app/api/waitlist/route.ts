@@ -16,6 +16,8 @@ const Body = z.object({
   company: optionalText(200),
   invoice_volume: z.enum(['<20', '20-100', '100-500', '500+']).nullish(),
   above_800k: z.enum(['yes', 'no', 'unsure']).nullish(),
+  bookkeeping: z.enum(['advisor', 'inhouse', 'both']).nullish(),
+  advisor_datev: z.enum(['yes', 'no', 'unsure']).nullish(),
   locale: z.enum(['en', 'de']).default('en'),
   utm_source: optionalText(200),
   utm_medium: optionalText(200),
@@ -57,7 +59,7 @@ export async function POST(req: NextRequest) {
   }
 
   const supabase = createClient(url, key, { auth: { persistSession: false } })
-  const { error } = await supabase.from('waitlist').insert({
+  const row = {
     email: data.email,
     company: data.company,
     invoice_volume: data.invoice_volume ?? null,
@@ -67,7 +69,15 @@ export async function POST(req: NextRequest) {
     utm_medium: data.utm_medium,
     utm_campaign: data.utm_campaign,
     referrer: data.referrer,
-  })
+  }
+  const extra = { bookkeeping: data.bookkeeping ?? null, advisor_datev: data.advisor_datev ?? null }
+  let { error } = await supabase.from('waitlist').insert({ ...row, ...extra })
+  // Until supabase/migrations/0002 is applied the new columns don't exist (PostgREST PGRST204):
+  // store the signup without them rather than losing it.
+  if (error?.code === 'PGRST204') {
+    console.warn('[waitlist] bookkeeping columns missing; run supabase/migrations/0002_waitlist_bookkeeping.sql')
+    ;({ error } = await supabase.from('waitlist').insert(row))
+  }
 
   if (error) {
     if (error.code === '23505') return NextResponse.json({ status: 'already' })

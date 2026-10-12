@@ -12,8 +12,6 @@ const hasHeroSource = existsSync(join(process.cwd(), 'public', 'hero-source.jpg'
 
 const nextConfig: NextConfig = {
   env: {
-    // Exposed so lib/i18n.ts can build absolute URLs on Vercel when NEXT_PUBLIC_SITE_URL is unset.
-    VERCEL_PROJECT_PRODUCTION_URL: process.env.VERCEL_PROJECT_PRODUCTION_URL ?? '',
     NEXT_PUBLIC_HERO_POSTER: hasHeroPoster ? '1' : '',
     NEXT_PUBLIC_HERO_POSTER_DARK: hasHeroPosterDark ? '1' : '',
     NEXT_PUBLIC_HERO_SOURCE: hasHeroSource ? '1' : '',

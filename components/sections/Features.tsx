@@ -10,7 +10,7 @@ const BARS = Array.from({ length: 36 }, (_, i) => 28 + Math.round(((Math.sin(i *
 
 export function Features({ t }: { t: Messages['features'] }) {
   const v = t.visuals
-  const [formats, validation, vat, delivery, archive, backfill] = t.items
+  const [formats, validation, vat, delivery, archive, backfill, datev] = t.items
 
   return (
     <section data-section="features" className="section defer-render pb-[clamp(72px,8vw,112px)]" aria-labelledby="features-title">
@@ -90,11 +90,15 @@ export function Features({ t }: { t: Messages['features'] }) {
                 <p className="mt-0.5 font-mono text-[10.5px] tracking-[0.06em] text-muted uppercase">{v.locked}</p>
               </div>
             </div>
+            <div className="mt-2 flex items-center justify-between gap-3 rounded-xl border border-hairline bg-white/60 px-3.5 py-2.5 font-mono text-[11px]">
+              <span className="truncate">validation-report.html</span>
+              <span className="shrink-0 text-gold-deep">10y</span>
+            </div>
           </Tile>
 
-          <Tile item={backfill} n={6} className="sm:col-span-2 lg:col-span-6" i={2} wide>
+          <Tile item={backfill} n={6} className="sm:col-span-2 lg:col-span-3" i={2}>
             <div>
-              <div className="flex h-[96px] items-end gap-[5px]" aria-hidden="true">
+              <div className="flex h-[88px] items-end gap-[4px]" aria-hidden="true">
                 {BARS.map((h, idx) => (
                   <span
                     key={idx}
@@ -109,6 +113,10 @@ export function Features({ t }: { t: Messages['features'] }) {
                 <span>{'→'}</span>
               </div>
             </div>
+          </Tile>
+
+          <Tile item={datev} n={7} className="sm:col-span-2 lg:col-span-3" i={3}>
+            <DatevChip />
           </Tile>
         </ul>
       </div>
@@ -143,6 +151,32 @@ function Tile({
         <p className="lede mt-2 text-[15.5px]">{item.body}</p>
       </div>
     </li>
+  )
+}
+
+/** The monthly DATEV hand-off as a file chip with its account frame and recipient. */
+function DatevChip() {
+  return (
+    <div className="grid grid-cols-1 gap-2" aria-hidden="true">
+      <div className="flex items-center gap-3 rounded-xl border border-hairline bg-white/80 px-3.5 py-3">
+        <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-ink font-mono text-[9.5px] tracking-[0.04em] text-on-dark">CSV</span>
+        <div className="min-w-0 flex-1">
+          <p className="truncate font-mono text-[11.5px]">EXTF_Buchungsstapel_2026-09.csv</p>
+          <p className="mt-0.5 font-mono text-[10.5px] tracking-[0.06em] text-muted uppercase">DATEV · 142</p>
+        </div>
+        <span className="flex shrink-0 overflow-hidden rounded-full border border-hairline font-mono text-[10px]">
+          <span className="bg-ink px-2 py-1 text-on-dark">SKR03</span>
+          <span className="px-2 py-1 text-muted">SKR04</span>
+        </span>
+      </div>
+      <div className="flex items-center justify-between gap-3 rounded-xl border border-hairline bg-white/60 px-3.5 py-2.5 font-mono text-[11px]">
+        <span className="truncate">→ Kanzlei Weber</span>
+        <span className="flex shrink-0 items-center gap-1.5 text-gold-deep">
+          <span className="size-1.5 rounded-full bg-verified" />
+          01.10.
+        </span>
+      </div>
+    </div>
   )
 }
 

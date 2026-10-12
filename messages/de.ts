@@ -102,13 +102,13 @@ export const de: Messages = {
   },
   how: {
     eyebrow: 'So funktioniert’s',
-    h2: 'Drei Schritte. Danach müssen Sie nicht mehr daran denken.',
+    h2: 'Vier Schritte. Danach müssen Sie nicht mehr daran denken.',
     h2Accent: 'nicht mehr daran denken.',
     steps: [
       {
         n: '01',
         title: 'Stripe verbinden',
-        body: 'App installieren und Ihre Unternehmensdaten einmalig hinterlegen.',
+        body: 'Stripe-Konto verbinden und Ihre Unternehmensdaten einmalig hinterlegen.',
       },
       {
         n: '02',
@@ -119,6 +119,11 @@ export const de: Messages = {
         n: '03',
         title: 'Zustellen & archivieren',
         body: 'Per E-Mail an Ihre Kunden versendet und für die gesetzliche Aufbewahrungsfrist gespeichert.',
+      },
+      {
+        n: '04',
+        title: 'An Ihren Steuerberater',
+        body: 'Jeden Monat geht eine DATEV-Datei mit allen Rechnungen und Gutschriften an Ihre Kanzlei.',
       },
     ],
   },
@@ -144,11 +149,11 @@ export const de: Messages = {
       },
       {
         title: 'Validierung nach offiziellen Regeln',
-        body: 'Jede Datei wird gegen das offizielle Schema und die Geschäftsregeln geprüft, bevor sie jemand sieht.',
+        body: 'Jede Datei wird gegen das offizielle Schema und die Geschäftsregeln geprüft. Fällt eine Rechnung durch, wird sie zurückgehalten, und wir zeigen Ihnen genau, welches Feld Sie in Stripe korrigieren müssen.',
       },
       {
         title: 'USt., Reverse Charge & Gutschriften',
-        body: '19 % und 7 %, gemischte Sätze, EU-Reverse-Charge und Gutschriften mit Bezug auf die ursprüngliche Rechnung.',
+        body: '19 % und 7 %, gemischte Sätze, EU-Reverse-Charge und Gutschriften mit Bezug auf die ursprüngliche Rechnung. Stornierte Rechnungen erhalten eine korrekte Stornorechnung.',
       },
       {
         title: 'E-Mail-Zustellung mit Protokoll',
@@ -156,13 +161,51 @@ export const de: Messages = {
       },
       {
         title: 'Manipulationssicheres EU-Archiv',
-        body: 'Jede Datei in der EU gespeichert, mit kryptografischem Hash und schreibgeschützt für die Aufbewahrungsfrist.',
+        body: 'Jede Datei liegt in der EU, zusammen mit ihrem Prüfbericht als Nachweis der Sorgfalt, gehasht und schreibgeschützt. 10 Jahre aufbewahrt (gesetzlich vorgeschrieben sind 8).',
       },
       {
         title: 'Vergangene Rechnungen nachträglich umwandeln',
         body: 'Bereits in Stripe finalisierte Rechnungen für einen Zeitraum Ihrer Wahl umwandeln.',
       },
+      {
+        title: 'DATEV-Export für Ihre Kanzlei',
+        body: 'Jeden Monat eine importfertige DATEV-Datei, kontiert nach SKR03 oder SKR04, dazu Lesezugriff auf Ihr Archiv für Ihren Steuerberater.',
+      },
     ],
+  },
+  datev: {
+    eyebrow: 'Für Ihren Steuerberater',
+    h2: 'Ihr Steuerberater bekommt eine DATEV-Datei. Jeden Monat.',
+    h2Accent: 'Jeden Monat.',
+    body: 'Alle Rechnungen und Gutschriften, nach SKR03 oder SKR04 kontiert und importfertig. Dazu Lesezugriff auf Ihr Archiv, damit Ihre Kanzlei nie wieder nach einem PDF fragen muss.',
+    points: [
+      'Importfertiges DATEV-Format (EXTF)',
+      'Kontierung nach SKR03 oder SKR04',
+      'Rechnungen, Gutschriften und Stornos',
+      'Lesezugriff auf das Archiv für Ihre Kanzlei',
+    ],
+    plan: 'In Growth und Scale enthalten',
+    mock: {
+      period: 'September 2026',
+      bookings: 'Buchungen',
+      cols: ['Konto', 'Gegenkonto', 'Betrag', 'Beleg'],
+      sentTo: 'An Kanzlei Weber gesendet · 1. Okt.',
+      access: 'Lesezugriff aufs Archiv',
+    },
+  },
+  freeCheck: {
+    eyebrow: 'Kostenloser Rechnungs-Check',
+    h2: 'Testen Sie Ihre letzten 10 Rechnungen. Kostenlos.',
+    h2Accent: 'Kostenlos.',
+    body: 'Verbinden Sie Stripe, und wir prüfen Ihre letzten 10 Rechnungen nach den offiziellen Regeln. Sie sehen genau, was besteht und was fehlt, bevor Sie etwas bezahlen.',
+    cta: 'Kostenlosen Check anfragen',
+    note: 'Teil des Frühzugangs',
+    result: {
+      title: 'Check Ihrer letzten 10 Rechnungen',
+      passed: 'bestanden',
+      toFix: 'zu korrigieren',
+      issues: ['INV-2026-0137 · USt-IdNr. des Käufers fehlt', 'INV-2026-0139 · Leistungszeitraum fehlt'],
+    },
   },
   audience: {
     eyebrow: 'Für wen',
@@ -190,19 +233,26 @@ export const de: Messages = {
     popular: 'Am beliebtesten',
     perMonth: '/Monat',
     plans: [
-      { id: 'starter', name: 'Starter', price: 29, limit: 'Bis zu 50 Rechnungen/Monat', extras: [] },
-      { id: 'growth', name: 'Growth', price: 79, limit: 'Bis zu 500 Rechnungen/Monat', extras: [] },
+      { id: 'starter', name: 'Starter', price: 49, limit: 'Bis zu 50 Rechnungen/Monat', extras: [] },
+      {
+        id: 'growth',
+        name: 'Growth',
+        price: 149,
+        limit: 'Bis zu 500 Rechnungen/Monat',
+        extras: ['DATEV-Export für Ihre Kanzlei', 'Lesezugriff aufs Archiv für Ihren Steuerberater'],
+      },
       {
         id: 'scale',
         name: 'Scale',
-        price: 199,
+        price: 399,
         limit: 'Bis zu 5.000 Rechnungen/Monat',
-        extras: ['Mehrere Stripe-Konten', 'Bevorzugter Support'],
+        extras: ['DATEV-Export für Ihre Kanzlei', 'Lesezugriff aufs Archiv für Ihren Steuerberater', 'Mehrere Stripe-Konten', 'Bevorzugter Support'],
       },
     ],
     includesTitle: 'In jedem Tarif enthalten',
     includes: ['ZUGFeRD & XRechnung', 'Validierung', 'E-Mail-Zustellung', 'EU-Archiv'],
     founding: 'Gründungskunden: 50 % Rabatt in den ersten 3 Monaten.',
+    freeCheck: 'Unsicher, welcher Tarif passt? Starten Sie mit einem kostenlosen Check Ihrer letzten 10 Rechnungen.',
     cta: 'Frühzugang sichern',
     vatNote: 'Preise zzgl. USt.',
   },
@@ -253,9 +303,14 @@ export const de: Messages = {
         a: 'ZUGFeRD (Profil EN 16931) und XRechnung.',
       },
       {
+        id: 'scope',
+        q: 'Wandelt Siegel jede Rechnung um?',
+        a: 'Nur die, die E-Rechnungen sein müssen: inländische B2B-Rechnungen über 250 €. Rechnungen an Verbraucher und an Kunden außerhalb Deutschlands werden automatisch übersprungen.',
+      },
+      {
         id: 'change',
         q: 'Muss ich meine Arbeit mit Stripe ändern?',
-        a: 'Nein. Rechnen Sie genau so ab wie bisher.',
+        a: 'Sie rechnen weiter genau so in Stripe ab wie bisher. Die einzige Änderung: Siegel versendet die Rechnungs-E-Mail an Ihre Geschäftskunden statt Stripe, damit jeder Kunde genau eine rechtsgültige Rechnung erhält. Das stellen wir beim Onboarding gemeinsam mit Ihnen um.',
       },
       { id: 'data', q: 'Wo werden meine Daten gespeichert?', a: 'In der EU.' },
       {
@@ -271,7 +326,7 @@ export const de: Messages = {
       {
         id: 'stripe-builds',
         q: 'Was, wenn Stripe das selbst baut?',
-        a: 'Dann haben Sie die Wahl. Bis dahin funktioniert Siegel schon heute, und Ihre archivierten Dateien bleiben jederzeit exportierbar.',
+        a: 'Dann haben Sie die Wahl. Aber Siegel ist darauf ausgelegt, wie deutsche Unternehmen tatsächlich arbeiten: DATEV-Export, GoBD-konformes Archiv und Ihr Steuerberater. Das geht über das hinaus, was Stripe oder andere Anbieter bieten, und Ihre archivierten Dateien bleiben jederzeit exportierbar.',
       },
       {
         id: 'avv',
@@ -326,6 +381,18 @@ export const de: Messages = {
     ],
     turnover: 'Vorjahresumsatz über 800.000 €?',
     turnoverOptions: [
+      { value: 'yes', label: 'Ja' },
+      { value: 'no', label: 'Nein' },
+      { value: 'unsure', label: 'Weiß nicht' },
+    ],
+    bookkeeping: 'Wer macht Ihre Buchhaltung?',
+    bookkeepingOptions: [
+      { value: 'advisor', label: 'Steuerberater' },
+      { value: 'inhouse', label: 'Intern' },
+      { value: 'both', label: 'Beides' },
+    ],
+    datev: 'Nutzt Ihr Steuerberater DATEV?',
+    datevOptions: [
       { value: 'yes', label: 'Ja' },
       { value: 'no', label: 'Nein' },
       { value: 'unsure', label: 'Weiß nicht' },

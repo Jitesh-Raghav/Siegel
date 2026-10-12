@@ -20,8 +20,10 @@ export function localePath(locale: Locale, path = '/'): string {
   return clean || '/'
 }
 
-/** Public origin for canonical/OG/hreflang URLs. Never localhost: explicit env, then Vercel's production domain. */
-export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://siegel.example')
-).replace(/\/$/, '')
+/**
+ * Public origin for canonical/OG/hreflang URLs: the production domain. NEXT_PUBLIC_SITE_URL can
+ * override it (e.g. for a staging deploy), but *.vercel.app, placeholder (*.example) and localhost
+ * values are ignored, so a stray env value can never leak into canonical links.
+ */
+const envSite = process.env.NEXT_PUBLIC_SITE_URL ?? ''
+export const siteUrl = (envSite && !/\.vercel\.app|\.example\b|localhost/.test(envSite) ? envSite : 'https://www.siegel.live').replace(/\/$/, '')

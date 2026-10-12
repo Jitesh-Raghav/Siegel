@@ -17,10 +17,10 @@ export function HowItWorks({ t }: { t: Messages['how'] }) {
         <SectionHeader num={3} id="how-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} />
 
         <div className="relative mt-16 md:mt-24">
-          {/* the rail that joins the three steps */}
-          <div className="how-rail absolute top-[22px] right-[16.66%] left-[16.66%] hidden md:block" {...reveal(2, 'rule')} />
+          {/* the rail that joins the four steps (one row of four from lg up) */}
+          <div className="how-rail absolute top-[22px] right-[12.5%] left-[12.5%] hidden lg:block" {...reveal(2, 'rule')} />
 
-          <ol className="relative grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-x-6 md:gap-y-0">
+          <ol className="relative grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-x-6 md:gap-y-14 lg:grid-cols-4 lg:gap-x-5 lg:gap-y-0">
             {t.steps.map((s, i) => (
               <li key={s.n} className="group relative flex flex-col md:row-span-3 md:grid md:grid-rows-subgrid md:gap-0" {...reveal(2 + i)}>
                 <div className="flex items-center gap-4 md:flex-col md:gap-0">
@@ -29,15 +29,15 @@ export function HowItWorks({ t }: { t: Messages['how'] }) {
                   </span>
                   <h3 className="h3 text-on-dark md:mt-7 md:text-center">{s.title}</h3>
                 </div>
-                <p className="lede mt-3 text-[16px] md:mx-auto md:max-w-[32ch] md:text-center">{s.body}</p>
+                <p className="lede mt-3 text-[15.5px] md:mx-auto md:max-w-[30ch] md:text-center">{s.body}</p>
 
-                <div className="glass-dark spotlight mt-8 flex flex-col gap-4 rounded-[20px] p-5">
+                <div className="glass-dark spotlight mt-8 flex flex-col gap-4 rounded-[20px] p-4 xl:p-5">
                   <div className="flex items-center gap-3">
                     <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-engrave-paper">
                       <StepIcon index={i} />
                     </span>
                     <span className="font-mono text-[11px] tracking-[0.12em] text-on-dark-muted uppercase">
-                      {['stripe → siegel', 'invoice.finalized', 'delivery'][i]}
+                      {['stripe → siegel', 'invoice.finalized', 'delivery', 'monthly · datev'][i]}
                     </span>
                   </div>
                   <StepProof index={i} />
@@ -53,7 +53,8 @@ export function HowItWorks({ t }: { t: Messages['how'] }) {
 
 /** A small, product-true panel per step: what Siegel actually does at that moment. */
 function StepProof({ index }: { index: number }) {
-  const row = 'flex items-center justify-between gap-3 rounded-lg border border-white/8 bg-white/[0.03] px-3 py-2 font-mono text-[11.5px]'
+  const row =
+    'flex items-center justify-between gap-3 rounded-lg border border-white/8 bg-white/[0.03] px-3 py-2 font-mono text-[11px] [&>span:last-child]:min-w-0 [&>span:last-child]:truncate'
   const ok = (
     <span className="grid size-4 shrink-0 place-items-center rounded-full bg-gold text-midnight" aria-hidden="true">
       <svg width="8" height="8" viewBox="0 0 10 10">
@@ -96,6 +97,7 @@ function StepProof({ index }: { index: number }) {
       </div>
     )
   }
+  if (index === 2) {
   return (
     <div className="grid grid-cols-1 gap-2" aria-hidden="true">
       <div className={row}>
@@ -108,7 +110,24 @@ function StepProof({ index }: { index: number }) {
       </div>
       <div className={row}>
         <span className="text-on-dark-muted">receipt</span>
-        <span className="text-gold-soft">delivered · 09:41:05</span>
+        <span className="text-gold-soft">delivered · 09:41</span>
+      </div>
+    </div>
+  )
+  }
+  return (
+    <div className="grid grid-cols-1 gap-2" aria-hidden="true">
+      <div className={row}>
+        <span className="text-on-dark">EXTF_…_2026-09.csv</span>
+        <span className="text-on-dark-muted">142</span>
+      </div>
+      <div className={row}>
+        <span className="text-on-dark-muted">frame</span>
+        <span className="text-on-dark">SKR03 · SKR04</span>
+      </div>
+      <div className={row}>
+        <span className="text-on-dark-muted">sent</span>
+        <span className="flex items-center gap-2 text-gold-soft">Kanzlei Weber {ok}</span>
       </div>
     </div>
   )
@@ -154,6 +173,16 @@ function StepIcon({ index }: { index: number }) {
           <path d="M28 34h16" fill="none" strokeWidth="1.4" />
           <path d="M20 4h32v20H20z" fill="var(--paper)" />
           <path d="M20 4l16 11 16-11" fill="none" />
+        </g>
+      )}
+      {index === 3 && (
+        // A ledger page with booking columns, handed on with an arrow
+        <g stroke="currentColor" strokeWidth="1.1">
+          <path d="M10 6h34v44H10z" fill="var(--paper)" />
+          <path d="M10 6h8v44h-8z" fill={`url(#${id})`} />
+          <path d="M22 16h18M22 23h18M22 30h18M22 37h12" fill="none" strokeWidth="0.9" />
+          <path d="M31 12v32" fill="none" strokeWidth="0.6" />
+          <path d="M48 28h16M58 22l6 6-6 6" fill="none" strokeWidth="1.4" />
         </g>
       )}
     </svg>

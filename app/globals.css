@@ -580,6 +580,74 @@
     }
   }
 
+  /* DATEV export mock */
+  .datev-glow {
+    background: radial-gradient(closest-side at 60% 50%, rgb(152 187 88 / 0.22), transparent 75%);
+  }
+
+  .hi-band-light {
+    background:
+      repeating-linear-gradient(-28deg, rgb(95 154 62 / 0.08) 0 1px, transparent 1px 6px),
+      linear-gradient(180deg, #f8fbf2, #ffffff);
+  }
+
+  .segmented-pill {
+    display: inline-flex;
+    padding: 3px;
+    gap: 2px;
+    border-radius: 999px;
+    border: 1px solid var(--hairline-strong);
+    background: var(--paper-2);
+  }
+
+  .segmented-pill button {
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    transition:
+      background-color 250ms var(--ease),
+      color 250ms var(--ease),
+      box-shadow 250ms var(--ease);
+  }
+
+  .segmented-pill button[aria-pressed='true'] {
+    background: var(--ink);
+    color: var(--on-dark);
+    box-shadow: 0 4px 10px -4px rgb(19 41 26 / 0.5);
+  }
+
+  .datev-swap {
+    animation: datev-swap 450ms var(--ease);
+  }
+
+  @keyframes datev-swap {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+
+  /* Free invoice check band */
+  .free-check {
+    background:
+      radial-gradient(700px 360px at 100% 0%, rgb(188 211 131 / 0.28), transparent 65%),
+      radial-gradient(500px 300px at 0% 100%, rgb(95 154 62 / 0.1), transparent 70%),
+      rgb(255 255 255 / 0.72);
+  }
+
+  .free-ring {
+    background: conic-gradient(var(--gold) 0 var(--p), rgb(168 57 42 / 0.75) var(--p) 100%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .datev-swap {
+      animation: none;
+    }
+  }
+
   /* Below-the-fold sections: skip style, layout and paint until they near the viewport. */
   .defer-render {
     content-visibility: auto;

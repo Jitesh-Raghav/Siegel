@@ -41,7 +41,9 @@ export function WaitlistForm({
 
     const invoice_volume = String(data.get('invoice_volume') ?? '') || null
     const above_800k = String(data.get('above_800k') ?? '') || null
-    const analyticsProps = { locale, location, invoice_volume, above_800k }
+    const bookkeeping = String(data.get('bookkeeping') ?? '') || null
+    const advisor_datev = String(data.get('advisor_datev') ?? '') || null
+    const analyticsProps = { locale, location, invoice_volume, above_800k, bookkeeping, advisor_datev }
     track('waitlist_submit', analyticsProps)
     setStatus('loading')
 
@@ -54,6 +56,8 @@ export function WaitlistForm({
           company: String(data.get('company') ?? '').trim() || null,
           invoice_volume,
           above_800k,
+          bookkeeping,
+          advisor_datev,
           locale,
           website: String(data.get('website') ?? ''),
           ...getAttribution(),
@@ -126,6 +130,10 @@ export function WaitlistForm({
 
       <Segmented name="invoice_volume" legend={t.volume} options={t.volumeOptions} optional={t.optional} />
       <Segmented name="above_800k" legend={t.turnover} options={t.turnoverOptions} optional={t.optional} />
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+        <Segmented name="bookkeeping" legend={t.bookkeeping} options={t.bookkeepingOptions} optional={t.optional} />
+        <Segmented name="advisor_datev" legend={t.datev} options={t.datevOptions} optional={t.optional} />
+      </div>
 
       {/* Honeypot: hidden from people and assistive tech, tempting for bots. */}
       <div aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, overflow: 'hidden' }}>

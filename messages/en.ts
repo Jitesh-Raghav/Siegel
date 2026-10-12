@@ -99,13 +99,13 @@ export const en = {
   },
   how: {
     eyebrow: 'How it works',
-    h2: 'Three steps. Then you forget about it.',
+    h2: 'Four steps. Then you forget about it.',
     h2Accent: 'forget about it.',
     steps: [
       {
         n: '01',
         title: 'Connect Stripe',
-        body: 'Install the app and add your company details once.',
+        body: 'Connect your Stripe account and add your company details once.',
       },
       {
         n: '02',
@@ -116,6 +116,11 @@ export const en = {
         n: '03',
         title: 'Deliver & archive',
         body: 'Sent to your customer by email and stored for the legal retention period.',
+      },
+      {
+        n: '04',
+        title: 'Export to your tax advisor',
+        body: 'Every month, a DATEV file with all invoices and credit notes goes to your Steuerberater.',
       },
     ],
   },
@@ -141,11 +146,11 @@ export const en = {
       },
       {
         title: 'Validation against official rules',
-        body: 'Every file is checked against the official schema and business rules before anyone sees it.',
+        body: 'Every file is checked against the official schema and business rules. If an invoice fails, it’s held back, and we tell you exactly which field to fix in Stripe.',
       },
       {
         title: 'VAT, reverse charge & credit notes',
-        body: '19% and 7%, mixed rates, EU reverse charge and credit notes that reference the original invoice.',
+        body: '19% and 7%, mixed rates, EU reverse charge and credit notes that reference the original invoice. Voided invoices get a proper cancellation credit note.',
       },
       {
         title: 'Email delivery with logs',
@@ -153,13 +158,51 @@ export const en = {
       },
       {
         title: 'Tamper-evident EU archive',
-        body: 'Each file stored in the EU with a cryptographic hash, write-protected for the retention period.',
+        body: 'Each file is stored in the EU with its validation report as proof of due care, hashed and write-protected. Kept 10 years (the law requires 8).',
       },
       {
         title: 'Backfill past invoices',
         body: 'Convert invoices you already finalized in Stripe, for a date range you choose.',
       },
+      {
+        title: 'DATEV export for your tax advisor',
+        body: 'A ready-to-import DATEV file every month, mapped to SKR03 or SKR04, plus read-only archive access for your Steuerberater.',
+      },
     ],
+  },
+  datev: {
+    eyebrow: 'For your tax advisor',
+    h2: 'Your Steuerberater gets a DATEV file. Every month.',
+    h2Accent: 'Every month.',
+    body: 'All invoices and credit notes, mapped to SKR03 or SKR04 and ready to import. Plus read-only access to your archive, so your advisor never has to ask for a PDF again.',
+    points: [
+      'Ready-to-import DATEV format (EXTF)',
+      'SKR03 or SKR04 account mapping',
+      'Invoices, credit notes and cancellations',
+      'Read-only archive access for your advisor',
+    ],
+    plan: 'Included in Growth and Scale',
+    mock: {
+      period: 'September 2026',
+      bookings: 'bookings',
+      cols: ['Account', 'Contra', 'Amount', 'Document'],
+      sentTo: 'Sent to Kanzlei Weber · 1 Oct',
+      access: 'Read-only archive access',
+    },
+  },
+  freeCheck: {
+    eyebrow: 'Free invoice check',
+    h2: 'Test your last 10 invoices. Free.',
+    h2Accent: 'Free.',
+    body: 'Connect Stripe and we’ll check your last 10 invoices against the official rules. See exactly what passes and what’s missing, before you pay anything.',
+    cta: 'Get your free check',
+    note: 'Part of early access',
+    result: {
+      title: 'Check of your last 10 invoices',
+      passed: 'passed',
+      toFix: 'to fix',
+      issues: ['INV-2026-0137 · Buyer VAT ID missing', 'INV-2026-0139 · Service period missing'],
+    },
   },
   audience: {
     eyebrow: 'Who it’s for',
@@ -187,19 +230,26 @@ export const en = {
     popular: 'Most popular',
     perMonth: '/mo',
     plans: [
-      { id: 'starter', name: 'Starter', price: 29, limit: 'Up to 50 invoices/mo', extras: [] as string[] },
-      { id: 'growth', name: 'Growth', price: 79, limit: 'Up to 500 invoices/mo', extras: [] as string[] },
+      { id: 'starter', name: 'Starter', price: 49, limit: 'Up to 50 invoices/mo', extras: [] as string[] },
+      {
+        id: 'growth',
+        name: 'Growth',
+        price: 149,
+        limit: 'Up to 500 invoices/mo',
+        extras: ['DATEV export for your tax advisor', 'Read-only archive access for your advisor'],
+      },
       {
         id: 'scale',
         name: 'Scale',
-        price: 199,
+        price: 399,
         limit: 'Up to 5,000 invoices/mo',
-        extras: ['Multiple Stripe accounts', 'Priority support'],
+        extras: ['DATEV export for your tax advisor', 'Read-only archive access for your advisor', 'Multiple Stripe accounts', 'Priority support'],
       },
     ],
     includesTitle: 'Included in every plan',
     includes: ['ZUGFeRD & XRechnung', 'Validation', 'Email delivery', 'EU archive'],
     founding: 'Founding customers: 50% off for the first 3 months.',
+    freeCheck: 'Not sure which plan? Start with a free check of your last 10 invoices.',
     cta: 'Join early access',
     vatNote: 'Prices excl. VAT.',
   },
@@ -250,9 +300,14 @@ export const en = {
         a: 'ZUGFeRD (EN 16931 profile) and XRechnung.',
       },
       {
+        id: 'scope',
+        q: 'Does Siegel convert every invoice?',
+        a: 'Only the ones that must be e-invoices: German B2B invoices over €250. Invoices to consumers and to customers outside Germany are skipped automatically.',
+      },
+      {
         id: 'change',
         q: 'Do I have to change how I use Stripe?',
-        a: 'No. Keep invoicing exactly as you do today.',
+        a: 'You keep billing in Stripe exactly as now. The only change: Siegel sends the invoice email to your business customers instead of Stripe, so each customer gets one legally valid invoice. We switch this with you during onboarding.',
       },
       { id: 'data', q: 'Where is my data stored?', a: 'In the EU.' },
       {
@@ -268,7 +323,7 @@ export const en = {
       {
         id: 'stripe-builds',
         q: 'What if Stripe builds this?',
-        a: 'Then you’ll have a choice. Until then, Siegel works today, and your archived files stay exportable at any time.',
+        a: 'Then you’ll have a choice. But Siegel is built around how German companies actually work: DATEV exports, a GoBD-compliant archive and your tax advisor. That goes beyond what Stripe or generic providers offer, and your archived files stay exportable at any time.',
       },
       {
         id: 'avv',
@@ -323,6 +378,18 @@ export const en = {
     ],
     turnover: 'Prior-year turnover above €800k?',
     turnoverOptions: [
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' },
+      { value: 'unsure', label: 'Not sure' },
+    ],
+    bookkeeping: 'Who does your bookkeeping?',
+    bookkeepingOptions: [
+      { value: 'advisor', label: 'Tax advisor' },
+      { value: 'inhouse', label: 'In-house' },
+      { value: 'both', label: 'Both' },
+    ],
+    datev: 'Does your tax advisor use DATEV?',
+    datevOptions: [
       { value: 'yes', label: 'Yes' },
       { value: 'no', label: 'No' },
       { value: 'unsure', label: 'Not sure' },

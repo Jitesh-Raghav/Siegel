@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { notFound } from 'next/navigation'
+import { Analytics as VercelAnalytics } from '@vercel/analytics/next'
 import { Analytics } from '@/components/Analytics'
 import { Footer } from '@/components/sections/Footer'
 import { Nav } from '@/components/nav/Nav'
@@ -66,6 +67,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<'/[
           <Footer locale={locale} t={t} />
         </WaitlistProvider>
         <Analytics />
+        <VercelAnalytics />
       </body>
     </html>
   )

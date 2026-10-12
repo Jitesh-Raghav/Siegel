@@ -1139,6 +1139,10 @@
     border-color: var(--danger);
   }
 
+  fieldset {
+    min-width: 0;
+  }
+
   .segmented {
     display: grid;
     gap: 4px;
@@ -1146,11 +1150,13 @@
     border: 1px solid var(--hairline-strong);
     border-radius: 14px;
     background: rgb(255 255 255 / 0.7);
+    min-width: 0;
   }
 
   .segmented label {
     position: relative;
     display: block;
+    min-width: 0;
   }
 
   .segmented input {
@@ -1177,7 +1183,9 @@
   }
 
   .segmented span {
-    white-space: nowrap;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.2;
   }
 
   @media (max-width: 400px) {

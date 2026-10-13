@@ -1,11 +1,13 @@
 import { notFound } from 'next/navigation'
 import { Hero } from '@/components/hero/Hero'
 import { Audience } from '@/components/sections/Audience'
+import { Datev } from '@/components/sections/Datev'
 import { Deadline } from '@/components/sections/Deadline'
 import { Faq } from '@/components/sections/Faq'
 import { Features } from '@/components/sections/Features'
 import { Film } from '@/components/sections/Film'
 import { FinalCta } from '@/components/sections/FinalCta'
+import { FreeCheck } from '@/components/sections/FreeCheck'
 import { HowItWorks } from '@/components/sections/HowItWorks'
 import { Pricing } from '@/components/sections/Pricing'
 import { Standards } from '@/components/sections/Standards'
@@ -31,7 +33,10 @@ export default async function Home({ params }: PageProps<'/[locale]'>) {
       <SectionDivider />
       <Deadline t={t.deadline} />
       <HowItWorks t={t.how} />
+      <FreeCheck t={t.freeCheck} />
       <Features t={t.features} />
+      <SectionDivider />
+      <Datev t={t.datev} />
       <SectionDivider />
       <Audience t={t.audience} />
       <SectionDivider />

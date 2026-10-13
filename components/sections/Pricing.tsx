@@ -19,7 +19,7 @@ export function Pricing({ locale, t }: { locale: Locale; t: Messages['pricing'] 
   return (
     <section id="pricing" data-section="pricing" className="section defer-render pb-[clamp(72px,8vw,112px)]" aria-labelledby="pricing-title">
       <div className="container-ledger">
-        <SectionHeader num={6} id="pricing-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} align="center" />
+        <SectionHeader num={7} id="pricing-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} align="center" />
 
         <ul className="mt-16 grid grid-cols-1 gap-5 lg:grid-cols-3 lg:items-stretch">
           {t.plans.map((p, i) => {
@@ -79,6 +79,10 @@ export function Pricing({ locale, t }: { locale: Locale; t: Messages['pricing'] 
             </span>
             {t.founding}
           </p>
+          <a href="#free-check" className="group inline-flex items-center gap-2 text-[14.5px] text-ink underline decoration-gold/60 underline-offset-4 transition-colors hover:decoration-gold">
+            {t.freeCheck}
+            <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+          </a>
           <p className="text-[13px] text-muted">{t.vatNote}</p>
         </div>
       </div>

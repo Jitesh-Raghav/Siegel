@@ -40,7 +40,7 @@ export const SCRIPT = {
   en: [
     'From 2027, German businesses must send e-invoices. By 2028, everyone does.',
     'Stripe sends PDFs. But a PDF isn’t an e-invoice.',
-    'Siegel connects to Stripe in one click. You keep invoicing exactly as before.',
+    'Siegel connects to your Stripe account in one click. Your billing stays in Stripe.',
     'Every invoice becomes ZUGFeRD or XRechnung, validated against the official rules, and sealed.',
     'Then delivered to your customer, and archived in the EU.',
     'Siegel. Every Stripe invoice, sealed.',
@@ -48,7 +48,7 @@ export const SCRIPT = {
   de: [
     'Ab 2027 wird die E-Rechnung für Unternehmen Pflicht. Ab 2028 für alle.',
     'Stripe verschickt PDFs. Doch ein PDF ist keine E-Rechnung.',
-    'Siegel verbindet sich mit einem Klick mit Stripe. Sie rechnen weiter ab wie bisher.',
+    'Siegel verbindet sich mit einem Klick mit Ihrem Stripe-Konto. Ihre Abrechnung bleibt in Stripe.',
     'Jede Rechnung wird zu ZUGFeRD oder XRechnung, nach offiziellen Regeln geprüft, und besiegelt.',
     'Dann zugestellt an Ihre Kunden und archiviert in der EU.',
     'Siegel. Jede Stripe-Rechnung, besiegelt.',

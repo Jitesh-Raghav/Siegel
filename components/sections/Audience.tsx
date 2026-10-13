@@ -8,7 +8,7 @@ export function Audience({ t }: { t: Messages['audience'] }) {
   return (
     <section data-section="audience" className="section bg-paper-2/60 defer-render pb-[clamp(72px,8vw,112px)]" aria-labelledby="audience-title">
       <div className="container-ledger">
-        <SectionHeader num={5} id="audience-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} />
+        <SectionHeader num={6} id="audience-title" eyebrow={t.eyebrow} title={t.h2} accent={t.h2Accent} />
         <ul className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-3">
           {t.items.map((a, i) => (
             <li
